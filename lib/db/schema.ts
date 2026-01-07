@@ -30,6 +30,12 @@ export const workspace = pgTable("workspace", {
   // Onboarding status
   onboardingCompleted: boolean("onboarding_completed").notNull().default(false),
 
+  // Admin/billing fields
+  status: text("status").notNull().default("active"), // "active" | "suspended" | "trial"
+  plan: text("plan").notNull().default("free"), // "free" | "pro" | "enterprise"
+  suspendedAt: timestamp("suspended_at"),
+  suspendedReason: text("suspended_reason"),
+
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -52,6 +58,9 @@ export const user = pgTable("user", {
     onDelete: "cascade",
   }),
   role: text("role").notNull().default("member"), // "owner" | "admin" | "member"
+
+  // System admin flag (for super admin access across all workspaces)
+  isSystemAdmin: boolean("is_system_admin").notNull().default(false),
 });
 
 export const session = pgTable(
@@ -359,6 +368,8 @@ export type MusicTrack = typeof musicTrack.$inferSelect;
 export type NewMusicTrack = typeof musicTrack.$inferInsert;
 
 export type UserRole = "owner" | "admin" | "member";
+export type WorkspaceStatus = "active" | "suspended" | "trial";
+export type WorkspacePlan = "free" | "pro" | "enterprise";
 export type ProjectStatus = "pending" | "processing" | "completed" | "failed";
 export type ImageStatus = "pending" | "processing" | "completed" | "failed";
 

@@ -46,7 +46,7 @@ export default async function HelpArticle({ params }: HelpArticlePageProps) {
   const article = await getHelpArticle(categorySlug, slug);
   const category = getCategoryBySlug(categorySlug);
 
-  if (!article || !category) {
+  if (!(article && category)) {
     notFound();
   }
 

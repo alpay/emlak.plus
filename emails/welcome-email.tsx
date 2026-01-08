@@ -21,8 +21,8 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
       </Text>
 
       <Text style={paragraph}>
-        With Proppi, you can transform your real estate photos with
-        AI-powered enhancements:
+        With Proppi, you can transform your real estate photos with AI-powered
+        enhancements:
       </Text>
 
       <Section style={features}>

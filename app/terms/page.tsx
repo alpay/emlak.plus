@@ -14,9 +14,9 @@ export default function TermsPage() {
     >
       <LegalSection title="1. Acceptance of Terms">
         <p>
-          By accessing or using Proppi (&quot;the Service&quot;), you agree
-          to be bound by these Terms of Service. If you disagree with any part
-          of these terms, you may not access the Service.
+          By accessing or using Proppi (&quot;the Service&quot;), you agree to
+          be bound by these Terms of Service. If you disagree with any part of
+          these terms, you may not access the Service.
         </p>
         <p>
           These terms apply to all visitors, users, and others who access or use
@@ -49,8 +49,7 @@ export default function TermsPage() {
 
       <LegalSection title="4. Payment and Pricing">
         <p>
-          Proppi operates on a pay-per-use model. Current pricing is as
-          follows:
+          Proppi operates on a pay-per-use model. Current pricing is as follows:
         </p>
         <ul className="ml-4 list-disc space-y-2">
           <li>
@@ -130,10 +129,10 @@ export default function TermsPage() {
 
       <LegalSection title="9. Limitation of Liability">
         <p>
-          To the maximum extent permitted by law, Proppi shall not be liable
-          for any indirect, incidental, special, consequential, or punitive
-          damages, including loss of profits, data, or other intangible losses,
-          resulting from:
+          To the maximum extent permitted by law, Proppi shall not be liable for
+          any indirect, incidental, special, consequential, or punitive damages,
+          including loss of profits, data, or other intangible losses, resulting
+          from:
         </p>
         <ul className="ml-4 list-disc space-y-2">
           <li>Your use or inability to use the Service</li>

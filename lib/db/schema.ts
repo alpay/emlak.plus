@@ -53,6 +53,11 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
+  // Better-Auth admin plugin fields
+  banned: boolean("banned").default(false),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires"),
+
   // Workspace relation
   workspaceId: text("workspace_id").references(() => workspace.id, {
     onDelete: "cascade",

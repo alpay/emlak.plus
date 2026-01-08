@@ -20,8 +20,8 @@ export default function PrivacyPage() {
           our AI-powered real estate photo enhancement service.
         </p>
         <p>
-          By using Proppi, you agree to the collection and use of information
-          in accordance with this policy. If you do not agree with our policies,
+          By using Proppi, you agree to the collection and use of information in
+          accordance with this policy. If you do not agree with our policies,
           please do not use our service.
         </p>
       </LegalSection>

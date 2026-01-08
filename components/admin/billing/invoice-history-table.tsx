@@ -3,7 +3,6 @@
 import {
   IconBuilding,
   IconCheck,
-  IconExternalLink,
   IconFileInvoice,
   IconLoader2,
 } from "@tabler/icons-react";
@@ -271,27 +270,6 @@ export function InvoiceHistoryTable({ invoices }: InvoiceHistoryTableProps) {
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>Marker som betalt</TooltipContent>
-                        </Tooltip>
-                      )}
-                      {invoice.fikenInvoiceId && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              asChild
-                              className="h-8"
-                              size="sm"
-                              variant="ghost"
-                            >
-                              <a
-                                href={`https://fiken.no/foretak/fiken-demo-mulig-hytte-as2/handel/salg/${invoice.fikenInvoiceId}`}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                              >
-                                <IconExternalLink className="h-4 w-4" />
-                              </a>
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Apne i Fiken</TooltipContent>
                         </Tooltip>
                       )}
                     </div>

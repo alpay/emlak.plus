@@ -10,7 +10,13 @@ import {
   sql,
   sum,
 } from "drizzle-orm";
-import { BILLING_DEFAULTS } from "@/lib/fiken-client";
+
+// Billing defaults (in øre - Norwegian cents)
+const BILLING_DEFAULTS = {
+  IMAGE_PROJECT_PRICE_ORE: 100_000, // 1000 NOK
+  VIDEO_PROJECT_PRICE_ORE: 100_000, // 1000 NOK
+};
+
 import type {
   AdminWorkspaceFilters,
   AdminWorkspaceRow,

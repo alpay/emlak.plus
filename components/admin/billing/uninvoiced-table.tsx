@@ -35,10 +35,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  createInvoiceFromLineItemsAction,
-  sendInvoiceToFikenAction,
-} from "@/lib/actions/billing";
+import { createInvoiceFromLineItemsAction } from "@/lib/actions/billing";
 import type { UninvoicedLineItemRow } from "@/lib/db/queries";
 
 // Format Norwegian currency
@@ -147,10 +144,10 @@ export function UninvoicedTable({ items }: UninvoicedTableProps) {
         return;
       }
 
-      // Send each invoice to Fiken
+      // Mark each invoice as sent
       let sentCount = 0;
       for (const invoiceId of result.data.invoiceIds) {
-        const sendResult = await sendInvoiceToFikenAction(invoiceId);
+        const sendResult = await markInvoiceAsSentAction(invoiceId);
         if (sendResult.success) {
           sentCount++;
         }
@@ -190,8 +187,8 @@ export function UninvoicedTable({ items }: UninvoicedTableProps) {
         return;
       }
 
-      // Send to Fiken
-      const sendResult = await sendInvoiceToFikenAction(
+      // Mark as sent
+      const sendResult = await markInvoiceAsSentAction(
         result.data.invoiceIds[0]
       );
 

@@ -12,7 +12,6 @@ import {
   getInvoiceById,
   getInvoiceHistory,
   getUninvoicedLineItems,
-  getWorkspaceById,
   getWorkspacePricing,
   type InvoiceHistoryRow,
   type UninvoicedLineItemRow,
@@ -21,7 +20,12 @@ import {
   upsertWorkspacePricing,
 } from "@/lib/db/queries";
 import type { Invoice, InvoiceStatus, WorkspacePricing } from "@/lib/db/schema";
-import { FIKEN_CONFIG, getFikenClient } from "@/lib/fiken-client";
+
+// Billing defaults (previously in fiken-client.ts)
+const BILLING_DEFAULTS = {
+  DEFAULT_DUE_DAYS: 14,
+  VAT_RATE: 0.25,
+};
 
 // ============================================================================
 // Types
@@ -233,91 +237,43 @@ export async function createInvoiceFromLineItemsAction(
 }
 
 /**
- * Send an invoice to Fiken (admin only)
+ * Mark invoice as sent (admin only)
+ * Sets the issue date and calculates due date
  */
-export async function sendInvoiceToFikenAction(
+export async function markInvoiceAsSentAction(
   invoiceId: string
-): Promise<
-  ActionResult<{ fikenInvoiceId: number; fikenInvoiceNumber: string }>
-> {
+): Promise<ActionResult<Invoice>> {
   const adminCheck = await verifySystemAdmin();
   if (adminCheck.error) {
     return { success: false, error: adminCheck.error };
   }
 
   try {
-    // Get the invoice
     const invoice = await getInvoiceById(invoiceId);
     if (!invoice) {
       return { success: false, error: "Invoice not found" };
     }
 
-    // Get workspace details
-    const workspace = await getWorkspaceById(invoice.workspaceId);
-    if (!workspace) {
-      return { success: false, error: "Workspace not found" };
-    }
-
-    // Validate org number
-    if (!workspace.organizationNumber) {
-      return {
-        success: false,
-        error: "Workspace must have an organization number to send invoices",
-      };
-    }
-
-    // Get line items for description
-    const { getLineItemsByInvoiceId } = await import("@/lib/db/queries");
-    const lineItems = await getLineItemsByInvoiceId(invoiceId);
-
-    // Send to Fiken
-    const fiken = getFikenClient();
-    const result = await fiken.invoiceWorkspace({
-      workspaceName: workspace.name,
-      organizationNumber: workspace.organizationNumber,
-      projects: lineItems.map((item) => ({
-        name: item.description,
-        description: item.description,
-      })),
-    });
-
-    // Update invoice with Fiken details
     const today = new Date();
     const dueDate = new Date(
-      today.getTime() + FIKEN_CONFIG.defaultDueDays * 24 * 60 * 60 * 1000
+      today.getTime() + BILLING_DEFAULTS.DEFAULT_DUE_DAYS * 24 * 60 * 60 * 1000
     );
 
-    await updateInvoice(invoiceId, {
-      fikenInvoiceId: result.invoiceId,
-      fikenInvoiceNumber: String(result.invoiceId), // Fiken doesn't return invoice number directly
-      fikenContactId: result.contactId,
+    const updated = await updateInvoice(invoiceId, {
       status: "sent",
       issueDate: today,
       dueDate,
     });
 
-    // Cache the Fiken contact ID for future invoices
-    await upsertWorkspacePricing(workspace.id, {
-      fikenContactId: result.contactId,
-    });
+    if (!updated) {
+      return { success: false, error: "Failed to update invoice" };
+    }
 
     revalidatePath("/admin/billing");
-    return {
-      success: true,
-      data: {
-        fikenInvoiceId: result.invoiceId,
-        fikenInvoiceNumber: String(result.invoiceId),
-      },
-    };
+    return { success: true, data: updated };
   } catch (error) {
-    console.error("[billing:sendInvoiceToFiken] Error:", error);
-    return {
-      success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : "Failed to send invoice to Fiken",
-    };
+    console.error("[billing:markInvoiceAsSent] Error:", error);
+    return { success: false, error: "Failed to mark invoice as sent" };
   }
 }
 

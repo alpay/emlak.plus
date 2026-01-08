@@ -479,7 +479,7 @@ export type VideoRoomType = RoomType; // Unified with RoomType for consistency
 
 /**
  * Workspace Pricing - Custom pricing per workspace
- * If null, defaults to BILLING_DEFAULTS in fiken-client.ts (1000 NOK)
+ * If null, defaults to BILLING_DEFAULTS (1000 NOK)
  */
 export const workspacePricing = pgTable(
   "workspace_pricing",
@@ -494,7 +494,7 @@ export const workspacePricing = pgTable(
     imageProjectPriceOre: integer("image_project_price_ore"), // in ore (100000 = 1000 NOK)
     videoProjectPriceOre: integer("video_project_price_ore"), // in ore
 
-    // Cached Fiken contact ID for faster invoice creation
+    // Cached external contact ID (for accounting integrations)
     fikenContactId: integer("fiken_contact_id"),
 
     createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -514,7 +514,7 @@ export const invoice = pgTable(
       .notNull()
       .references(() => workspace.id, { onDelete: "cascade" }),
 
-    // Fiken integration
+    // External invoice tracking (legacy columns kept for data integrity)
     fikenInvoiceId: integer("fiken_invoice_id"),
     fikenInvoiceNumber: text("fiken_invoice_number"),
     fikenContactId: integer("fiken_contact_id"),

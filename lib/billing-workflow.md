@@ -6,7 +6,7 @@ This document explains the billing workflow for Proppi, from project creation to
 
 ## Overview
 
-The billing system tracks revenue from image and video projects, integrates with Fiken (Norwegian accounting software) for invoicing, and supports an affiliate program with commission tracking.
+The billing system tracks revenue from image and video projects and supports an affiliate program with commission tracking.
 
 **Default Pricing:**
 - Image projects: 1000 NOK (per project, up to 20 images)
@@ -50,7 +50,7 @@ The billing page shows two tabs:
 
 ---
 
-### Stage 3: Invoice Creation & Sending to Fiken
+### Stage 3: Invoice Creation & Sending
 
 When admin clicks "Send faktura" (`lib/actions/billing.ts`):
 
@@ -60,11 +60,9 @@ When admin clicks "Send faktura" (`lib/actions/billing.ts`):
    - Links line items to the invoice
    - Updates line item status to "invoiced"
 
-2. **`sendInvoiceToFikenAction`**:
-   - Validates workspace has org.nr
-   - Creates/finds customer contact in Fiken
-   - Creates invoice in Fiken via API
-   - Updates invoice with Fiken ID and invoice number
+2. **`markInvoiceAsSentAction`**:
+   - Sets issue date to today
+   - Calculates due date (14 days from issue)
    - Sets invoice status to "sent"
 
 ---
@@ -110,7 +108,7 @@ The affiliates page shows:
 |-------|---------|
 | `workspacePricing` | Custom pricing per workspace (null = use defaults) |
 | `invoiceLineItem` | Individual billable items linked to projects/videos |
-| `invoice` | Invoice records with Fiken integration |
+| `invoice` | Invoice records |
 | `affiliateRelationship` | Links affiliate to referred workspace |
 | `affiliateEarning` | Commission tracking per paid invoice |
 
@@ -122,9 +120,8 @@ The affiliates page shows:
 |------|----------------|
 | `lib/db/schema.ts` | Database table definitions |
 | `lib/db/queries.ts` | Billing queries + `updateProjectCounts` hook |
-| `lib/actions/billing.ts` | Invoice creation, Fiken integration, payment actions |
+| `lib/actions/billing.ts` | Invoice creation, payment actions |
 | `lib/actions/affiliate.ts` | Affiliate relationship and earnings management |
-| `lib/fiken-client.ts` | Fiken API client + `BILLING_DEFAULTS` constant |
 | `app/admin/billing/page.tsx` | Admin billing page |
 | `app/admin/affiliates/page.tsx` | Admin affiliates page |
 
@@ -162,7 +159,6 @@ The affiliates page shows:
 │                    SYSTEM: Invoice Created & Sent                    │
 ├─────────────────────────────────────────────────────────────────────┤
 │  • Invoice created in database                                       │
-│  • Sent to Fiken via API                                             │
 │  • Status: "sent"                                                    │
 └────────────────────────────┬────────────────────────────────────────┘
                              │
@@ -198,7 +194,7 @@ The affiliates page shows:
 
 ## Notes
 
-- **Org.nr Required**: Workspaces must have an organization number before invoices can be sent to Fiken
+- **Org.nr Required**: Workspaces should have an organization number for proper invoicing
 - **Idempotency**: The system prevents duplicate invoice line items for the same project/video
 - **Error Handling**: Billing operations are wrapped in try/catch to not fail core operations if billing has issues
 - **Currency**: All amounts stored in øre (Norwegian cents). 100000 øre = 1000 NOK

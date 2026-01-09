@@ -48,20 +48,20 @@ export function CreditsSettingsContent({
         body: JSON.stringify({ packageId }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.error || "Failed to start checkout");
       }
 
-      const { paymentLink } = await response.json();
-
       // Redirect to DodoPayments checkout
-      if (paymentLink) {
-        window.location.href = paymentLink;
+      if (data.paymentLink) {
+        window.location.href = data.paymentLink;
+      } else {
+        throw new Error("No payment link received");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to start checkout");
-    } finally {
       setPurchasing(null);
     }
   }

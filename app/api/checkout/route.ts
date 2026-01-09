@@ -57,24 +57,26 @@ export async function POST(request: NextRequest) {
 
     // Create checkout session with DodoPayments
     // The metadata will be passed to the webhook so we know where to add credits
-    const checkoutSession = await dodo.payments.create({
-      billing: {
-        city: "",
-        country: "US",
-        state: "",
-        street: "",
-        zipcode: "",
-      },
-      customer: {
-        email: session.user.email,
-        name: session.user.name,
-      },
+    console.log(
+      "[checkout] Creating checkout session with product:",
+      pkg.dodoProductId
+    );
+
+    // Get the base URL for return/success redirects
+    const baseUrl =
+      request.headers.get("origin") ||
+      process.env.NEXT_PUBLIC_APP_URL ||
+      "http://localhost:3000";
+
+    const checkoutSession = await dodo.checkoutSessions.create({
       product_cart: [
         {
           product_id: pkg.dodoProductId,
           quantity: 1,
         },
       ],
+      payment_link: true, // Request a payment link
+      return_url: `${baseUrl}/dashboard/settings/credits?success=true`,
       metadata: {
         workspaceId: userData.workspace.id,
         packageId: pkg.id,
@@ -84,10 +86,15 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log(
+      "[checkout] DodoPayments response:",
+      JSON.stringify(checkoutSession, null, 2)
+    );
+
     return NextResponse.json({
       success: true,
-      paymentLink: checkoutSession.payment_link,
-      paymentId: checkoutSession.payment_id,
+      paymentLink: checkoutSession.checkout_url,
+      sessionId: checkoutSession.session_id,
     });
   } catch (error) {
     console.error("[checkout] Error creating checkout session:", error);

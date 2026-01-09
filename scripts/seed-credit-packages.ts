@@ -9,15 +9,16 @@
  * 2. Copy the product IDs and update the DODO_PRODUCT_IDS below
  */
 
-import "dotenv/config";
-import { eq } from "drizzle-orm";
-import { db } from "../lib/db";
-import { creditPackage } from "../lib/db/schema";
+import { config } from "dotenv";
+
+// Load env BEFORE any other imports
+config({ path: ".env.local" });
+config({ path: ".env" });
 
 // Update these with your actual DodoPayments product IDs
 // Create products in https://app.dodopayments.com first!
 const DODO_PRODUCT_IDS = {
-  STARTER: "YOUR_DODO_PRODUCT_ID_FOR_STARTER", // 10 credits - $5
+  STARTER: "pdt_0NVsfT7G5xFcQUsTYMHEx", // 10 credits - $5
   POPULAR: "YOUR_DODO_PRODUCT_ID_FOR_POPULAR", // 25 credits - $10
   BEST_VALUE: "YOUR_DODO_PRODUCT_ID_FOR_BEST_VALUE", // 50 credits - $18
 };
@@ -50,6 +51,11 @@ const PACKAGES = [
 ];
 
 async function seedCreditPackages() {
+  // Dynamic import AFTER env is loaded
+  const { eq } = await import("drizzle-orm");
+  const { db } = await import("../lib/db");
+  const { creditPackage } = await import("../lib/db/schema");
+
   console.log("🌱 Seeding credit packages...\n");
 
   for (const pkg of PACKAGES) {

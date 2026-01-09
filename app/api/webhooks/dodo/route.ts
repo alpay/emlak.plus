@@ -1,6 +1,6 @@
-import crypto from "node:crypto";
 import { type NextRequest, NextResponse } from "next/server";
 import { addCredits, refundCredits } from "@/lib/credits";
+import { dodo } from "@/lib/dodo";
 
 // DodoPayments webhook event types we care about
 type WebhookEventType =
@@ -9,10 +9,10 @@ type WebhookEventType =
   | "refund.succeeded"
   | "refund.failed";
 
-interface WebhookPayload {
-  event_type: WebhookEventType;
-  payment_id: string;
-  status: string;
+interface WebhookData {
+  payload_type: string;
+  payment_id?: string;
+  status?: string;
   metadata?: {
     workspaceId?: string;
     packageId?: string;
@@ -20,28 +20,14 @@ interface WebhookPayload {
     userId?: string;
     workspaceName?: string;
   };
-  amount?: number;
-  currency?: string;
-  created_at?: string;
+  [key: string]: unknown;
 }
 
-/**
- * Verify the webhook signature from DodoPayments
- */
-function verifyWebhookSignature(
-  payload: string,
-  signature: string,
-  secret: string
-): boolean {
-  const expectedSignature = crypto
-    .createHmac("sha256", secret)
-    .update(payload)
-    .digest("hex");
-
-  return crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(expectedSignature)
-  );
+interface WebhookPayload {
+  business_id: string;
+  type: WebhookEventType;
+  timestamp: string;
+  data: WebhookData;
 }
 
 export async function POST(request: NextRequest) {
@@ -49,44 +35,44 @@ export async function POST(request: NextRequest) {
     // Get the raw body for signature verification
     const rawBody = await request.text();
 
-    // Get the signature header
-    const signature = request.headers.get("x-dodo-signature");
-    const webhookSecret = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
+    // Get the DodoPayments webhook headers
+    const webhookId = request.headers.get("webhook-id");
+    const webhookTimestamp = request.headers.get("webhook-timestamp");
+    const webhookSignature = request.headers.get("webhook-signature");
 
-    // Verify signature if webhook secret is configured
-    if (webhookSecret && signature) {
-      const isValid = verifyWebhookSignature(rawBody, signature, webhookSecret);
-      if (!isValid) {
-        console.error("[webhook] Invalid signature");
-        return NextResponse.json(
-          { error: "Invalid signature" },
-          { status: 401 }
+    // Use SDK to verify and unwrap the webhook
+    let payload: WebhookPayload;
+
+    try {
+      if (webhookId && webhookTimestamp && webhookSignature) {
+        // Use SDK's built-in verification
+        const unwrapped = dodo.webhooks.unwrap(rawBody, {
+          headers: {
+            "webhook-id": webhookId,
+            "webhook-timestamp": webhookTimestamp,
+            "webhook-signature": webhookSignature,
+          },
+        });
+        payload = unwrapped as unknown as WebhookPayload;
+      } else {
+        // No signature headers - parse without verification (dev mode only)
+        console.warn(
+          "[webhook] Missing headers - parsing without verification"
         );
+        payload = JSON.parse(rawBody) as WebhookPayload;
       }
-    } else if (webhookSecret && !signature) {
-      console.error("[webhook] Missing signature header");
-      return NextResponse.json({ error: "Missing signature" }, { status: 401 });
+    } catch (verifyError) {
+      console.error("[webhook] Signature verification failed:", verifyError);
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
     }
 
-    // Parse the payload
-    const payload: WebhookPayload = JSON.parse(rawBody);
-
-    console.log(`[webhook] Received event: ${payload.event_type}`, {
-      paymentId: payload.payment_id,
-      status: payload.status,
-    });
-
     // Handle different event types
-    switch (payload.event_type) {
+    switch (payload.type) {
       case "payment.succeeded":
         await handlePaymentSucceeded(payload);
         break;
 
       case "payment.failed":
-        console.log(
-          `[webhook] Payment failed: ${payload.payment_id}`,
-          payload.metadata
-        );
         // No action needed - user didn't complete payment
         break;
 
@@ -95,12 +81,12 @@ export async function POST(request: NextRequest) {
         break;
 
       case "refund.failed":
-        console.log(`[webhook] Refund failed: ${payload.payment_id}`);
         // May want to alert admin
         break;
 
       default:
-        console.log(`[webhook] Unhandled event type: ${payload.event_type}`);
+        // Unhandled event type
+        break;
     }
 
     return NextResponse.json({ received: true });
@@ -114,19 +100,18 @@ export async function POST(request: NextRequest) {
 }
 
 async function handlePaymentSucceeded(payload: WebhookPayload) {
-  const { payment_id, metadata } = payload;
+  const { data } = payload;
+  const payment_id = data.payment_id;
+  const metadata = data.metadata;
 
   if (!(metadata?.workspaceId && metadata?.credits && metadata?.packageId)) {
-    console.error("[webhook] Missing required metadata for payment:", {
-      paymentId: payment_id,
-      metadata,
-    });
+    console.error("[webhook] Missing required metadata for payment");
     return;
   }
 
   const credits = Number.parseInt(metadata.credits, 10);
-  if (Number.isNaN(credits) || credits <= 0) {
-    console.error("[webhook] Invalid credits amount:", metadata.credits);
+  if (Number.isNaN(credits) || credits <= 0 || !payment_id) {
+    console.error("[webhook] Invalid payment data");
     return;
   }
 
@@ -151,22 +136,18 @@ async function handlePaymentSucceeded(payload: WebhookPayload) {
 }
 
 async function handleRefundSucceeded(payload: WebhookPayload) {
-  const { payment_id, metadata } = payload;
+  const { data } = payload;
+  const payment_id = data.payment_id;
+  const metadata = data.metadata;
 
   if (!(metadata?.workspaceId && metadata?.credits)) {
-    console.error("[webhook] Missing required metadata for refund:", {
-      paymentId: payment_id,
-      metadata,
-    });
+    console.error("[webhook] Missing required metadata for refund");
     return;
   }
 
   const credits = Number.parseInt(metadata.credits, 10);
-  if (Number.isNaN(credits) || credits <= 0) {
-    console.error(
-      "[webhook] Invalid credits amount for refund:",
-      metadata.credits
-    );
+  if (Number.isNaN(credits) || credits <= 0 || !payment_id) {
+    console.error("[webhook] Invalid refund data");
     return;
   }
 

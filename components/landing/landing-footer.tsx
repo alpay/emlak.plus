@@ -39,7 +39,7 @@ export function LandingFooter() {
               href="/"
               style={{ color: "var(--landing-text)" }}
             >
-              Proppi
+              Emlak
             </Link>
             <p
               className="mt-4 max-w-xs text-sm leading-relaxed"
@@ -162,7 +162,7 @@ export function LandingFooter() {
           style={{ borderColor: "var(--landing-border)" }}
         >
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
-            &copy; {currentYear} Proppi. All rights reserved.
+            &copy; {currentYear} Emlak. All rights reserved.
           </p>
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
             Made with care in Norway

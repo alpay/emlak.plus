@@ -64,7 +64,7 @@ export function LandingNav() {
           href="/"
           style={{ color: "var(--landing-text)" }}
         >
-          Proppi
+          Emlak
         </Link>
 
         {/* Navigation Links */}

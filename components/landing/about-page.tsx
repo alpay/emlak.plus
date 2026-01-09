@@ -64,7 +64,7 @@ export function AboutPage() {
               className="mt-6 text-lg leading-relaxed md:text-xl"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Proppi is an AI-powered photo enhancement platform built
+              Emlak is an AI-powered photo enhancement platform built
               specifically for real estate professionals. We help agents,
               photographers, and property managers create stunning visuals that
               sell properties faster.
@@ -93,8 +93,8 @@ export function AboutPage() {
               style={{ color: "var(--landing-text-muted)" }}
             >
               <p>
-                We started Proppi because we saw a gap in the market. Real
-                estate professionals needed high-quality photo enhancement, but
+                We started Emlak because we saw a gap in the market. Real estate
+                professionals needed high-quality photo enhancement, but
                 existing solutions were either too expensive, too slow, or
                 required technical expertise.
               </p>
@@ -105,7 +105,7 @@ export function AboutPage() {
                 have multiple listings and tight deadlines.
               </p>
               <p>
-                Proppi bridges this gap. Our AI understands real estate
+                Emlak bridges this gap. Our AI understands real estate
                 photography. It knows how to brighten rooms, enhance curb
                 appeal, and make properties look their absolute best. All
                 automatically, in seconds.

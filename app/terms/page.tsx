@@ -1,8 +1,8 @@
 import { LegalPage, LegalSection } from "@/components/landing/legal-page";
 
 export const metadata = {
-  title: "Terms of Service - Proppi",
-  description: "Terms and conditions for using Proppi services.",
+  title: "Terms of Service - Emlak",
+  description: "Terms and conditions for using Emlak services.",
 };
 
 export default function TermsPage() {
@@ -14,8 +14,8 @@ export default function TermsPage() {
     >
       <LegalSection title="1. Acceptance of Terms">
         <p>
-          By accessing or using Proppi (&quot;the Service&quot;), you agree to
-          be bound by these Terms of Service. If you disagree with any part of
+          By accessing or using Emlak (&quot;the Service&quot;), you agree to be
+          bound by these Terms of Service. If you disagree with any part of
           these terms, you may not access the Service.
         </p>
         <p>
@@ -26,7 +26,7 @@ export default function TermsPage() {
 
       <LegalSection title="2. Description of Service">
         <p>
-          Proppi provides AI-powered photo enhancement and video creation
+          Emlak provides AI-powered photo enhancement and video creation
           services for real estate professionals. Our service allows you to
           upload property images, apply AI enhancements, and generate
           professional marketing materials.
@@ -49,7 +49,7 @@ export default function TermsPage() {
 
       <LegalSection title="4. Payment and Pricing">
         <p>
-          Proppi operates on a pay-per-use model. Current pricing is as follows:
+          Emlak operates on a pay-per-use model. Current pricing is as follows:
         </p>
         <ul className="ml-4 list-disc space-y-2">
           <li>
@@ -72,8 +72,8 @@ export default function TermsPage() {
           If you are not satisfied with the results of our AI processing, you
           may request a refund within 24 hours of the processing completion.
           Refund requests should be submitted to{" "}
-          <a className="underline" href="mailto:support@proppi.tech">
-            support@proppi.tech
+          <a className="underline" href="mailto:support@emlak.tech">
+            support@emlak.tech
           </a>{" "}
           with your order details and reason for dissatisfaction.
         </p>
@@ -104,7 +104,7 @@ export default function TermsPage() {
       <LegalSection title="7. Intellectual Property">
         <p>
           The Service, including its original content, features, and
-          functionality, is owned by Proppi and is protected by international
+          functionality, is owned by Emlak and is protected by international
           copyright, trademark, and other intellectual property laws.
         </p>
         <p>
@@ -129,7 +129,7 @@ export default function TermsPage() {
 
       <LegalSection title="9. Limitation of Liability">
         <p>
-          To the maximum extent permitted by law, Proppi shall not be liable for
+          To the maximum extent permitted by law, Emlak shall not be liable for
           any indirect, incidental, special, consequential, or punitive damages,
           including loss of profits, data, or other intangible losses, resulting
           from:
@@ -203,16 +203,16 @@ export default function TermsPage() {
           If you have any questions about these Terms, please contact us at:
         </p>
         <p className="mt-2">
-          <strong>Proppi</strong>
+          <strong>Emlak</strong>
           <br />
           Email:{" "}
-          <a className="underline" href="mailto:legal@proppi.tech">
-            legal@proppi.tech
+          <a className="underline" href="mailto:legal@emlak.tech">
+            legal@emlak.tech
           </a>
           <br />
           General inquiries:{" "}
-          <a className="underline" href="mailto:hello@proppi.tech">
-            hello@proppi.tech
+          <a className="underline" href="mailto:hello@emlak.tech">
+            hello@emlak.tech
           </a>
         </p>
       </LegalSection>

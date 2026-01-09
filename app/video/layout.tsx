@@ -6,7 +6,7 @@ import { auth } from "@/lib/auth";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
 export const metadata: Metadata = {
-  title: "Videos | Proppi",
+  title: "Videos | Emlak",
   description: "Create and manage property tour videos",
 };
 
@@ -34,7 +34,10 @@ export default async function VideoLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      <DashboardHeader userLabel={session.user.email} />
+      <DashboardHeader
+        userLabel={session.user.email}
+        userName={session.user.name}
+      />
 
       {/* Main content - full width with consistent padding */}
       <main className="w-full">{children}</main>

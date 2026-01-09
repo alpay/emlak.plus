@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Proppi",
+  title: "Emlak",
   description: "AI-powered real estate photo editor",
 };
 

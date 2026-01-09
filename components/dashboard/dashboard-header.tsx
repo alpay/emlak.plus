@@ -1,16 +1,32 @@
 "use client";
 
-import { IconMovie, IconSettings, IconSparkles } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconLoader,
+  IconLogout,
+  IconMovie,
+  IconSettings,
+  IconSparkles,
+} from "@tabler/icons-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { CreditBalance } from "@/components/credits/credit-balance";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { signOut } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import { SignOutButton } from "./sign-out-button";
 
 interface DashboardHeaderProps {
   userLabel?: string;
+  userName?: string;
   credits?: number;
 }
 
@@ -29,11 +45,29 @@ const navItems: NavItem[] = [
     icon: IconMovie,
     disabled: true,
   },
-  { href: "/dashboard/settings", label: "Settings", icon: IconSettings },
 ];
 
-export function DashboardHeader({ userLabel, credits }: DashboardHeaderProps) {
+export function DashboardHeader({
+  userLabel,
+  userName,
+  credits,
+}: DashboardHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const displayName = userName || userLabel || "User";
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/sign-in");
+        },
+      },
+    });
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -45,7 +79,7 @@ export function DashboardHeader({ userLabel, credits }: DashboardHeaderProps) {
               className="truncate font-semibold text-foreground tracking-tight transition-colors hover:text-foreground/80"
               href="/"
             >
-              Proppi
+              Emlak
             </Link>
 
             <Separator className="h-6" orientation="vertical" />
@@ -90,15 +124,46 @@ export function DashboardHeader({ userLabel, credits }: DashboardHeaderProps) {
             </nav>
           </div>
 
-          {/* Right side: Credits + User info + Sign out */}
+          {/* Right side: Credits + User dropdown */}
           <div className="flex items-center gap-3">
             {credits !== undefined && <CreditBalance credits={credits} />}
-            {userLabel && (
-              <span className="hidden max-w-[200px] truncate text-muted-foreground text-sm md:block">
-                {userLabel}
-              </span>
-            )}
-            <SignOutButton />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  className="gap-2 text-muted-foreground hover:text-foreground"
+                  size="sm"
+                  variant="ghost"
+                >
+                  <span className="max-w-[150px] truncate">{displayName}</span>
+                  <IconChevronDown className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link
+                    className="flex cursor-pointer items-center gap-2"
+                    href="/dashboard/settings"
+                  >
+                    <IconSettings className="size-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="flex cursor-pointer items-center gap-2"
+                  disabled={isSigningOut}
+                  onClick={handleSignOut}
+                >
+                  {isSigningOut ? (
+                    <IconLoader className="size-4 animate-spin" />
+                  ) : (
+                    <IconLogout className="size-4" />
+                  )}
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>

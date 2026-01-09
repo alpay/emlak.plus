@@ -27,12 +27,12 @@ export async function generateMetadata({
 
   if (!category) {
     return {
-      title: "Category Not Found | Proppi Help",
+      title: "Category Not Found | Emlak Help",
     };
   }
 
   return {
-    title: `${category.title} | Proppi Help`,
+    title: `${category.title} | Emlak Help`,
     description: category.description,
   };
 }

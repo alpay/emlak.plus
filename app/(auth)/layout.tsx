@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Sign In | Proppi",
-  description: "Sign in to Proppi",
+  title: "Sign In | Emlak",
+  description: "Sign in to Emlak",
 };
 
 export default function AuthLayout({

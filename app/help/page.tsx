@@ -8,9 +8,9 @@ import {
 } from "@/lib/help";
 
 export const metadata: Metadata = {
-  title: "Help Center | Proppi",
+  title: "Help Center | Emlak",
   description:
-    "Get help with Proppi. Browse our knowledge base for guides, tutorials, and answers to frequently asked questions.",
+    "Get help with Emlak. Browse our knowledge base for guides, tutorials, and answers to frequently asked questions.",
 };
 
 export default function Help() {

@@ -1,12 +1,12 @@
 export const siteConfig = {
-  name: "Proppi",
+  name: "Emlak",
   description: "AI-powered real estate photo editor",
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.proppi.tech",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.emlak.tech",
 
   // Email settings
   email: {
-    from: "noreply@proppi.tech",
-    replyTo: "support@proppi.tech",
+    from: "noreply@emlak.tech",
+    replyTo: "support@emlak.tech",
   },
 
   // Links

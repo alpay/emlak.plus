@@ -12,7 +12,7 @@ export const helpCategories = [
   {
     slug: "getting-started",
     title: "Getting Started",
-    description: "Learn the basics of Proppi",
+    description: "Learn the basics of Emlak",
     icon: "IconRocket",
   },
   {

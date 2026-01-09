@@ -18,6 +18,57 @@ import { Button } from "@/components/ui/button";
 import type { CreditPackage, CreditTransaction } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
+function ViewInvoicesButton() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleViewInvoices() {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch("/api/customer-portal", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to access customer portal");
+      }
+
+      if (data.portalLink) {
+        window.open(data.portalLink, "_blank", "noopener,noreferrer");
+      }
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to access customer portal"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col items-end gap-1">
+      <Button disabled={loading} onClick={handleViewInvoices} variant="outline">
+        {loading ? (
+          <IconLoader2 className="size-4 animate-spin" />
+        ) : (
+          <IconReceipt className="size-4" />
+        )}
+        View Invoices
+        <IconExternalLink className="size-3" />
+      </Button>
+      {error && (
+        <p className="max-w-[200px] text-right text-destructive text-xs">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
 interface CreditsSettingsContentProps {
   credits: number;
   packages: CreditPackage[];
@@ -147,17 +198,7 @@ export function CreditsSettingsContent({
               </span>
             </div>
           </div>
-          <Button asChild variant="outline">
-            <a
-              href="https://app.dodopayments.com/invoices"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <IconReceipt className="size-4" />
-              View Invoices
-              <IconExternalLink className="size-3" />
-            </a>
-          </Button>
+          <ViewInvoicesButton />
         </div>
 
         {isEmpty && (

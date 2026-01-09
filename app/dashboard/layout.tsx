@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Proppi",
+  title: "Dashboard | Emlak",
   description: "Manage your property photos and AI edits",
 };
 
@@ -39,6 +39,7 @@ export default async function DashboardLayout({
       <DashboardHeader
         credits={data.workspace.credits}
         userLabel={session.user.email}
+        userName={session.user.name}
       />
 
       {/* Main content - full width with consistent padding */}

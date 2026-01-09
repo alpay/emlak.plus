@@ -11,17 +11,17 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
 
   return (
     <EmailLayout preview={`Welcome to ${siteConfig.name}, ${name}!`}>
-      <Heading style={heading}>Welcome to Proppi!</Heading>
+      <Heading style={heading}>Welcome to Emlak!</Heading>
 
       <Text style={paragraph}>Hi {name},</Text>
 
       <Text style={paragraph}>
-        Thanks for signing up for Proppi. We&apos;re excited to have you on
+        Thanks for signing up for Emlak. We&apos;re excited to have you on
         board!
       </Text>
 
       <Text style={paragraph}>
-        With Proppi, you can transform your real estate photos with AI-powered
+        With Emlak, you can transform your real estate photos with AI-powered
         enhancements:
       </Text>
 
@@ -56,7 +56,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
       <Text style={signature}>
         Best,
         <br />
-        The Proppi Team
+        The Emlak Team
       </Text>
     </EmailLayout>
   );

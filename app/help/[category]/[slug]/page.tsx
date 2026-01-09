@@ -30,12 +30,12 @@ export async function generateMetadata({
 
   if (!article) {
     return {
-      title: "Article Not Found | Proppi Help",
+      title: "Article Not Found | Emlak Help",
     };
   }
 
   return {
-    title: `${article.title} | Proppi Help`,
+    title: `${article.title} | Emlak Help`,
     description: article.description,
   };
 }

@@ -3,18 +3,29 @@
 import {
   IconLayoutGrid,
   IconPlus,
+  IconSearch,
   IconSparkles,
   IconTable,
+  IconX,
 } from "@tabler/icons-react";
-import { parseAsStringLiteral, useQueryState } from "nuqs";
-import { useState } from "react";
+import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
+import { useMemo, useState } from "react";
 import { EmptyProjects } from "@/components/dashboard/empty-projects";
 import { ProjectsGrid } from "@/components/dashboard/projects-grid";
 import { StatsBar } from "@/components/dashboard/stats-bar";
 import { NewProjectDialog } from "@/components/projects/new-project-dialog";
 import { DataTable } from "@/components/tables/properties/data-table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { Project } from "@/lib/db/schema";
+import { STYLE_TEMPLATES } from "@/lib/style-templates";
 import { cn } from "@/lib/utils";
 
 type ViewMode = "grid" | "table";
@@ -37,6 +48,7 @@ function ViewToggle({
             : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("grid")}
+        type="button"
       >
         <IconLayoutGrid
           className="h-4 w-4"
@@ -52,6 +64,7 @@ function ViewToggle({
             : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("table")}
+        type="button"
       >
         <IconTable
           className="h-4 w-4"
@@ -68,8 +81,22 @@ interface DashboardContentProps {
     totalProjects: number;
     completedProjects: number;
     processingProjects: number;
+    failedProjects: number;
     totalImages: number;
   };
+}
+
+const PROJECT_STATUSES = [
+  "pending",
+  "processing",
+  "completed",
+  "failed",
+] as const;
+
+// Get unique styles used in projects
+function getUsedStyles(projects: Project[]) {
+  const styleIds = new Set(projects.map((p) => p.styleTemplateId));
+  return STYLE_TEMPLATES.filter((t) => styleIds.has(t.id) && !t.comingSoon);
 }
 
 export function DashboardContent({ projects, stats }: DashboardContentProps) {
@@ -78,8 +105,54 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
     "view",
     parseAsStringLiteral(["grid", "table"] as const).withDefault("grid")
   );
+  const [statusFilter, setStatusFilter] = useQueryState(
+    "status",
+    parseAsStringLiteral(PROJECT_STATUSES)
+  );
+  const [searchQuery, setSearchQuery] = useQueryState("q", parseAsString);
+  const [styleFilter, setStyleFilter] = useQueryState("style", parseAsString);
+
+  // Available styles based on projects
+  const usedStyles = useMemo(() => getUsedStyles(projects), [projects]);
+
+  // Filter projects based on status, search, and style
+  const filteredProjects = useMemo(() => {
+    let filtered = projects;
+
+    // Status filter
+    if (statusFilter) {
+      if (statusFilter === "processing") {
+        filtered = filtered.filter(
+          (p) => p.status === "processing" || p.status === "pending"
+        );
+      } else {
+        filtered = filtered.filter((p) => p.status === statusFilter);
+      }
+    }
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter((p) => p.name.toLowerCase().includes(query));
+    }
+
+    // Style filter
+    if (styleFilter) {
+      filtered = filtered.filter((p) => p.styleTemplateId === styleFilter);
+    }
+
+    return filtered;
+  }, [projects, statusFilter, searchQuery, styleFilter]);
 
   const hasProjects = projects.length > 0;
+  const hasFilteredProjects = filteredProjects.length > 0;
+  const hasActiveFilters = !!(statusFilter || searchQuery || styleFilter);
+
+  const clearAllFilters = () => {
+    setStatusFilter(null);
+    setSearchQuery(null);
+    setStyleFilter(null);
+  };
 
   return (
     <div className="space-y-6 px-4 md:px-6 lg:px-8">
@@ -122,17 +195,88 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
         <>
           {/* Stats bar */}
           <StatsBar
-            activeProperties={stats.completedProjects}
+            activeStatus={statusFilter}
+            completedProperties={stats.completedProjects}
+            failedProperties={stats.failedProjects}
+            onStatusFilter={(status) => setStatusFilter(status)}
+            processingProperties={stats.processingProjects}
             totalEdits={stats.totalImages}
             totalProperties={stats.totalProjects}
           />
 
+          {/* Search and filters toolbar */}
+          <div className="stagger-2 animate-fade-in-up">
+            <div className="flex flex-col gap-3 rounded-xl bg-muted/30 p-3 ring-1 ring-foreground/5 sm:flex-row sm:items-center">
+              {/* Search input */}
+              <div className="relative flex-1 sm:max-w-[320px]">
+                <IconSearch className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  className="border-foreground/10 bg-background/80 pl-9 transition-shadow focus:ring-2 focus:ring-[var(--accent-teal)]/20"
+                  onChange={(e) => setSearchQuery(e.target.value || null)}
+                  placeholder="Search projects..."
+                  value={searchQuery || ""}
+                />
+              </div>
+
+              {/* Style filter */}
+              {usedStyles.length > 1 && (
+                <Select
+                  onValueChange={(value) =>
+                    setStyleFilter(value === "all" ? null : value)
+                  }
+                  value={styleFilter || "all"}
+                >
+                  <SelectTrigger className="w-full border-foreground/10 bg-background/80 sm:w-[180px]">
+                    <SelectValue placeholder="All styles" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All styles</SelectItem>
+                    {usedStyles.map((style) => (
+                      <SelectItem key={style.id} value={style.id}>
+                        {style.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+
+              {/* Clear filters */}
+              {hasActiveFilters && (
+                <Button
+                  className="text-muted-foreground transition-colors hover:text-destructive"
+                  onClick={clearAllFilters}
+                  size="sm"
+                  variant="ghost"
+                >
+                  <IconX className="mr-1 h-3.5 w-3.5" />
+                  Clear filters
+                </Button>
+              )}
+            </div>
+          </div>
+
           {/* Content based on view mode */}
           <div className="stagger-3 animate-fade-in-up">
-            {view === "grid" ? (
-              <ProjectsGrid projects={projects} />
-            ) : (
-              <DataTable />
+            {!hasFilteredProjects && (
+              <div className="flex flex-col items-center justify-center rounded-xl border border-foreground/10 border-dashed py-12 text-center">
+                <IconSearch className="mb-4 h-10 w-10 text-muted-foreground/30" />
+                <p className="text-muted-foreground">
+                  No projects match your filters
+                </p>
+                <Button
+                  className="mt-4"
+                  onClick={clearAllFilters}
+                  variant="outline"
+                >
+                  Clear all filters
+                </Button>
+              </div>
+            )}
+            {hasFilteredProjects && view === "grid" && (
+              <ProjectsGrid projects={filteredProjects} />
+            )}
+            {hasFilteredProjects && view === "table" && (
+              <DataTable projects={filteredProjects} />
             )}
           </div>
         </>

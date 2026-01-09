@@ -4,12 +4,14 @@ import {
   IconBuilding,
   IconLock,
   IconSettings,
+  IconUser,
   IconUserPlus,
   IconUsers,
 } from "@tabler/icons-react";
-import * as React from "react";
+import { useState } from "react";
 import { ChangePasswordForm } from "@/components/settings/change-password-form";
 import { InviteMemberDialog } from "@/components/settings/invite-member-dialog";
+import { ProfileForm } from "@/components/settings/profile-form";
 import { TeamMembersTable } from "@/components/settings/team-members-table";
 import { WorkspaceForm } from "@/components/settings/workspace-form";
 import { Button } from "@/components/ui/button";
@@ -17,12 +19,15 @@ import type { Workspace } from "@/lib/db/schema";
 import type { TeamMember } from "@/lib/mock/workspace";
 import { cn } from "@/lib/utils";
 
-type SettingsSection = "workspace" | "team" | "security";
+type SettingsSection = "profile" | "workspace" | "team" | "security";
 
 interface SettingsContentProps {
   workspace: Workspace;
   members: TeamMember[];
   currentUserId: string;
+  userName: string;
+  userEmail: string;
+  userImage: string | null;
 }
 
 const SECTIONS: {
@@ -31,6 +36,12 @@ const SECTIONS: {
   icon: React.ReactNode;
   description: string;
 }[] = [
+  {
+    id: "profile",
+    label: "Profile",
+    icon: <IconUser className="h-4 w-4" />,
+    description: "Your personal information",
+  },
   {
     id: "workspace",
     label: "Workspace",
@@ -55,10 +66,13 @@ export function SettingsContent({
   workspace,
   members,
   currentUserId,
+  userName,
+  userEmail,
+  userImage,
 }: SettingsContentProps) {
   const [activeSection, setActiveSection] =
-    React.useState<SettingsSection>("workspace");
-  const [inviteDialogOpen, setInviteDialogOpen] = React.useState(false);
+    useState<SettingsSection>("profile");
+  const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
 
   const activeMembers = members.filter((m) => m.status === "active").length;
   const pendingInvites = members.filter((m) => m.status === "pending").length;
@@ -126,6 +140,40 @@ export function SettingsContent({
 
           {/* Main content area */}
           <main className="min-w-0 flex-1">
+            {/* Profile Section */}
+            {activeSection === "profile" && (
+              <section className="animate-fade-in space-y-4">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="flex h-8 w-8 items-center justify-center rounded-lg"
+                    style={{
+                      backgroundColor:
+                        "color-mix(in oklch, var(--accent-teal) 15%, transparent)",
+                    }}
+                  >
+                    <IconUser
+                      className="h-4 w-4"
+                      style={{ color: "var(--accent-teal)" }}
+                    />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-lg">Profile Settings</h2>
+                    <p className="text-muted-foreground text-sm">
+                      Your personal information and preferences
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-foreground/5 bg-card p-6 shadow-sm">
+                  <ProfileForm
+                    userEmail={userEmail}
+                    userImage={userImage}
+                    userName={userName}
+                  />
+                </div>
+              </section>
+            )}
+
             {/* Workspace Section */}
             {activeSection === "workspace" && (
               <section className="animate-fade-in space-y-4">

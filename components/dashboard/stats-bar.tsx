@@ -1,21 +1,38 @@
 "use client";
 
 import {
+  IconAlertTriangle,
   IconBuilding,
+  IconCheck,
+  IconLoader2,
   IconSparkles,
-  IconTrendingUp,
 } from "@tabler/icons-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { ProjectStatus } from "@/lib/db/schema";
+import { cn } from "@/lib/utils";
 
-type StatItemProps = {
+interface StatItemProps {
   icon: React.ReactNode;
   label: string;
   value: string | number;
   accentColor: string;
   delay: number;
-};
+  onClick?: () => void;
+  isActive?: boolean;
+  isClickable?: boolean;
+}
 
-function StatItem({ icon, label, value, accentColor, delay }: StatItemProps) {
+function StatItem({
+  icon,
+  label,
+  value,
+  accentColor,
+  delay,
+  onClick,
+  isActive,
+  isClickable = true,
+}: StatItemProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -24,10 +41,20 @@ function StatItem({ icon, label, value, accentColor, delay }: StatItemProps) {
   }, [delay]);
 
   return (
-    <div
-      className={`stats-card flex items-center gap-3 rounded-xl bg-card px-4 py-3 ring-1 ring-foreground/5 transition-all duration-500 ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-      }`}
+    <button
+      className={cn(
+        "stats-card flex w-full items-center gap-3 rounded-xl bg-card px-4 py-3 text-left ring-1 ring-foreground/5 transition-all duration-500",
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
+        isClickable && "cursor-pointer hover:ring-2",
+        isActive && "ring-2"
+      )}
+      disabled={!isClickable}
+      onClick={onClick}
+      style={{
+        ["--ring-color" as string]: accentColor,
+        ringColor: isActive || !isClickable ? undefined : "var(--foreground/5)",
+      }}
+      type="button"
     >
       <div
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
@@ -48,41 +75,94 @@ function StatItem({ icon, label, value, accentColor, delay }: StatItemProps) {
           {value}
         </p>
       </div>
-    </div>
+    </button>
   );
 }
 
-type StatsBarProps = {
+interface StatsBarProps {
   totalProperties: number;
-  activeProperties: number;
+  completedProperties: number;
+  processingProperties: number;
+  failedProperties: number;
   totalEdits: number;
-};
+  onStatusFilter?: (status: ProjectStatus | null) => void;
+  activeStatus?: ProjectStatus | null;
+}
 
 export function StatsBar({
   totalProperties,
-  activeProperties,
+  completedProperties,
+  processingProperties,
+  failedProperties,
   totalEdits,
+  onStatusFilter,
+  activeStatus,
 }: StatsBarProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleStatusClick = (status: ProjectStatus | null) => {
+    if (onStatusFilter) {
+      onStatusFilter(status);
+    } else {
+      // Update URL params
+      const params = new URLSearchParams(searchParams.toString());
+      if (status) {
+        params.set("status", status);
+      } else {
+        params.delete("status");
+      }
+      router.push(`?${params.toString()}`, { scroll: false });
+    }
+  };
+
+  const currentStatus = activeStatus ?? searchParams.get("status");
+
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
       <StatItem
         accentColor="var(--accent-teal)"
         delay={0}
         icon={<IconBuilding className="h-4 w-4" />}
-        label="Total Properties"
+        isActive={currentStatus === null}
+        label="Total Projects"
+        onClick={() => handleStatusClick(null)}
         value={totalProperties.toLocaleString()}
       />
       <StatItem
         accentColor="var(--accent-green)"
-        delay={100}
-        icon={<IconTrendingUp className="h-4 w-4" />}
-        label="Active"
-        value={activeProperties.toLocaleString()}
+        delay={50}
+        icon={<IconCheck className="h-4 w-4" />}
+        isActive={currentStatus === "completed"}
+        label="Completed"
+        onClick={() => handleStatusClick("completed")}
+        value={completedProperties.toLocaleString()}
       />
+      <StatItem
+        accentColor="var(--accent-amber)"
+        delay={100}
+        icon={<IconLoader2 className="h-4 w-4" />}
+        isActive={currentStatus === "processing"}
+        label="Processing"
+        onClick={() => handleStatusClick("processing")}
+        value={processingProperties.toLocaleString()}
+      />
+      {failedProperties > 0 && (
+        <StatItem
+          accentColor="var(--accent-red, #ef4444)"
+          delay={150}
+          icon={<IconAlertTriangle className="h-4 w-4" />}
+          isActive={currentStatus === "failed"}
+          label="Failed"
+          onClick={() => handleStatusClick("failed")}
+          value={failedProperties.toLocaleString()}
+        />
+      )}
       <StatItem
         accentColor="var(--accent-teal)"
         delay={200}
         icon={<IconSparkles className="h-4 w-4" />}
+        isClickable={false}
         label="AI Edits"
         value={totalEdits.toLocaleString()}
       />

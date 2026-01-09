@@ -75,7 +75,6 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      payment_link: true, // Request a payment link
       return_url: `${baseUrl}/dashboard/settings/credits?success=true`,
       metadata: {
         workspaceId: userData.workspace.id,

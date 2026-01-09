@@ -38,7 +38,7 @@ function VirtualRowInner<TData>({
       }
     >
       {cells.map((cell) => {
-        const isFlexColumn = cell.column.id === "address";
+        const isFlexColumn = cell.column.id === "name";
         const cellStyle: CSSProperties = isFlexColumn
           ? {
               flex: 1,

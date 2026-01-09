@@ -6,10 +6,29 @@ import {
   IconFileInvoice,
   IconReceipt,
 } from "@tabler/icons-react";
-import { type BillingStats, formatNOK } from "@/lib/mock/admin-billing";
 
+// The component receives formatted stats from the page, define props inline
 interface BillingStatsBarProps {
-  stats: BillingStats;
+  stats: {
+    uninvoicedCount: number;
+    uninvoicedAmount: number;
+    pendingPayment: number;
+    pendingPaymentAmount: number;
+    invoicedThisMonth: number;
+    invoicedAmountThisMonth: number;
+    invoicedCount: number;
+    invoicedAmount: number;
+  };
+}
+
+function formatNOK(value: string | number): string {
+  const num = typeof value === "string" ? Number.parseFloat(value) : value;
+  return new Intl.NumberFormat("nb-NO", {
+    style: "currency",
+    currency: "NOK",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(num);
 }
 
 export function BillingStatsBar({ stats }: BillingStatsBarProps) {

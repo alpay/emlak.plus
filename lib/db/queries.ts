@@ -340,6 +340,7 @@ export async function getProjectStats(workspaceId: string): Promise<{
   totalProjects: number;
   completedProjects: number;
   processingProjects: number;
+  failedProjects: number;
   totalImages: number;
 }> {
   const [totalResult] = await db
@@ -360,8 +361,15 @@ export async function getProjectStats(workspaceId: string): Promise<{
     .where(
       and(
         eq(project.workspaceId, workspaceId),
-        eq(project.status, "processing")
+        or(eq(project.status, "processing"), eq(project.status, "pending"))
       )
+    );
+
+  const [failedResult] = await db
+    .select({ count: count() })
+    .from(project)
+    .where(
+      and(eq(project.workspaceId, workspaceId), eq(project.status, "failed"))
     );
 
   const [imagesResult] = await db
@@ -373,6 +381,7 @@ export async function getProjectStats(workspaceId: string): Promise<{
     totalProjects: totalResult?.count || 0,
     completedProjects: completedResult?.count || 0,
     processingProjects: processingResult?.count || 0,
+    failedProjects: failedResult?.count || 0,
     totalImages: Number(imagesResult?.total) || 0,
   };
 }

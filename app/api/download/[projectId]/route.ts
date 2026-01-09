@@ -1,12 +1,25 @@
 import archiver from "archiver";
 import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
+import sharp from "sharp";
 import { auth } from "@/lib/auth";
 import {
   getImageGenerationById,
   getLatestVersionImages,
   getProjectById,
 } from "@/lib/db/queries";
+
+// Regex defined at top level for performance
+const EXTENSION_REGEX = /\.[^/.]+$/;
+
+type ImageFormat = "jpg" | "png" | "webp" | "original";
+
+const FORMAT_CONFIG = {
+  jpg: { ext: "jpg", mime: "image/jpeg", quality: 90 },
+  png: { ext: "png", mime: "image/png" },
+  webp: { ext: "webp", mime: "image/webp", quality: 85 },
+  original: null,
+} as const;
 
 export async function GET(
   request: NextRequest,
@@ -21,12 +34,17 @@ export async function GET(
 
     const { projectId } = await params;
 
-    // Check for specific image IDs in query params
+    // Check for query params
     const { searchParams } = new URL(request.url);
     const imageIdsParam = searchParams.get("imageIds");
     const selectedImageIds = imageIdsParam
       ? imageIdsParam.split(",").filter(Boolean)
       : null;
+
+    // Get format option (jpg, png, webp, or original)
+    const formatParam = searchParams.get("format") as ImageFormat | null;
+    const format: ImageFormat =
+      formatParam && formatParam in FORMAT_CONFIG ? formatParam : "original";
 
     // Get project
     const projectData = await getProjectById(projectId);
@@ -76,8 +94,13 @@ export async function GET(
     (async () => {
       for (let i = 0; i < images.length; i++) {
         const image = images[i];
+        if (!image) {
+          continue;
+        }
         const imageUrl = image.resultImageUrl || image.originalImageUrl;
-        if (!imageUrl) continue;
+        if (!imageUrl) {
+          continue;
+        }
 
         try {
           const response = await fetch(imageUrl);
@@ -88,21 +111,47 @@ export async function GET(
             continue;
           }
 
-          const buffer = await response.arrayBuffer();
+          let buffer = Buffer.from(await response.arrayBuffer());
 
           // Get filename from metadata or generate one
           const metadata = image.metadata as {
             originalFileName?: string;
           } | null;
           const originalName = metadata?.originalFileName || `image-${i + 1}`;
-          const extension = imageUrl.split(".").pop()?.split("?")[0] || "jpg";
+          const originalExtension =
+            imageUrl.split(".").pop()?.split("?")[0] || "jpg";
+
+          // Determine final extension and convert if needed
+          let finalExtension = originalExtension;
+
+          if (format !== "original") {
+            const config = FORMAT_CONFIG[format];
+            if (config) {
+              finalExtension = config.ext;
+
+              // Convert image using Sharp
+              const sharpInstance = sharp(buffer);
+
+              if (format === "jpg") {
+                buffer = await sharpInstance
+                  .jpeg({ quality: config.quality })
+                  .toBuffer();
+              } else if (format === "png") {
+                buffer = await sharpInstance.png().toBuffer();
+              } else if (format === "webp") {
+                buffer = await sharpInstance
+                  .webp({ quality: config.quality })
+                  .toBuffer();
+              }
+            }
+          }
 
           // Create filename with index for ordering
           const paddedIndex = String(i + 1).padStart(3, "0");
-          const baseName = originalName.replace(/\.[^/.]+$/, ""); // Remove extension if present
-          const fileName = `${paddedIndex}-${baseName}.${extension}`;
+          const baseName = originalName.replace(EXTENSION_REGEX, ""); // Remove extension if present
+          const fileName = `${paddedIndex}-${baseName}.${finalExtension}`;
 
-          archive.append(Buffer.from(buffer), { name: fileName });
+          archive.append(buffer, { name: fileName });
         } catch (err) {
           console.error(`Error processing image ${image.id}:`, err);
         }

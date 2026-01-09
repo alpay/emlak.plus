@@ -899,15 +899,23 @@ export function ProjectDetailContent({
     });
   };
 
-  const handleDownload = () => {
+  const handleDownload = (
+    format: "original" | "jpg" | "png" | "webp" = "original"
+  ) => {
     const hasSelection = selectedImageIds.size > 0;
     const count = hasSelection ? selectedImageIds.size : completedImages.length;
 
     const downloadPromise = new Promise<void>((resolve, reject) => {
       try {
-        const url = hasSelection
-          ? `/api/download/${project.id}?imageIds=${Array.from(selectedImageIds).join(",")}`
-          : `/api/download/${project.id}`;
+        const params = new URLSearchParams();
+        if (hasSelection) {
+          params.set("imageIds", Array.from(selectedImageIds).join(","));
+        }
+        if (format !== "original") {
+          params.set("format", format);
+        }
+        const queryString = params.toString();
+        const url = `/api/download/${project.id}${queryString ? `?${queryString}` : ""}`;
 
         window.location.href = url;
 
@@ -921,8 +929,10 @@ export function ProjectDetailContent({
       }
     });
 
+    const formatLabel =
+      format === "original" ? "" : ` as ${format.toUpperCase()}`;
     toast.promise(downloadPromise, {
-      loading: `Preparing ${count} image${count !== 1 ? "s" : ""} for download…`,
+      loading: `Preparing ${count} image${count !== 1 ? "s" : ""}${formatLabel} for download…`,
       success: "Download started",
       error: "Download failed",
     });
@@ -1042,7 +1052,7 @@ export function ProjectDetailContent({
       // D - download
       if (e.key === "d" && !e.metaKey && !e.ctrlKey) {
         if (completedImages.length > 0) {
-          handleDownload();
+          handleDownload("original");
         }
         return;
       }
@@ -1117,14 +1127,32 @@ export function ProjectDetailContent({
               </Button>
             )}
             {completedImages.length > 0 && selectedImageIds.size === 0 && (
-              <Button
-                className="gap-2"
-                onClick={handleDownload}
-                style={{ backgroundColor: "var(--accent-teal)" }}
-              >
-                <IconDownload className="h-4 w-4" />
-                Download All
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="gap-2"
+                    style={{ backgroundColor: "var(--accent-teal)" }}
+                  >
+                    <IconDownload className="h-4 w-4" />
+                    Download All
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleDownload("original")}>
+                    Original Format
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => handleDownload("jpg")}>
+                    JPG (Compressed)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload("png")}>
+                    PNG (Lossless)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload("webp")}>
+                    WebP (Modern)
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -1141,7 +1169,7 @@ export function ProjectDetailContent({
                   Add Images
                 </DropdownMenuItem>
                 {completedImages.length > 0 && (
-                  <DropdownMenuItem onClick={handleDownload}>
+                  <DropdownMenuItem onClick={() => handleDownload("original")}>
                     <IconDownload className="mr-2 h-4 w-4" />
                     Download All
                   </DropdownMenuItem>
@@ -1361,15 +1389,33 @@ export function ProjectDetailContent({
                 Delete
               </Button>
 
-              <Button
-                className="gap-1.5"
-                onClick={handleDownload}
-                size="sm"
-                style={{ backgroundColor: "var(--accent-teal)" }}
-              >
-                <IconDownload className="h-4 w-4" />
-                Download
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="gap-1.5"
+                    size="sm"
+                    style={{ backgroundColor: "var(--accent-teal)" }}
+                  >
+                    <IconDownload className="h-4 w-4" />
+                    Download
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleDownload("original")}>
+                    Original Format
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => handleDownload("jpg")}>
+                    JPG (Compressed)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload("png")}>
+                    PNG (Lossless)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload("webp")}>
+                    WebP (Modern)
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

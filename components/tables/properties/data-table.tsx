@@ -1,84 +1,27 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import {
-  useCallback,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useRef } from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { useInfiniteScroll } from "@/hooks/use-infinite-scroll";
-import { usePropertyFilters } from "@/hooks/use-property-filters";
-import { getPropertiesPage, type Property } from "@/lib/mock/properties";
+import type { Project } from "@/lib/db/schema";
 import { columns } from "./columns";
-import { EmptyState, NoResults } from "./empty-states";
+import { EmptyState } from "./empty-states";
 import { DataTableHeader } from "./table-header";
-import { TableToolbar } from "./table-toolbar";
 import { VirtualRow } from "./virtual-row";
 
-const ROW_HEIGHT = 56;
+const ROW_HEIGHT = 64;
 
-export function DataTable() {
+interface DataTableProps {
+  projects: Project[];
+}
+
+export function DataTable({ projects }: DataTableProps) {
   const parentRef = useRef<HTMLDivElement>(null);
-
-  // Get filters from URL state
-  const {
-    propertyFilters,
-    hasActiveFilters,
-    sortColumn,
-    sortDirection,
-    toggleSort,
-  } = usePropertyFilters();
-
-  // Defer search to debounce filtering
-  const deferredFilters = useDeferredValue(propertyFilters);
-
-  // Pagination state
-  const [pages, setPages] = useState<Property[][]>([]);
-  const [cursor, setCursor] = useState<string | null>(null);
-  const [hasNextPage, setHasNextPage] = useState(true);
-  const [filteredTotal, setFilteredTotal] = useState(0);
-  const [isFetchingNextPage, setIsFetchingNextPage] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-  // Reset pagination when filters change
-  useEffect(() => {
-    const response = getPropertiesPage(null, 20, deferredFilters);
-    setPages([response.data]);
-    setCursor(response.meta.cursor);
-    setHasNextPage(response.meta.hasMore);
-    setFilteredTotal(response.meta.filteredTotal);
-    setIsInitialLoad(false);
-  }, [deferredFilters]);
-
-  // Flatten all pages into single array
-  const tableData = useMemo(() => pages.flat(), [pages]);
-
-  // Fetch next page function
-  const fetchNextPage = useCallback(() => {
-    if (isFetchingNextPage || !hasNextPage) return;
-
-    setIsFetchingNextPage(true);
-
-    // Simulate async fetch with slight delay
-    setTimeout(() => {
-      const response = getPropertiesPage(cursor, 20, deferredFilters);
-      setPages((prev) => [...prev, response.data]);
-      setCursor(response.meta.cursor);
-      setHasNextPage(response.meta.hasMore);
-      setFilteredTotal(response.meta.filteredTotal);
-      setIsFetchingNextPage(false);
-    }, 300);
-  }, [cursor, hasNextPage, isFetchingNextPage, deferredFilters]);
 
   // Set up TanStack Table
   const table = useReactTable({
-    data: tableData,
+    data: projects,
     getRowId: (row) => row.id,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -94,161 +37,72 @@ export function DataTable() {
     overscan: 10,
   });
 
-  // Infinite scroll hook
-  useInfiniteScroll({
-    scrollRef: parentRef,
-    rowVirtualizer,
-    rowCount: rows.length,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-    threshold: 15,
-  });
-
-  // Loading skeleton state
-  if (isInitialLoad) {
-    return (
-      <div className="space-y-4">
-        <TableToolbar />
-        <div className="relative overflow-hidden rounded-xl bg-card shadow-xs ring-1 ring-foreground/10">
-          {/* Skeleton Header */}
-          <div className="flex items-center gap-4 border-b px-4 py-3">
-            <div className="skeleton h-4 w-32" />
-            <div className="skeleton h-4 w-20" />
-            <div className="skeleton h-4 w-24" />
-            <div className="skeleton h-4 w-16" />
-            <div className="skeleton h-4 w-20" />
-          </div>
-          {/* Skeleton Rows */}
-          <div className="divide-y">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                className="flex items-center gap-4 px-4 py-4"
-                key={i}
-                style={{ animationDelay: `${i * 50}ms` }}
-              >
-                <div className="flex flex-1 flex-col gap-1.5">
-                  <div className="skeleton h-4 w-48" />
-                  <div className="skeleton h-3 w-32" />
-                </div>
-                <div className="skeleton h-5 w-16 rounded-full" />
-                <div className="flex gap-1">
-                  <div className="skeleton h-5 w-14 rounded-full" />
-                  <div className="skeleton h-5 w-14 rounded-full" />
-                </div>
-                <div className="skeleton h-4 w-8" />
-                <div className="skeleton h-4 w-14" />
-                <div className="skeleton h-8 w-8 rounded-md" />
-              </div>
-            ))}
-          </div>
-          {/* Skeleton Footer */}
-          <div className="border-t px-4 py-3">
-            <div className="skeleton h-4 w-32" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Empty state (no data at all)
-  if (tableData.length === 0 && !hasActiveFilters) {
-    return (
-      <div className="space-y-4">
-        <TableToolbar />
-        <EmptyState />
-      </div>
-    );
-  }
-
-  // No results (filters applied but no matches)
-  if (tableData.length === 0 && hasActiveFilters) {
-    return (
-      <div className="space-y-4">
-        <TableToolbar />
-        <NoResults />
-      </div>
-    );
+  // Empty state (no data)
+  if (projects.length === 0) {
+    return <EmptyState />;
   }
 
   const virtualItems = rowVirtualizer.getVirtualItems();
 
   return (
-    <div className="space-y-4">
-      <TableToolbar />
+    <div className="relative overflow-hidden rounded-xl bg-card shadow-xs ring-1 ring-foreground/10">
+      {/* Table Header */}
+      <div className="border-border border-b">
+        <Table>
+          <DataTableHeader />
+        </Table>
+      </div>
 
-      <div className="relative overflow-hidden rounded-xl bg-card shadow-xs ring-1 ring-foreground/10">
-        {/* Table Header */}
-        <div className="border-border border-b">
-          <Table>
-            <DataTableHeader
-              onSort={toggleSort}
-              sortColumn={sortColumn}
-              sortDirection={sortDirection}
-            />
-          </Table>
-        </div>
-
-        {/* Scrollable body with virtualization */}
-        <div
-          className="scrollbar-thin overflow-auto"
-          ref={parentRef}
-          style={{ height: "calc(100vh - 400px)", minHeight: "300px" }}
-        >
-          <Table>
-            <TableBody
-              className="relative block"
-              style={{ height: rowVirtualizer.getTotalSize() }}
-            >
-              {virtualItems.length > 0 ? (
-                virtualItems.map((virtualRow) => {
-                  const row = rows[virtualRow.index];
-                  if (!row) return null;
-
-                  return (
-                    <VirtualRow
-                      key={row.id}
-                      row={row}
-                      rowHeight={ROW_HEIGHT}
-                      virtualStart={virtualRow.start}
-                    />
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell
-                    className="h-24 text-center"
-                    colSpan={columns.length}
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-
-          {/* Loading indicator */}
-          {isFetchingNextPage && (
-            <div className="flex items-center justify-center py-4">
-              <IconLoader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-              <span className="ml-2 text-muted-foreground text-sm">
-                Loading more...
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Footer with count */}
-        <div className="border-t px-4 py-3 text-muted-foreground text-sm">
-          <span
-            className="font-mono font-semibold"
-            style={{ color: "var(--accent-teal)" }}
+      {/* Scrollable body with virtualization */}
+      <div
+        className="scrollbar-thin overflow-auto"
+        ref={parentRef}
+        style={{ height: "calc(100vh - 420px)", minHeight: "300px" }}
+      >
+        <Table>
+          <TableBody
+            className="relative block"
+            style={{ height: rowVirtualizer.getTotalSize() }}
           >
-            {tableData.length}
-          </span>{" "}
-          of {filteredTotal} properties
-          {hasNextPage && " (scroll for more)"}
-        </div>
+            {virtualItems.length > 0 ? (
+              virtualItems.map((virtualRow) => {
+                const row = rows[virtualRow.index];
+                if (!row) {
+                  return null;
+                }
+
+                return (
+                  <VirtualRow
+                    key={row.id}
+                    row={row}
+                    rowHeight={ROW_HEIGHT}
+                    virtualStart={virtualRow.start}
+                  />
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell
+                  className="h-24 text-center"
+                  colSpan={columns.length}
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Footer with count */}
+      <div className="border-t px-4 py-3 text-muted-foreground text-sm">
+        <span
+          className="font-mono font-semibold"
+          style={{ color: "var(--accent-teal)" }}
+        >
+          {projects.length}
+        </span>{" "}
+        project{projects.length !== 1 ? "s" : ""}
       </div>
     </div>
   );

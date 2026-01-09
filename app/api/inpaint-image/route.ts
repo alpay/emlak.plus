@@ -115,7 +115,9 @@ export async function POST(request: NextRequest) {
         console.log("Resized mask to match source image dimensions");
 
         // Upload resized mask to Fal.ai storage
-        const maskBlob = new Blob([resizedMaskBuffer], { type: "image/png" });
+        const maskBlob = new Blob([new Uint8Array(resizedMaskBuffer)], {
+          type: "image/png",
+        });
         const falMaskUrl = await fal.storage.upload(
           new File([maskBlob], "mask.png", { type: "image/png" })
         );

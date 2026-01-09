@@ -39,6 +39,9 @@ export default async function SettingsPage() {
     <SettingsContent
       currentUserId={session.user.id}
       members={teamMembers}
+      userEmail={data.user.email}
+      userImage={data.user.image}
+      userName={data.user.name}
       workspace={data.workspace}
     />
   );

@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ImpersonationBanner } from "@/components/admin/impersonation-banner";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/lib/auth";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
@@ -44,6 +45,9 @@ export default async function DashboardLayout({
 
       {/* Main content - full width with consistent padding */}
       <main className="w-full py-6">{children}</main>
+
+      {/* Toast notifications */}
+      <Toaster position="top-right" richColors />
     </div>
   );
 }

@@ -35,12 +35,16 @@ export default async function VideoLayout({
   return (
     <div className="min-h-screen bg-background">
       <DashboardHeader
+        credits={data.workspace.credits}
         userLabel={session.user.email}
         userName={session.user.name}
       />
 
       {/* Main content - full width with consistent padding */}
       <main className="w-full">{children}</main>
+
+      {/* Toast notifications */}
+      <Toaster position="top-right" richColors />
     </div>
   );
 }

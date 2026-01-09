@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowRight, IconPlayerPlay } from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { Suspense } from "react";
 import { useSession } from "@/lib/auth-client";
@@ -25,12 +25,29 @@ function HeroAuthButton() {
       className="inline-flex h-12 items-center gap-2 rounded-full px-7 font-medium text-base transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
       href={href}
       style={{
+        backgroundColor: "var(--landing-card)",
+        color: "var(--landing-text)",
+        border: "1px solid var(--landing-border-strong)",
+      }}
+    >
+      {text}
+      <IconArrowRight className="size-5" />
+    </Link>
+  );
+}
+
+function BookDemoButton() {
+  return (
+    <Link
+      className="inline-flex h-12 items-center gap-2 rounded-full px-7 font-medium text-base transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+      href="/contact"
+      style={{
         backgroundColor: "var(--landing-accent)",
         color: "var(--landing-accent-foreground)",
         boxShadow: "0 8px 24px -8px var(--landing-accent)",
       }}
     >
-      {text}
+      Book a Demo
       <IconArrowRight className="size-5" />
     </Link>
   );
@@ -54,16 +71,11 @@ export function LandingHero() {
         <div
           className="landing-stagger-1 mb-6 inline-flex animate-spring-up items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-xs uppercase tracking-wider"
           style={{
-            backgroundColor: "var(--landing-bg-alt)",
-            color: "var(--landing-text-muted)",
-            border: "1px solid var(--landing-border)",
+            backgroundColor: "var(--landing-accent)",
+            color: "var(--landing-accent-foreground)",
           }}
         >
-          <span
-            className="size-2 rounded-full"
-            style={{ backgroundColor: "var(--landing-accent)" }}
-          />
-          #1 AI Photo Editor for Real Estate
+          Best AI Real Estate Media Platform
         </div>
 
         {/* Main Headline */}
@@ -71,25 +83,25 @@ export function LandingHero() {
           className="landing-stagger-2 animate-spring-up font-bold text-4xl leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ color: "var(--landing-text)" }}
         >
-          Create Stunning
+          Snap, Upload, Deliver
           <br />
-          <span style={{ color: "var(--landing-accent)" }}>
-            Property Photos
-          </span>
-          <br />
-          Instantly with AI
+          <span style={{ color: "var(--landing-accent)" }}>Perfect Shots</span>{" "}
+          Every Time!
         </h1>
 
         {/* Subheadline */}
         <p
-          className="landing-stagger-3 mx-auto mt-6 max-w-xl animate-spring-up text-lg leading-relaxed md:text-xl"
+          className="landing-stagger-3 mx-auto mt-6 max-w-2xl animate-spring-up text-lg leading-relaxed md:text-xl"
           style={{ color: "var(--landing-text-muted)" }}
         >
-          Transform photos 10x faster. No design skills needed.
+          No more back and forth or late night touch-ups. Designed specifically
+          for real estate pros to deliver high-end listings to clients in record
+          time.
         </p>
 
         {/* CTA Buttons */}
         <div className="landing-stagger-4 mt-10 flex animate-spring-up flex-col items-center justify-center gap-4 sm:flex-row">
+          <BookDemoButton />
           <Suspense
             fallback={
               <div
@@ -100,19 +112,6 @@ export function LandingHero() {
           >
             <HeroAuthButton />
           </Suspense>
-
-          <button
-            className="inline-flex h-12 items-center gap-2 rounded-full px-6 font-medium text-base transition-all duration-200 hover:scale-[1.02]"
-            style={{
-              backgroundColor: "var(--landing-card)",
-              color: "var(--landing-text)",
-              border: "1px solid var(--landing-border-strong)",
-            }}
-            type="button"
-          >
-            <IconPlayerPlay className="size-5" />
-            Watch Demo
-          </button>
         </div>
 
         {/* Stats Row */}
@@ -170,7 +169,7 @@ export function LandingHero() {
         </div>
       </div>
 
-      {/* Hero Image Preview */}
+      {/* Hero Image Preview - Before/After Comparison */}
       <div className="landing-stagger-6 mx-auto mt-16 max-w-5xl animate-spring-up px-4">
         <div
           className="relative overflow-hidden rounded-2xl p-1.5 md:rounded-3xl"
@@ -205,38 +204,15 @@ export function LandingHero() {
             />
           </div>
 
-          {/* Preview Content */}
+          {/* Preview Content - Showcase Image */}
           <div
             className="relative aspect-[16/9] overflow-hidden rounded-b-xl"
             style={{ backgroundColor: "var(--landing-bg-alt)" }}
           >
-            {/* Placeholder for actual app screenshot */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div
-                  className="mx-auto mb-4 size-16 rounded-2xl"
-                  style={{
-                    backgroundColor: "var(--landing-accent)",
-                    opacity: 0.2,
-                  }}
-                />
-                <p
-                  className="font-medium text-sm"
-                  style={{ color: "var(--landing-text-muted)" }}
-                >
-                  App Preview
-                </p>
-              </div>
-            </div>
-
-            {/* Decorative Grid */}
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(var(--landing-border) 1px, transparent 1px), linear-gradient(90deg, var(--landing-border) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
+            <img
+              alt="AI-enhanced real estate photo"
+              className="absolute inset-0 h-full w-full object-cover"
+              src="https://www.fotello.co/showcase-optimized/1/after/1.webp"
             />
           </div>
         </div>

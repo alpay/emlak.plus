@@ -2,6 +2,7 @@
 
 import {
   IconBuilding,
+  IconCamera,
   IconDeviceFloppy,
   IconHash,
   IconLoader2,
@@ -9,7 +10,8 @@ import {
   IconUpload,
   IconUser,
 } from "@tabler/icons-react";
-import { useActionState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +20,11 @@ import {
   updateWorkspaceSettings,
   type WorkspaceActionResult,
 } from "@/lib/actions";
+import {
+  createLogoUploadUrl,
+  getLogoPublicUrl,
+  updateWorkspaceLogo,
+} from "@/lib/actions/profile";
 import type { Workspace } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +37,9 @@ type FormState = WorkspaceActionResult | null;
 export function WorkspaceForm({ workspace }: WorkspaceFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const lastResultRef = useRef<FormState>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [logoUrl, setLogoUrl] = useState(workspace.logo);
+  const [isUploadingLogo, setIsUploadingLogo] = useState(false);
 
   const [state, formAction, isPending] = useActionState<FormState, FormData>(
     async (_prevState, formData) => {
@@ -58,31 +68,132 @@ export function WorkspaceForm({ workspace }: WorkspaceFormProps) {
     }
   }, [state]);
 
+  const handleLogoClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image must be less than 2MB");
+      return;
+    }
+
+    setIsUploadingLogo(true);
+
+    try {
+      // Get signed upload URL
+      const urlResult = await createLogoUploadUrl();
+      if (!(urlResult.success && urlResult.data)) {
+        toast.error(urlResult.error || "Failed to upload logo");
+        return;
+      }
+
+      // Upload to Supabase
+      const response = await fetch(urlResult.data.signedUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Upload failed");
+      }
+
+      // Get public URL
+      const publicUrl = await getLogoPublicUrl(urlResult.data.path);
+      setLogoUrl(publicUrl);
+
+      // Save the logo URL to the database
+      const saveResult = await updateWorkspaceLogo(publicUrl);
+      if (saveResult.success) {
+        toast.success("Logo uploaded successfully");
+      } else {
+        toast.error(saveResult.error || "Failed to save logo");
+      }
+    } catch (error) {
+      console.error("Logo upload error:", error);
+      toast.error("Failed to upload logo");
+    } finally {
+      setIsUploadingLogo(false);
+    }
+  };
+
   return (
     <form action={formAction} className="space-y-6" ref={formRef}>
       {/* Logo upload */}
       <div className="space-y-2">
         <Label className="font-medium text-sm">Workspace Logo</Label>
         <div className="flex items-center gap-4">
-          <div
-            className="flex h-20 w-20 items-center justify-center rounded-xl bg-muted ring-1 ring-foreground/5"
-            style={{
-              background: workspace.logo
-                ? `url(${workspace.logo}) center/cover`
-                : "linear-gradient(135deg, color-mix(in oklch, var(--accent-teal) 20%, transparent) 0%, color-mix(in oklch, var(--accent-teal) 5%, transparent) 100%)",
-            }}
+          <button
+            className={cn(
+              "relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl bg-muted ring-1 ring-foreground/5 transition-all hover:ring-2 hover:ring-[var(--accent-teal)]",
+              isUploadingLogo && "opacity-50"
+            )}
+            disabled={isUploadingLogo}
+            onClick={handleLogoClick}
+            type="button"
           >
-            {!workspace.logo && (
+            {logoUrl ? (
+              <Image
+                alt="Workspace logo"
+                className="object-cover"
+                fill
+                sizes="80px"
+                src={logoUrl}
+              />
+            ) : (
               <IconBuilding
                 className="h-8 w-8"
                 style={{ color: "var(--accent-teal)" }}
               />
             )}
-          </div>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity hover:opacity-100">
+              {isUploadingLogo ? (
+                <IconLoader2 className="h-6 w-6 animate-spin text-white" />
+              ) : (
+                <IconCamera className="h-6 w-6 text-white" />
+              )}
+            </div>
+          </button>
+          <input
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            type="file"
+          />
           <div className="space-y-1">
-            <Button className="gap-2" size="sm" type="button" variant="outline">
-              <IconUpload className="h-4 w-4" />
-              Upload Logo
+            <Button
+              className="gap-2"
+              disabled={isUploadingLogo}
+              onClick={handleLogoClick}
+              size="sm"
+              type="button"
+              variant="outline"
+            >
+              {isUploadingLogo ? (
+                <>
+                  <IconLoader2 className="h-4 w-4 animate-spin" />
+                  Uploading…
+                </>
+              ) : (
+                <>
+                  <IconUpload className="h-4 w-4" />
+                  Upload Logo
+                </>
+              )}
             </Button>
             <p className="text-muted-foreground text-xs">
               PNG, JPG up to 2MB. Recommended 200x200px.

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { Toaster } from "@/components/ui/sonner";
 import { auth } from "@/lib/auth";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
@@ -28,7 +29,7 @@ export default async function VideoLayout({
   const data = await getUserWithWorkspace(session.user.id);
 
   // If no workspace or onboarding not completed, redirect to onboarding
-  if (!(data && data.workspace.onboardingCompleted)) {
+  if (!data?.workspace.onboardingCompleted) {
     redirect("/onboarding");
   }
 
@@ -36,6 +37,7 @@ export default async function VideoLayout({
     <div className="min-h-screen bg-background">
       <DashboardHeader
         credits={data.workspace.credits}
+        userImage={data.user.image}
         userLabel={session.user.email}
         userName={session.user.name}
       />

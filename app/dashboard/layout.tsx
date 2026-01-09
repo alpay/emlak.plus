@@ -39,6 +39,7 @@ export default async function DashboardLayout({
       <ImpersonationBanner />
       <DashboardHeader
         credits={data.workspace.credits}
+        userImage={data.user.image}
         userLabel={session.user.email}
         userName={session.user.name}
       />

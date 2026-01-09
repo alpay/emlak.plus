@@ -17,6 +17,7 @@ import {
   getAvatarPublicUrl,
   type ProfileActionResult,
   updateProfileAction,
+  updateProfileImage,
 } from "@/lib/actions/profile";
 import { cn } from "@/lib/utils";
 
@@ -82,7 +83,7 @@ export function ProfileForm({
     // Validate file type
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
-      return undefined;
+      return;
     }
 
     // Validate file size (max 2MB)
@@ -115,9 +116,16 @@ export function ProfileForm({
       }
 
       // Get public URL
-      const publicUrl = getAvatarPublicUrl(urlResult.data.path);
+      const publicUrl = await getAvatarPublicUrl(urlResult.data.path);
       setAvatarUrl(publicUrl);
-      toast.success("Avatar uploaded! Click Save to update your profile.");
+
+      // Auto-save to database immediately
+      const saveResult = await updateProfileImage(publicUrl);
+      if (saveResult.success) {
+        toast.success("Profile photo updated");
+      } else {
+        toast.error(saveResult.error || "Failed to save profile photo");
+      }
     } catch (error) {
       console.error("Avatar upload error:", error);
       toast.error("Failed to upload avatar");

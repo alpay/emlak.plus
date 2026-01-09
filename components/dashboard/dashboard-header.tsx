@@ -7,7 +7,9 @@ import {
   IconMovie,
   IconSettings,
   IconSparkles,
+  IconUser,
 } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -27,6 +29,7 @@ import { cn } from "@/lib/utils";
 interface DashboardHeaderProps {
   userLabel?: string;
   userName?: string;
+  userImage?: string | null;
   credits?: number;
 }
 
@@ -50,6 +53,7 @@ const navItems: NavItem[] = [
 export function DashboardHeader({
   userLabel,
   userName,
+  userImage,
   credits,
 }: DashboardHeaderProps) {
   const pathname = usePathname();
@@ -135,6 +139,19 @@ export function DashboardHeader({
                   size="sm"
                   variant="ghost"
                 >
+                  <div className="relative flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-muted ring-1 ring-foreground/10">
+                    {userImage ? (
+                      <Image
+                        alt={displayName}
+                        className="object-cover"
+                        fill
+                        sizes="24px"
+                        src={userImage}
+                      />
+                    ) : (
+                      <IconUser className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
+                  </div>
                   <span className="max-w-[150px] truncate">{displayName}</span>
                   <IconChevronDown className="size-4" />
                 </Button>

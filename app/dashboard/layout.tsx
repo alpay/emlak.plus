@@ -29,14 +29,17 @@ export default async function DashboardLayout({
   const data = await getUserWithWorkspace(session.user.id);
 
   // If no workspace or onboarding not completed, redirect to onboarding
-  if (!(data && data.workspace.onboardingCompleted)) {
+  if (!data?.workspace.onboardingCompleted) {
     redirect("/onboarding");
   }
 
   return (
     <div className="min-h-screen bg-background">
       <ImpersonationBanner />
-      <DashboardHeader userLabel={session.user.email} />
+      <DashboardHeader
+        credits={data.workspace.credits}
+        userLabel={session.user.email}
+      />
 
       {/* Main content - full width with consistent padding */}
       <main className="w-full py-6">{children}</main>

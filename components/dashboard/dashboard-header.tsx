@@ -3,21 +3,23 @@
 import { IconMovie, IconSettings, IconSparkles } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CreditBalance } from "@/components/credits/credit-balance";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { SignOutButton } from "./sign-out-button";
 
-type DashboardHeaderProps = {
+interface DashboardHeaderProps {
   userLabel?: string;
-};
+  credits?: number;
+}
 
-type NavItem = {
+interface NavItem {
   href: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   disabled?: boolean;
-};
+}
 
 const navItems: NavItem[] = [
   { href: "/dashboard", label: "Projects", icon: IconSparkles },
@@ -30,7 +32,7 @@ const navItems: NavItem[] = [
   { href: "/dashboard/settings", label: "Settings", icon: IconSettings },
 ];
 
-export function DashboardHeader({ userLabel }: DashboardHeaderProps) {
+export function DashboardHeader({ userLabel, credits }: DashboardHeaderProps) {
   const pathname = usePathname();
 
   return (
@@ -88,8 +90,9 @@ export function DashboardHeader({ userLabel }: DashboardHeaderProps) {
             </nav>
           </div>
 
-          {/* Right side: User info + Sign out */}
+          {/* Right side: Credits + User info + Sign out */}
           <div className="flex items-center gap-3">
+            {credits !== undefined && <CreditBalance credits={credits} />}
             {userLabel && (
               <span className="hidden max-w-[200px] truncate text-muted-foreground text-sm md:block">
                 {userLabel}

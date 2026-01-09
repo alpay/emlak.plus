@@ -1,4 +1,5 @@
 import { logger, metadata, task } from "@trigger.dev/sdk/v3";
+import { CREDIT_COSTS, deductCredits } from "@/lib/credits";
 import {
   getVideoClipById,
   updateVideoClip,
@@ -262,6 +263,32 @@ export const generateVideoClipTask = task({
 
       // Update project counts
       await updateVideoProjectCounts(clip.videoProjectId);
+
+      // Deduct 10 credits for successful video clip (idempotency built-in)
+      try {
+        const newBalance = await deductCredits({
+          workspaceId: videoProjectData.videoProject.workspaceId,
+          amount: CREDIT_COSTS.VIDEO_CLIP,
+          description: `Video clip: ${clipId}`,
+          videoClipId: clipId,
+        });
+        if (newBalance !== null) {
+          logger.info("Deducted credits for video clip", {
+            clipId,
+            creditsDeducted: CREDIT_COSTS.VIDEO_CLIP,
+            newBalance,
+          });
+        }
+      } catch (creditError) {
+        // Log but don't fail the task if credit deduction fails
+        logger.error("Failed to deduct credits for video clip", {
+          clipId,
+          error:
+            creditError instanceof Error
+              ? creditError.message
+              : "Unknown error",
+        });
+      }
 
       metadata.set("status", {
         step: "completed",

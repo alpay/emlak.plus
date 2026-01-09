@@ -1,4 +1,5 @@
 import { logger, metadata, task } from "@trigger.dev/sdk/v3";
+import { CREDIT_COSTS, deductCredits } from "@/lib/credits";
 import {
   getImageGenerationById,
   updateImageGeneration,
@@ -168,6 +169,31 @@ export const processImageTask = task({
 
       // Update project counts
       await updateProjectCounts(image.projectId);
+
+      // Deduct 1 credit for successful image generation (idempotency built-in)
+      try {
+        const newBalance = await deductCredits({
+          workspaceId: image.workspaceId,
+          amount: CREDIT_COSTS.IMAGE_GENERATION,
+          description: `Image generation: ${imageId}`,
+          imageGenerationId: imageId,
+        });
+        if (newBalance !== null) {
+          logger.info("Deducted credit for image generation", {
+            imageId,
+            newBalance,
+          });
+        }
+      } catch (creditError) {
+        // Log but don't fail the task if credit deduction fails
+        logger.error("Failed to deduct credit", {
+          imageId,
+          error:
+            creditError instanceof Error
+              ? creditError.message
+              : "Unknown error",
+        });
+      }
 
       metadata.set("status", {
         step: "completed",

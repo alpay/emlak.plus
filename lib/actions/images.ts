@@ -4,6 +4,7 @@ import { eq, inArray, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { CREDIT_COSTS, getWorkspaceCredits } from "@/lib/credits";
 import { db } from "@/lib/db";
 import {
   createImageGeneration,
@@ -154,6 +155,17 @@ export async function recordUploadedImages(
   const template = getTemplateById(projectData.project.styleTemplateId);
   if (!template) {
     return { success: false, error: "Style template not found" };
+  }
+
+  // Check if workspace has enough credits for all images
+  const currentCredits = await getWorkspaceCredits(workspaceId);
+  const creditCost = images.length * CREDIT_COSTS.IMAGE_GENERATION;
+
+  if (currentCredits < creditCost) {
+    return {
+      success: false,
+      error: `Insufficient credits. Need ${creditCost} credits for ${images.length} image(s), but you have ${currentCredits}.`,
+    };
   }
 
   try {
@@ -549,6 +561,16 @@ export async function regenerateImage(
   // Generate prompt with room type context
   const prompt = generatePrompt(template, roomType);
 
+  // Check if workspace has enough credits for regeneration
+  const currentCredits = await getWorkspaceCredits(currentUser[0].workspaceId);
+
+  if (currentCredits < CREDIT_COSTS.IMAGE_REGENERATE) {
+    return {
+      success: false,
+      error: `Insufficient credits. Need ${CREDIT_COSTS.IMAGE_REGENERATE} credit(s) to regenerate, but you have ${currentCredits}.`,
+    };
+  }
+
   try {
     // Trigger the background task first to get runId
     const handle = await processImageTask.trigger({ imageId });
@@ -621,6 +643,18 @@ export async function triggerInpaintTask(
   // Mask is required for remove mode
   if (mode === "remove" && !maskDataUrl) {
     return { success: false, error: "Mask is required for remove mode" };
+  }
+
+  // Check if workspace has enough credits for editing
+  const creditsAvailable = await getWorkspaceCredits(
+    currentUser[0].workspaceId
+  );
+
+  if (creditsAvailable < CREDIT_COSTS.IMAGE_EDIT) {
+    return {
+      success: false,
+      error: `Insufficient credits. Need ${CREDIT_COSTS.IMAGE_EDIT} credit(s) to edit, but you have ${creditsAvailable}.`,
+    };
   }
 
   try {

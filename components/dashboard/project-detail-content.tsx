@@ -251,7 +251,7 @@ function ImageCard({
                   ) : (
                     <IconRefresh className="h-3.5 w-3.5" />
                   )}
-                  Retry
+                  Retry (1 credit)
                 </Button>
               </div>
             )}

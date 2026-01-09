@@ -1,5 +1,6 @@
 import { logger, metadata, task } from "@trigger.dev/sdk/v3";
 import sharp from "sharp";
+import { CREDIT_COSTS, deductCredits } from "@/lib/credits";
 import {
   createImageGeneration,
   deleteVersionsAfter,
@@ -275,6 +276,31 @@ export const inpaintImageTask = task({
 
       // Update project counts
       await updateProjectCounts(image.projectId);
+
+      // Deduct 1 credit for successful image edit (idempotency built-in)
+      try {
+        const newBalance = await deductCredits({
+          workspaceId: image.workspaceId,
+          amount: CREDIT_COSTS.IMAGE_EDIT,
+          description: `Image edit (${mode}): ${newImage.id}`,
+          imageGenerationId: newImage.id,
+        });
+        if (newBalance !== null) {
+          logger.info("Deducted credit for image edit", {
+            newImageId: newImage.id,
+            newBalance,
+          });
+        }
+      } catch (creditError) {
+        // Log but don't fail the task if credit deduction fails
+        logger.error("Failed to deduct credit for edit", {
+          newImageId: newImage.id,
+          error:
+            creditError instanceof Error
+              ? creditError.message
+              : "Unknown error",
+        });
+      }
 
       metadata.set("status", {
         step: "completed",

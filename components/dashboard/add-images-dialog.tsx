@@ -355,7 +355,7 @@ export function AddImagesDialog({
             Cancel
           </Button>
           <Button
-            className="min-w-[120px] gap-2"
+            className="min-w-[140px] gap-2"
             disabled={images.length === 0 || isSubmitting}
             onClick={handleSubmit}
             style={{ backgroundColor: "var(--accent-teal)" }}
@@ -368,7 +368,8 @@ export function AddImagesDialog({
             ) : (
               <>
                 <IconSparkles className="h-4 w-4" />
-                Add & Process
+                Add & Process ({images.length} credit
+                {images.length !== 1 ? "s" : ""})
               </>
             )}
           </Button>

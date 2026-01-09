@@ -36,6 +36,9 @@ export const workspace = pgTable("workspace", {
   suspendedAt: timestamp("suspended_at"),
   suspendedReason: text("suspended_reason"),
 
+  // Credit system
+  credits: integer("credits").notNull().default(3), // Free credits for new workspaces
+
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -675,6 +678,68 @@ export const affiliateEarning = pgTable(
   ]
 );
 
+// ============================================================================
+// CREDIT SYSTEM SCHEMA
+// ============================================================================
+
+/**
+ * Credit Package - Purchasable credit bundles
+ * Configured in DodoPayments dashboard and synced here
+ */
+export const creditPackage = pgTable("credit_package", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(), // "Starter", "Popular", "Best Value"
+  credits: integer("credits").notNull(), // 10, 25, 50
+  priceUsd: integer("price_usd").notNull(), // 500, 1000, 1800 (in cents)
+  dodoProductId: text("dodo_product_id").notNull(), // DodoPayments product ID
+  isActive: boolean("is_active").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+/**
+ * Credit Transaction - Audit log for all credit changes
+ * Provides idempotency via unique constraints on paymentId and reference IDs
+ */
+export const creditTransaction = pgTable(
+  "credit_transaction",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id")
+      .notNull()
+      .references(() => workspace.id, { onDelete: "cascade" }),
+
+    // Transaction details
+    type: text("type").notNull(), // "purchase" | "usage" | "bonus" | "refund" | "admin_adjustment"
+    amount: integer("amount").notNull(), // Positive for additions, negative for usage
+    balanceAfter: integer("balance_after").notNull(),
+
+    // Reference to what used the credit (for idempotency - prevents double-charging on retries)
+    imageGenerationId: text("image_generation_id").references(
+      () => imageGeneration.id,
+      { onDelete: "set null" }
+    ),
+    videoClipId: text("video_clip_id").references(() => videoClip.id, {
+      onDelete: "set null",
+    }),
+
+    // Payment reference (for purchases) - UNIQUE prevents duplicate webhook processing
+    paymentId: text("payment_id").unique(),
+    packageId: text("package_id").references(() => creditPackage.id, {
+      onDelete: "set null",
+    }),
+
+    description: text("description"),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("credit_tx_workspace_idx").on(table.workspaceId),
+    index("credit_tx_image_idx").on(table.imageGenerationId),
+    index("credit_tx_clip_idx").on(table.videoClipId),
+    index("credit_tx_type_idx").on(table.type),
+  ]
+);
+
 // Billing type exports
 export type WorkspacePricing = typeof workspacePricing.$inferSelect;
 export type NewWorkspacePricing = typeof workspacePricing.$inferInsert;
@@ -694,3 +759,16 @@ export type NewAffiliateRelationship =
 export type AffiliateEarning = typeof affiliateEarning.$inferSelect;
 export type NewAffiliateEarning = typeof affiliateEarning.$inferInsert;
 export type AffiliateEarningStatus = "pending" | "paid_out";
+
+// Credit system type exports
+export type CreditPackage = typeof creditPackage.$inferSelect;
+export type NewCreditPackage = typeof creditPackage.$inferInsert;
+
+export type CreditTransaction = typeof creditTransaction.$inferSelect;
+export type NewCreditTransaction = typeof creditTransaction.$inferInsert;
+export type CreditTransactionType =
+  | "purchase"
+  | "usage"
+  | "bonus"
+  | "refund"
+  | "admin_adjustment";

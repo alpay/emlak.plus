@@ -263,7 +263,7 @@ export function NewProjectDialog({
 
             {creation.step === "confirm" ? (
               <Button
-                className="min-w-[140px] gap-2"
+                className="min-w-[180px] gap-2"
                 disabled={!creation.canProceed() || creation.isSubmitting}
                 onClick={handleSubmit}
                 style={{ backgroundColor: "var(--accent-teal)" }}
@@ -276,7 +276,8 @@ export function NewProjectDialog({
                 ) : (
                   <>
                     <IconSparkles className="h-4 w-4" />
-                    Generate
+                    Generate ({creation.images.length} credit
+                    {creation.images.length !== 1 ? "s" : ""})
                   </>
                 )}
               </Button>

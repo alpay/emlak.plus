@@ -5,6 +5,11 @@ import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { verifySystemAdmin } from "@/lib/admin-auth";
+import {
+  adminAdjustCredits,
+  getCreditTransactions,
+  getWorkspaceCredits,
+} from "@/lib/credits";
 import { db } from "@/lib/db";
 import { getAdminUsers, getAdminWorkspaces } from "@/lib/db/queries";
 import {
@@ -260,7 +265,7 @@ export async function impersonateUserAction(
       userId,
       token: sessionToken,
       expiresAt,
-      impersonatedBy: adminCheck.user!.id, // Track who is impersonating
+      impersonatedBy: adminCheck.user?.id ?? null, // Track who is impersonating
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -579,5 +584,85 @@ export async function deleteUserAction(
   } catch (error) {
     console.error("[admin:deleteUser] Error:", error);
     return { success: false, error: "Failed to delete user" };
+  }
+}
+
+// ============================================================================
+// Workspace Credits Management
+// ============================================================================
+
+/**
+ * Adjust workspace credits (admin only)
+ * Used for customer support, compensation, manual corrections, etc.
+ */
+export async function adjustWorkspaceCreditsAction(
+  workspaceId: string,
+  amount: number,
+  reason: string
+): Promise<ActionResult<{ newBalance: number }>> {
+  const adminCheck = await verifySystemAdmin();
+  if (adminCheck.error) {
+    return { success: false, error: adminCheck.error };
+  }
+
+  if (!reason.trim()) {
+    return { success: false, error: "Reason is required" };
+  }
+
+  if (amount === 0) {
+    return { success: false, error: "Amount cannot be zero" };
+  }
+
+  try {
+    const newBalance = await adminAdjustCredits({
+      workspaceId,
+      amount,
+      reason: reason.trim(),
+      adminUserId: adminCheck.user?.id ?? "unknown",
+    });
+
+    revalidatePath("/admin/workspaces");
+    revalidatePath(`/admin/workspaces/${workspaceId}`);
+
+    return { success: true, data: { newBalance } };
+  } catch (error) {
+    console.error("[admin:adjustWorkspaceCredits] Error:", error);
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to adjust workspace credits",
+    };
+  }
+}
+
+/**
+ * Get workspace credits and transaction history (admin only)
+ */
+export async function getWorkspaceCreditHistoryAction(
+  workspaceId: string,
+  options?: { limit?: number; offset?: number }
+): Promise<
+  ActionResult<{
+    credits: number;
+    transactions: import("@/lib/db/schema").CreditTransaction[];
+  }>
+> {
+  const adminCheck = await verifySystemAdmin();
+  if (adminCheck.error) {
+    return { success: false, error: adminCheck.error };
+  }
+
+  try {
+    const [credits, transactions] = await Promise.all([
+      getWorkspaceCredits(workspaceId),
+      getCreditTransactions(workspaceId, options),
+    ]);
+
+    return { success: true, data: { credits, transactions } };
+  } catch (error) {
+    console.error("[admin:getWorkspaceCreditHistory] Error:", error);
+    return { success: false, error: "Failed to get credit history" };
   }
 }

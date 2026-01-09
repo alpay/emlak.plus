@@ -56,6 +56,12 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      dodopayments:
+        specifier: ^2.14.1
+        version: 2.14.1
+      dodopayments-checkout:
+        specifier: ^1.6.1
+        version: 1.6.1
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
@@ -3534,6 +3540,14 @@ packages:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
 
+  dodopayments-checkout@1.6.1:
+    resolution: {integrity: sha512-Q9w59RIhaoqYn7eP5gdAf2quAwYjIXS/U4+L8NLIKzVWXPTPC8iPG3iG0IxqKKBVWlf0z8z9UtI1ycaYBwrTrA==}
+    engines: {node: '>=18.0.0'}
+
+  dodopayments@2.14.1:
+    resolution: {integrity: sha512-Zxi4eDgZHg7Ciq2qMxO6LhgBKTyUPOtRcgfbDjaIMlmBuqQ/AauNDvSUC3G7OIl4BnEZG6iW5iINQBgy3u2x/A==}
+    hasBin: true
+
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
 
@@ -5879,6 +5893,9 @@ packages:
 
   stable-hash@0.0.5:
     resolution: {integrity: sha512-+L3ccpzibovGXFK+Ap/f8LOS0ahMrHTf3xu7mMLSpEGU0EO9ucaysSylKo9eRDFNhWve/y275iPmIZ4z39a9iA==}
+
+  standardwebhooks@1.0.0:
+    resolution: {integrity: sha512-BbHGOQK9olHPMvQNHWul6MYlrRTAOKn03rOe4A8O3CLWhNf4YHBqq2HJKKC+sfqpxiBY52pNeesD6jIiLDz8jg==}
 
   statuses@2.0.2:
     resolution: {integrity: sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==}
@@ -9653,6 +9670,12 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
+  dodopayments-checkout@1.6.1: {}
+
+  dodopayments@2.14.1:
+    dependencies:
+      standardwebhooks: 1.0.0
+
   dom-serializer@2.0.0:
     dependencies:
       domelementtype: 2.3.0
@@ -12618,6 +12641,11 @@ snapshots:
   sprintf-js@1.0.3: {}
 
   stable-hash@0.0.5: {}
+
+  standardwebhooks@1.0.0:
+    dependencies:
+      '@stablelib/base64': 1.0.1
+      fast-sha256: 1.3.0
 
   statuses@2.0.2: {}
 

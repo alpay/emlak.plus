@@ -624,7 +624,7 @@ export function ImageMaskEditor({
                     ) : (
                       <IconSparkles className="h-3.5 w-3.5" />
                     )}
-                    Add
+                    Add (1 credit)
                   </Button>
                 </div>
               </div>
@@ -642,7 +642,7 @@ export function ImageMaskEditor({
                 Draw on the object you want to remove
               </p>
               <Button
-                className="min-w-[120px] gap-2 bg-red-500 hover:bg-red-600"
+                className="min-w-[140px] gap-2 bg-red-500 hover:bg-red-600"
                 disabled={
                   isProcessing || !isCanvasReady || canvasHistory.length === 0
                 }
@@ -656,7 +656,7 @@ export function ImageMaskEditor({
                 ) : (
                   <>
                     <IconSparkles className="h-4 w-4" />
-                    Remove
+                    Remove (1 credit)
                   </>
                 )}
               </Button>

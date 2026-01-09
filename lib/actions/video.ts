@@ -4,6 +4,7 @@ import { tasks, auth as triggerAuth } from "@trigger.dev/sdk/v3";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { CREDIT_COSTS, getWorkspaceCredits } from "@/lib/credits";
 import {
   createVideoClips,
   createVideoProject as dbCreateVideoProject,
@@ -179,6 +180,17 @@ export async function triggerVideoGeneration(videoProjectId: string) {
       );
     }
     throw new Error("Unauthorized");
+  }
+
+  // Check if workspace has enough credits for all clips
+  const currentCredits = await getWorkspaceCredits(userData.workspace.id);
+  const clipCount = projectData.clips.length;
+  const creditCost = clipCount * CREDIT_COSTS.VIDEO_CLIP;
+
+  if (currentCredits < creditCost) {
+    throw new Error(
+      `Insufficient credits. Need ${creditCost} credits for ${clipCount} clip(s) (${CREDIT_COSTS.VIDEO_CLIP} per clip), but you have ${currentCredits}.`
+    );
   }
 
   try {

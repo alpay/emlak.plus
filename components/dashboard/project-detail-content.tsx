@@ -8,6 +8,7 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconClock,
+  IconDotsVertical,
   IconDownload,
   IconLoader2,
   IconPencil,
@@ -37,7 +38,18 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { deleteSelectedImages, retryImageProcessing } from "@/lib/actions";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  deleteProjectAction,
+  deleteSelectedImages,
+  retryImageProcessing,
+} from "@/lib/actions";
 import type { ImageGeneration, Project, ProjectStatus } from "@/lib/db/schema";
 import { getTemplateById } from "@/lib/style-templates";
 import { cn } from "@/lib/utils";
@@ -711,6 +723,9 @@ export function ProjectDetailContent({
     new Set()
   );
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+  const [deleteProjectDialogOpen, setDeleteProjectDialogOpen] =
+    React.useState(false);
+  const [isDeletingProject, setIsDeletingProject] = React.useState(false);
 
   // Real-time run tracking for processing images
   const [runIds, setRunIds] = React.useState<Map<string, string>>(() => {
@@ -859,6 +874,28 @@ export function ProjectDetailContent({
         throw new Error(result.error || "Delete failed");
       },
       error: (err) => err?.message || "Failed to delete images",
+    });
+  };
+
+  const handleDeleteProject = async () => {
+    setIsDeletingProject(true);
+    setDeleteProjectDialogOpen(false);
+
+    const deletePromise = deleteProjectAction(project.id);
+
+    toast.promise(deletePromise, {
+      loading: "Deleting project and all images…",
+      success: (result) => {
+        if (result.success) {
+          router.push("/dashboard");
+          return "Project deleted successfully";
+        }
+        throw new Error(result.error || "Delete failed");
+      },
+      error: (err) => {
+        setIsDeletingProject(false);
+        return err?.message || "Failed to delete project";
+      },
     });
   };
 
@@ -1089,6 +1126,37 @@ export function ProjectDetailContent({
                 Download All
               </Button>
             )}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost">
+                  <IconDotsVertical className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  disabled={!canAddMore}
+                  onClick={() => setAddImagesOpen(true)}
+                >
+                  <IconPlus className="mr-2 h-4 w-4" />
+                  Add Images
+                </DropdownMenuItem>
+                {completedImages.length > 0 && (
+                  <DropdownMenuItem onClick={handleDownload}>
+                    <IconDownload className="mr-2 h-4 w-4" />
+                    Download All
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-red-500 focus:bg-red-500/10 focus:text-red-500"
+                  disabled={isDeletingProject}
+                  onClick={() => setDeleteProjectDialogOpen(true)}
+                >
+                  <IconTrash className="mr-2 h-4 w-4" />
+                  Delete Project
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -1389,6 +1457,44 @@ export function ProjectDetailContent({
               onClick={handleDeleteSelected}
             >
               Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Project Confirmation Dialog */}
+      <AlertDialog
+        onOpenChange={setDeleteProjectDialogOpen}
+        open={deleteProjectDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Delete &ldquo;{project.name}&rdquo;?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              project and all {project.imageCount} images associated with it,
+              including all versions and edits.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeletingProject}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-500 text-white hover:bg-red-600"
+              disabled={isDeletingProject}
+              onClick={handleDeleteProject}
+            >
+              {isDeletingProject ? (
+                <>
+                  <IconLoader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting…
+                </>
+              ) : (
+                "Delete Project"
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

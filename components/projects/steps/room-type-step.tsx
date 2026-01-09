@@ -2,12 +2,29 @@
 
 import {
   IconArmchair,
+  IconBarbell,
   IconBath,
   IconBed,
+  IconBuildingBridge,
+  IconBuildingSkyscraper,
+  IconBuildingStore,
+  IconCar,
   IconCheck,
   IconDesk,
+  IconDoor,
+  IconHanger,
+  IconHome,
+  IconMoodKid,
+  IconMountain,
+  IconPlant,
+  IconPool,
   IconSofa,
+  IconStairs,
+  IconSun,
+  IconTools,
   IconToolsKitchen2,
+  IconTree,
+  IconWashMachine,
 } from "@tabler/icons-react";
 import type * as React from "react";
 import { ROOM_TYPES } from "@/lib/style-templates";
@@ -21,6 +38,23 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   IconBath,
   IconArmchair,
   IconDesk,
+  IconDoor,
+  IconWashMachine,
+  IconMoodKid,
+  IconStairs,
+  IconBuildingSkyscraper,
+  IconBarbell,
+  IconHanger,
+  IconPlant,
+  IconSun,
+  IconTree,
+  IconMountain,
+  IconBuildingStore,
+  IconHome,
+  IconPool,
+  IconCar,
+  IconTools,
+  IconBuildingBridge,
 };
 
 interface RoomTypeStepProps {

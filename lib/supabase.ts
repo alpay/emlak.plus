@@ -54,36 +54,62 @@ export async function deleteImage(path: string): Promise<void> {
   }
 }
 
-// Delete all images for a project
+// Delete all images for a project (handles nested folders)
 export async function deleteProjectImages(
   workspaceId: string,
   projectId: string
 ): Promise<void> {
   const folderPath = `${workspaceId}/${projectId}`;
+  const allFilePaths: string[] = [];
 
-  // List all files in the project folder
-  const { data: files, error: listError } = await supabaseAdmin.storage
-    .from(STORAGE_BUCKET)
-    .list(folderPath, {
-      limit: 1000,
-    });
+  // Helper function to recursively list files
+  async function listFilesRecursively(path: string): Promise<void> {
+    const { data: items, error: listError } = await supabaseAdmin.storage
+      .from(STORAGE_BUCKET)
+      .list(path, { limit: 1000 });
 
-  if (listError) {
-    throw new Error(`Failed to list project images: ${listError.message}`);
+    if (listError) {
+      throw new Error(`Failed to list files at ${path}: ${listError.message}`);
+    }
+
+    if (!items || items.length === 0) {
+      return;
+    }
+
+    for (const item of items) {
+      const itemPath = `${path}/${item.name}`;
+
+      // Check if it's a folder (no metadata means it's a folder)
+      if (item.metadata) {
+        // It's a file, add to delete list
+        allFilePaths.push(itemPath);
+      } else {
+        // It's a folder, recurse into it
+        await listFilesRecursively(itemPath);
+      }
+    }
   }
 
-  if (!files || files.length === 0) {
+  // Start recursive listing
+  await listFilesRecursively(folderPath);
+
+  if (allFilePaths.length === 0) {
     return; // No files to delete
   }
 
-  // Delete all files in the folder
-  const filePaths = files.map((file) => `${folderPath}/${file.name}`);
-  const { error: deleteError } = await supabaseAdmin.storage
-    .from(STORAGE_BUCKET)
-    .remove(filePaths);
+  // Delete files in batches (Supabase has limits)
+  const batchSize = 100;
+  for (let i = 0; i < allFilePaths.length; i += batchSize) {
+    const batch = allFilePaths.slice(i, i + batchSize);
+    const { error: deleteError } = await supabaseAdmin.storage
+      .from(STORAGE_BUCKET)
+      .remove(batch);
 
-  if (deleteError) {
-    throw new Error(`Failed to delete project images: ${deleteError.message}`);
+    if (deleteError) {
+      throw new Error(
+        `Failed to delete project images: ${deleteError.message}`
+      );
+    }
   }
 }
 

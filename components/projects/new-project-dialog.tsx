@@ -188,7 +188,7 @@ export function NewProjectDialog({
     <Dialog onOpenChange={handleClose} open={open}>
       <DialogContent
         className="flex max-h-[90vh] flex-col gap-0 overflow-hidden p-0"
-        size="lg"
+        size="2xl"
       >
         {/* Header */}
         <div className="border-b px-6 py-4">

@@ -69,6 +69,9 @@ export const user = pgTable("user", {
 
   // System admin flag (for super admin access across all workspaces)
   isSystemAdmin: boolean("is_system_admin").notNull().default(false),
+
+  // User preferences
+  language: text("language").notNull().default("tr"), // "tr" | "en"
 });
 
 export const session = pgTable(

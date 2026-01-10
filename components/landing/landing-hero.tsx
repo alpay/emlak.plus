@@ -3,10 +3,12 @@
 import { IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { useSession } from "@/lib/auth-client";
 
 function HeroAuthButton() {
   const { data: session, isPending } = useSession();
+  const { t } = useTranslation();
 
   if (isPending) {
     return (
@@ -18,7 +20,7 @@ function HeroAuthButton() {
   }
 
   const href = session ? "/dashboard" : "/sign-in";
-  const text = session ? "Go to Dashboard" : "Start for Free";
+  const text = session ? t("hero.goToDashboard") : t("hero.startFree");
 
   return (
     <Link
@@ -37,6 +39,8 @@ function HeroAuthButton() {
 }
 
 function BookDemoButton() {
+  const { t } = useTranslation();
+
   return (
     <Link
       className="inline-flex h-12 items-center gap-2 rounded-full px-7 font-medium text-base transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
@@ -47,13 +51,15 @@ function BookDemoButton() {
         boxShadow: "0 8px 24px -8px var(--landing-accent)",
       }}
     >
-      Book a Demo
+      {t("hero.bookDemo")}
       <IconArrowRight className="size-5" />
     </Link>
   );
 }
 
 export function LandingHero() {
+  const { t } = useTranslation();
+
   return (
     <section className="relative overflow-hidden px-6 pt-16 pb-24 md:pt-24 md:pb-32">
       {/* Subtle gradient accent */}
@@ -75,7 +81,7 @@ export function LandingHero() {
             color: "var(--landing-accent-foreground)",
           }}
         >
-          Best AI Real Estate Media Platform
+          {t("hero.badge")}
         </div>
 
         {/* Main Headline */}
@@ -83,10 +89,12 @@ export function LandingHero() {
           className="landing-stagger-2 animate-spring-up font-bold text-4xl leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ color: "var(--landing-text)" }}
         >
-          Snap, Upload, Deliver
+          {t("hero.title1")}
           <br />
-          <span style={{ color: "var(--landing-accent)" }}>Perfect Shots</span>{" "}
-          Every Time!
+          <span style={{ color: "var(--landing-accent)" }}>
+            {t("hero.title2")}
+          </span>{" "}
+          {t("hero.title3")}
         </h1>
 
         {/* Subheadline */}
@@ -94,9 +102,7 @@ export function LandingHero() {
           className="landing-stagger-3 mx-auto mt-6 max-w-2xl animate-spring-up text-lg leading-relaxed md:text-xl"
           style={{ color: "var(--landing-text-muted)" }}
         >
-          No more back and forth or late night touch-ups. Designed specifically
-          for real estate pros to deliver high-end listings to clients in record
-          time.
+          {t("hero.subtitle")}
         </p>
 
         {/* CTA Buttons */}
@@ -127,7 +133,7 @@ export function LandingHero() {
               className="mt-1 text-sm"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Photos enhanced
+              {t("hero.stats.photosEnhanced")}
             </p>
           </div>
           <div
@@ -139,13 +145,13 @@ export function LandingHero() {
               className="font-bold text-2xl tabular-nums md:text-3xl"
               style={{ color: "var(--landing-text)" }}
             >
-              30 sec
+              30 {t("common.sec", "sn")}
             </p>
             <p
               className="mt-1 text-sm"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Average time
+              {t("hero.stats.averageTime")}
             </p>
           </div>
           <div
@@ -163,7 +169,7 @@ export function LandingHero() {
               className="mt-1 text-sm"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Listing engagement
+              {t("hero.stats.listingEngagement")}
             </p>
           </div>
         </div>

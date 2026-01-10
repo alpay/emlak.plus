@@ -8,47 +8,62 @@ import {
   IconShieldCheck,
   IconWand,
 } from "@tabler/icons-react";
-
-const features = [
-  {
-    icon: IconWand,
-    title: "AI-Powered Enhancement",
-    description:
-      "Our advanced AI transforms ordinary photos into stunning, professional-quality images automatically.",
-  },
-  {
-    icon: IconPalette,
-    title: "Multiple Style Templates",
-    description:
-      "Choose from a variety of professionally designed styles to match your brand and property type.",
-  },
-  {
-    icon: IconClockHour4,
-    title: "Results in Seconds",
-    description:
-      "No waiting around. Get your enhanced photos back in seconds, not hours or days.",
-  },
-  {
-    icon: IconPhoto,
-    title: "Batch Processing",
-    description:
-      "Upload multiple photos at once and process entire property shoots in one go.",
-  },
-  {
-    icon: IconDeviceDesktop,
-    title: "No Software Required",
-    description:
-      "Everything runs in your browser. No downloads, no installations, no technical skills needed.",
-  },
-  {
-    icon: IconShieldCheck,
-    title: "Secure & Private",
-    description:
-      "Your photos are encrypted and automatically deleted after processing. Your data stays yours.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export function LandingFeatures() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      icon: IconWand,
+      title: t("features.aiPowered", "Yapay Zeka Destekli İyileştirme"),
+      description: t(
+        "features.aiPoweredDesc",
+        "Gelişmiş yapay zekamız sıradan fotoğrafları otomatik olarak profesyonel kalitede görüntülere dönüştürür."
+      ),
+    },
+    {
+      icon: IconPalette,
+      title: t("features.multipleStyles", "Çoklu Stil Şablonları"),
+      description: t(
+        "features.multipleStylesDesc",
+        "Markanıza ve mülk tipinize uygun profesyonelce tasarlanmış çeşitli stillerden seçin."
+      ),
+    },
+    {
+      icon: IconClockHour4,
+      title: t("features.resultsInSeconds", "Saniyeler İçinde Sonuç"),
+      description: t(
+        "features.resultsInSecondsDesc",
+        "Beklemeyin. İyileştirilmiş fotoğraflarınızı saatler veya günler değil, saniyeler içinde alın."
+      ),
+    },
+    {
+      icon: IconPhoto,
+      title: t("features.batchProcessing", "Toplu İşleme"),
+      description: t(
+        "features.batchProcessingDesc",
+        "Birden fazla fotoğrafı tek seferde yükleyin ve tüm mülk çekimlerini bir kerede işleyin."
+      ),
+    },
+    {
+      icon: IconDeviceDesktop,
+      title: t("features.noSoftware", "Yazılım Gerektirmez"),
+      description: t(
+        "features.noSoftwareDesc",
+        "Her şey tarayıcınızda çalışır. İndirme, kurulum veya teknik beceri gerekmez."
+      ),
+    },
+    {
+      icon: IconShieldCheck,
+      title: t("features.securePrivate", "Güvenli ve Gizli"),
+      description: t(
+        "features.securePrivateDesc",
+        "Fotoğraflarınız şifrelenir ve işlemden sonra otomatik olarak silinir. Verileriniz sizin kalır."
+      ),
+    },
+  ];
+
   return (
     <section
       className="px-6 py-24 md:py-32"
@@ -62,22 +77,24 @@ export function LandingFeatures() {
             className="font-semibold text-sm uppercase tracking-wider"
             style={{ color: "var(--landing-accent)" }}
           >
-            Features
+            {t("features.title")}
           </p>
           <h2
             className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            Everything you need to
+            {t("features.heading", "Çarpıcı ilanlar oluşturmak için")}
             <br />
-            create stunning listings
+            {t("features.headingLine2", "ihtiyacınız olan her şey")}
           </h2>
           <p
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            Powerful features designed specifically for real estate
-            professionals who want to save time and impress clients.
+            {t(
+              "features.subtitle",
+              "Zaman kazanmak ve müşterilerinizi etkilemek isteyen gayrimenkul profesyonelleri için özel olarak tasarlanmış güçlü özellikler."
+            )}
           </p>
         </div>
 

@@ -1,0 +1,256 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "clearFilters": "Clear Filters",
+    "all": "All",
+    "noResults": "No results found",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and"
+  },
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "getStarted": "Get Started",
+    "dashboard": "Dashboard",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out"
+  },
+  "hero": {
+    "badge": "Best AI Real Estate Media Platform",
+    "title1": "Snap, Upload, Deliver",
+    "title2": "Perfect Shots",
+    "title3": "Every Time!",
+    "subtitle": "No more back and forth or late night touch-ups. Designed specifically for real estate pros to deliver high-end listings to clients in record time.",
+    "bookDemo": "Book a Demo",
+    "startFree": "Start for Free",
+    "goToDashboard": "Go to Dashboard",
+    "stats": {
+      "photosEnhanced": "Photos enhanced",
+      "averageTime": "Average time",
+      "listingEngagement": "Listing engagement"
+    }
+  },
+  "features": {
+    "title": "Features",
+    "subtitle": "Everything you need to transform your real estate photos",
+    "virtualStaging": "Virtual Staging",
+    "virtualStagingDesc": "Transform empty rooms into professionally decorated spaces",
+    "lightingEnhancement": "Lighting Enhancement",
+    "lightingEnhancementDesc": "Optimize photos with perfect lighting and color balance",
+    "twilightConversion": "Twilight Conversion",
+    "twilightConversionDesc": "Transform daytime photos into stunning twilight shots",
+    "objectRemoval": "Object Removal",
+    "objectRemovalDesc": "Remove unwanted objects and clutter",
+    "skyReplacement": "Sky Replacement",
+    "skyReplacementDesc": "Replace cloudy skies with perfect blue skies",
+    "hdrMerge": "HDR Merge",
+    "hdrMergeDesc": "Combine multiple exposures into professional HDR images"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Get professional results in three simple steps",
+    "step1Title": "Upload Your Photos",
+    "step1Desc": "Drag and drop your property photos or select from your files",
+    "step2Title": "Choose a Style",
+    "step2Desc": "Select from our professional style templates",
+    "step3Title": "Download Results",
+    "step3Desc": "Get your AI-enhanced photos in seconds"
+  },
+  "cta": {
+    "title": "Ready to Transform Your Real Estate Photos?",
+    "subtitle": "Join thousands of professionals and elevate your listings",
+    "button": "Try for Free"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Trusted by thousands of real estate professionals"
+  },
+  "footer": {
+    "description": "Transform your real estate photos with AI-powered enhancements. Professional results in seconds.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "about": "About",
+    "blog": "Blog",
+    "helpCenter": "Help Center",
+    "contact": "Contact",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "allRightsReserved": "All rights reserved.",
+    "madeWith": "Made with care in Turkey"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "projects": "Listings",
+    "project": "Listing",
+    "newProject": "New Listing",
+    "createProject": "Create Listing",
+    "allProjects": "All Listings",
+    "recentProjects": "Recent Listings",
+    "noProjects": "No listings yet",
+    "createFirstProject": "Create Your First Listing",
+    "stats": {
+      "totalProjects": "Total Listings",
+      "completedProjects": "Completed Listings",
+      "processingProjects": "Processing",
+      "failedProjects": "Failed",
+      "totalImages": "Total Images"
+    },
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "filters": {
+      "status": "Status",
+      "style": "Style",
+      "view": "View",
+      "grid": "Grid",
+      "table": "Table"
+    }
+  },
+  "empty": {
+    "title": "Your first masterpiece awaits",
+    "description": "Transform your real estate photos with AI-powered enhancements. Upload images, choose a style, and watch the magic happen.",
+    "createButton": "Create Your First Listing",
+    "virtualStaging": "Virtual Staging",
+    "lightingEnhancement": "Lighting Enhancement",
+    "twilightConversion": "Twilight Conversion"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your workspace and account preferences",
+    "profile": {
+      "title": "Profile",
+      "description": "Your personal information",
+      "settings": "Profile Settings",
+      "settingsDesc": "Your personal information and preferences",
+      "photo": "Profile Photo",
+      "changePhoto": "Change Photo",
+      "uploadHint": "PNG, JPG up to 2MB. Recommended 200x200px.",
+      "displayName": "Display Name",
+      "email": "Email Address",
+      "emailHint": "Email cannot be changed",
+      "language": "Language",
+      "languageDesc": "Select your preferred language",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "uploading": "Uploading...",
+      "updateSuccess": "Profile updated successfully",
+      "photoUpdateSuccess": "Profile photo updated"
+    },
+    "workspace": {
+      "title": "Workspace",
+      "description": "Organization details and branding",
+      "settings": "Workspace Settings",
+      "settingsDesc": "Your organization details and branding"
+    },
+    "team": {
+      "title": "Team",
+      "description": "Manage team members and invitations",
+      "members": "Team Members",
+      "activeMember": "active member",
+      "activeMembers": "active members",
+      "pendingInvite": "pending invite",
+      "pendingInvites": "pending invites",
+      "inviteMember": "Invite Member",
+      "role": {
+        "owner": "Owner",
+        "admin": "Admin",
+        "member": "Member"
+      }
+    },
+    "security": {
+      "title": "Security",
+      "description": "Password and account security",
+      "changePassword": "Change Password",
+      "changePasswordDesc": "Update your account password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "tips": "Security Tips",
+      "tip1": "Use a strong, unique password that you don't use elsewhere",
+      "tip2": "Never share your password with anyone, including support staff",
+      "tip3": "Consider using a password manager to generate and store secure passwords",
+      "tip4": "Change your password immediately if you suspect unauthorized access"
+    }
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "createAccount": "Create Account",
+    "orContinueWith": "or continue with",
+    "google": "Continue with Google",
+    "github": "Continue with GitHub"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Enter a valid email address",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "unauthorized": "Unauthorized access",
+    "notFound": "Not found",
+    "serverError": "Server error",
+    "tryAgain": "Try again"
+  },
+  "language": {
+    "turkish": "Türkçe",
+    "english": "English",
+    "selectLanguage": "Select Language"
+  },
+  "pricing": {
+    "title": "Pricing",
+    "subtitle": "Choose the plan that fits your needs",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "perMonth": "/month",
+    "popular": "Popular",
+    "getStarted": "Get Started",
+    "currentPlan": "Current Plan",
+    "credits": "Credits",
+    "images": "Images"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Redefining real estate photography"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "How can we help you?",
+    "name": "Your Name",
+    "email": "Email",
+    "message": "Your Message",
+    "send": "Send",
+    "sending": "Sending..."
+  },
+  "help": {
+    "title": "Help Center",
+    "subtitle": "Find answers to your questions",
+    "searchPlaceholder": "Search help articles..."
+  }
+}

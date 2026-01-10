@@ -1,0 +1,256 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "clearFilters": "Filtreleri Temizle",
+    "all": "Tümü",
+    "noResults": "Sonuç bulunamadı",
+    "error": "Hata",
+    "success": "Başarılı",
+    "confirm": "Onayla",
+    "back": "Geri",
+    "next": "İleri",
+    "close": "Kapat",
+    "yes": "Evet",
+    "no": "Hayır",
+    "or": "veya",
+    "and": "ve"
+  },
+  "nav": {
+    "features": "Özellikler",
+    "howItWorks": "Nasıl Çalışır",
+    "pricing": "Fiyatlandırma",
+    "getStarted": "Başla",
+    "dashboard": "Panel",
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "signOut": "Çıkış Yap"
+  },
+  "hero": {
+    "badge": "En İyi Yapay Zeka Emlak Medya Platformu",
+    "title1": "Çek, Yükle, Teslim Et",
+    "title2": "Mükemmel Çekimler",
+    "title3": "Her Seferinde!",
+    "subtitle": "Artık geri bildirimler veya gece geç saatlere kadar düzenlemeler yok. Gayrimenkul profesyonelleri için tasarlandı - müşterilerinize rekor sürede üst düzey listeler sunun.",
+    "bookDemo": "Demo Talep Et",
+    "startFree": "Ücretsiz Başla",
+    "goToDashboard": "Panele Git",
+    "stats": {
+      "photosEnhanced": "Fotoğraf iyileştirildi",
+      "averageTime": "Ortalama süre",
+      "listingEngagement": "Liste etkileşimi"
+    }
+  },
+  "features": {
+    "title": "Özellikler",
+    "subtitle": "Gayrimenkul fotoğraflarınızı dönüştürmek için ihtiyacınız olan her şey",
+    "virtualStaging": "Sanal Dekorasyon",
+    "virtualStagingDesc": "Boş odaları profesyonelce dekore edilmiş alanlara dönüştürün",
+    "lightingEnhancement": "Aydınlatma İyileştirme",
+    "lightingEnhancementDesc": "Mükemmel aydınlatma ve renk dengesi ile fotoğrafları optimize edin",
+    "twilightConversion": "Alacakaranlık Dönüşümü",
+    "twilightConversionDesc": "Gündüz fotoğraflarını çarpıcı alacakaranlık çekimlerine dönüştürün",
+    "objectRemoval": "Nesne Kaldırma",
+    "objectRemovalDesc": "İstenmeyen nesneleri ve dağınıklığı temizleyin",
+    "skyReplacement": "Gökyüzü Değiştirme",
+    "skyReplacementDesc": "Bulutlu gökyüzünü mükemmel mavi gökyüzüyle değiştirin",
+    "hdrMerge": "HDR Birleştirme",
+    "hdrMergeDesc": "Birden fazla pozlamayı profesyonel HDR görüntülere birleştirin"
+  },
+  "howItWorks": {
+    "title": "Nasıl Çalışır",
+    "subtitle": "Üç basit adımda profesyonel sonuçlar alın",
+    "step1Title": "Fotoğraflarınızı Yükleyin",
+    "step1Desc": "Mülk fotoğraflarınızı sürükleyip bırakın veya dosyalarınızdan seçin",
+    "step2Title": "Tarz Seçin",
+    "step2Desc": "Profesyonel tarz şablonlarımızdan birini seçin",
+    "step3Title": "Sonuçları İndirin",
+    "step3Desc": "Saniyeler içinde AI tarafından geliştirilmiş fotoğraflarınızı alın"
+  },
+  "cta": {
+    "title": "Emlak Fotoğraflarınızı Dönüştürmeye Hazır mısınız?",
+    "subtitle": "Binlerce profesyonele katılın ve listelerinizi üst düzeye çıkarın",
+    "button": "Ücretsiz Deneyin"
+  },
+  "testimonials": {
+    "title": "Müşterilerimiz Ne Diyor",
+    "subtitle": "Binlerce gayrimenkul profesyoneli tarafından güveniliyor"
+  },
+  "footer": {
+    "description": "Gayrimenkul fotoğraflarınızı AI destekli iyileştirmelerle dönüştürün. Saniyeler içinde profesyonel sonuçlar.",
+    "product": "Ürün",
+    "company": "Şirket",
+    "legal": "Yasal",
+    "about": "Hakkımızda",
+    "blog": "Blog",
+    "helpCenter": "Yardım Merkezi",
+    "contact": "İletişim",
+    "privacy": "Gizlilik",
+    "terms": "Şartlar",
+    "allRightsReserved": "Tüm hakları saklıdır.",
+    "madeWith": "Türkiye'de özenle yapıldı"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Hoş Geldiniz",
+    "projects": "İlanlar",
+    "project": "İlan",
+    "newProject": "Yeni İlan",
+    "createProject": "İlan Oluştur",
+    "allProjects": "Tüm İlanlar",
+    "recentProjects": "Son İlanlar",
+    "noProjects": "Henüz ilanınız yok",
+    "createFirstProject": "İlk İlanınızı Oluşturun",
+    "stats": {
+      "totalProjects": "Toplam İlan",
+      "completedProjects": "Tamamlanan İlan",
+      "processingProjects": "İşleniyor",
+      "failedProjects": "Başarısız",
+      "totalImages": "Toplam Görsel"
+    },
+    "status": {
+      "pending": "Bekliyor",
+      "processing": "İşleniyor",
+      "completed": "Tamamlandı",
+      "failed": "Başarısız"
+    },
+    "filters": {
+      "status": "Durum",
+      "style": "Tarz",
+      "view": "Görünüm",
+      "grid": "Izgara",
+      "table": "Tablo"
+    }
+  },
+  "empty": {
+    "title": "İlk şaheseriniz sizi bekliyor",
+    "description": "Gayrimenkul fotoğraflarınızı AI destekli iyileştirmelerle dönüştürün. Görselleri yükleyin, bir tarz seçin ve sihrin gerçekleşmesini izleyin.",
+    "createButton": "İlk İlanınızı Oluşturun",
+    "virtualStaging": "Sanal Dekorasyon",
+    "lightingEnhancement": "Aydınlatma İyileştirme",
+    "twilightConversion": "Alacakaranlık Dönüşümü"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "subtitle": "Çalışma alanınızı ve hesap tercihlerinizi yönetin",
+    "profile": {
+      "title": "Profil",
+      "description": "Kişisel bilgileriniz",
+      "settings": "Profil Ayarları",
+      "settingsDesc": "Kişisel bilgileriniz ve tercihleriniz",
+      "photo": "Profil Fotoğrafı",
+      "changePhoto": "Fotoğrafı Değiştir",
+      "uploadHint": "PNG, JPG 2MB'a kadar. Önerilen 200x200px.",
+      "displayName": "Görünen Ad",
+      "email": "E-posta Adresi",
+      "emailHint": "E-posta değiştirilemez",
+      "language": "Dil",
+      "languageDesc": "Tercih ettiğiniz dili seçin",
+      "saveChanges": "Değişiklikleri Kaydet",
+      "saving": "Kaydediliyor...",
+      "uploading": "Yükleniyor...",
+      "updateSuccess": "Profil başarıyla güncellendi",
+      "photoUpdateSuccess": "Profil fotoğrafı güncellendi"
+    },
+    "workspace": {
+      "title": "Çalışma Alanı",
+      "description": "Organizasyon detayları ve markalama",
+      "settings": "Çalışma Alanı Ayarları",
+      "settingsDesc": "Organizasyon detaylarınız ve markalamanız"
+    },
+    "team": {
+      "title": "Ekip",
+      "description": "Ekip üyelerini ve davetleri yönetin",
+      "members": "Ekip Üyeleri",
+      "activeMember": "aktif üye",
+      "activeMembers": "aktif üye",
+      "pendingInvite": "bekleyen davet",
+      "pendingInvites": "bekleyen davet",
+      "inviteMember": "Üye Davet Et",
+      "role": {
+        "owner": "Sahip",
+        "admin": "Yönetici",
+        "member": "Üye"
+      }
+    },
+    "security": {
+      "title": "Güvenlik",
+      "description": "Şifre ve hesap güvenliği",
+      "changePassword": "Şifre Değiştir",
+      "changePasswordDesc": "Hesap şifrenizi güncelleyin",
+      "currentPassword": "Mevcut Şifre",
+      "newPassword": "Yeni Şifre",
+      "confirmPassword": "Şifreyi Onayla",
+      "tips": "Güvenlik İpuçları",
+      "tip1": "Başka yerde kullanmadığınız güçlü ve benzersiz bir şifre kullanın",
+      "tip2": "Şifrenizi destek personeli dahil kimseyle paylaşmayın",
+      "tip3": "Güvenli şifreler oluşturmak ve saklamak için bir şifre yöneticisi kullanmayı düşünün",
+      "tip4": "Yetkisiz erişimden şüpheleniyorsanız şifrenizi hemen değiştirin"
+    }
+  },
+  "auth": {
+    "signIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "signOut": "Çıkış Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "forgotPassword": "Şifremi Unuttum",
+    "noAccount": "Hesabınız yok mu?",
+    "haveAccount": "Zaten hesabınız var mı?",
+    "createAccount": "Hesap Oluştur",
+    "orContinueWith": "veya şununla devam edin",
+    "google": "Google ile devam et",
+    "github": "GitHub ile devam et"
+  },
+  "errors": {
+    "required": "Bu alan zorunludur",
+    "invalidEmail": "Geçerli bir e-posta adresi girin",
+    "passwordTooShort": "Şifre en az 8 karakter olmalıdır",
+    "passwordMismatch": "Şifreler eşleşmiyor",
+    "unauthorized": "Yetkisiz erişim",
+    "notFound": "Bulunamadı",
+    "serverError": "Sunucu hatası",
+    "tryAgain": "Tekrar deneyin"
+  },
+  "language": {
+    "turkish": "Türkçe",
+    "english": "English",
+    "selectLanguage": "Dil Seçin"
+  },
+  "pricing": {
+    "title": "Fiyatlandırma",
+    "subtitle": "İhtiyaçlarınıza uygun planı seçin",
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "perMonth": "/ay",
+    "popular": "Popüler",
+    "getStarted": "Başla",
+    "currentPlan": "Mevcut Plan",
+    "credits": "Kredi",
+    "images": "Görsel"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Emlak fotoğrafçılığını yeniden tanımlıyoruz"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Size nasıl yardımcı olabiliriz?",
+    "name": "Adınız",
+    "email": "E-posta",
+    "message": "Mesajınız",
+    "send": "Gönder",
+    "sending": "Gönderiliyor..."
+  },
+  "help": {
+    "title": "Yardım Merkezi",
+    "subtitle": "Sorularınızın cevaplarını bulun",
+    "searchPlaceholder": "Yardım makaleleri ara..."
+  }
+}

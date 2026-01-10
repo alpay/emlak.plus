@@ -1,6 +1,7 @@
 "use client";
 
 import { IconPhotoPlus, IconSparkles } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,8 @@ export function EmptyProjects({
   onCreateClick,
   className,
 }: EmptyProjectsProps) {
+  const { t } = useTranslation();
+
   return (
     <div
       className={cn(
@@ -52,11 +55,10 @@ export function EmptyProjects({
       {/* Text content */}
       <div className="stagger-1 max-w-md animate-fade-in-up space-y-2">
         <h2 className="font-bold text-3xl text-foreground tracking-tight">
-          Your first masterpiece awaits
+          {t("empty.title")}
         </h2>
         <p className="text-base text-muted-foreground">
-          Transform your real estate photos with AI-powered enhancements. Upload
-          images, choose a style, and watch the magic happen.
+          {t("empty.description")}
         </p>
       </div>
 
@@ -71,7 +73,7 @@ export function EmptyProjects({
           }}
         >
           <IconPhotoPlus className="h-5 w-5" />
-          Create Your First Project
+          {t("empty.createButton")}
         </Button>
       </div>
 
@@ -79,15 +81,15 @@ export function EmptyProjects({
       <div className="stagger-3 flex animate-fade-in-up flex-wrap items-center justify-center gap-6 pt-4 text-muted-foreground/70 text-sm">
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          Virtual Staging
+          {t("empty.virtualStaging")}
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-          Lighting Enhancement
+          {t("empty.lightingEnhancement")}
         </span>
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-          Twilight Conversion
+          {t("empty.twilightConversion")}
         </span>
       </div>
     </div>

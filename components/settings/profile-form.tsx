@@ -8,17 +8,22 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useChangeLanguage } from "@/components/providers/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import {
   createAvatarUploadUrl,
   getAvatarPublicUrl,
   type ProfileActionResult,
   updateProfileAction,
   updateProfileImage,
+  updateUserLanguage,
 } from "@/lib/actions/profile";
+import type { SupportedLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 interface ProfileFormProps {
@@ -34,6 +39,8 @@ export function ProfileForm({
   userEmail,
   userImage,
 }: ProfileFormProps) {
+  const { t } = useTranslation();
+  const { changeLanguage } = useChangeLanguage();
   const formRef = useRef<HTMLFormElement>(null);
   const lastResultRef = useRef<FormState>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -46,7 +53,7 @@ export function ProfileForm({
 
       // Client-side validation
       if (!name.trim()) {
-        return { success: false, error: "Display name is required" };
+        return { success: false, error: t("errors.required") };
       }
 
       // Add the current avatar URL to the form data
@@ -64,13 +71,13 @@ export function ProfileForm({
   useEffect(() => {
     if (state && state !== lastResultRef.current) {
       if (state.success) {
-        toast.success("Profile updated successfully");
+        toast.success(t("settings.profile.updateSuccess"));
       } else if (state.error) {
         toast.error(state.error);
       }
       lastResultRef.current = state;
     }
-  }, [state]);
+  }, [state, t]);
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
@@ -82,13 +89,13 @@ export function ProfileForm({
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+      toast.error(t("errors.invalidImage", "Lütfen bir görsel dosyası seçin"));
       return;
     }
 
     // Validate file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
-      toast.error("Image must be less than 2MB");
+      toast.error(t("errors.imageTooLarge", "Görsel 2MB'dan küçük olmalıdır"));
       return;
     }
 
@@ -98,7 +105,7 @@ export function ProfileForm({
       // Get signed upload URL
       const urlResult = await createAvatarUploadUrl();
       if (!(urlResult.success && urlResult.data)) {
-        toast.error(urlResult.error || "Failed to upload avatar");
+        toast.error(urlResult.error || t("errors.serverError"));
         return;
       }
 
@@ -122,15 +129,26 @@ export function ProfileForm({
       // Auto-save to database immediately
       const saveResult = await updateProfileImage(publicUrl);
       if (saveResult.success) {
-        toast.success("Profile photo updated");
+        toast.success(t("settings.profile.photoUpdateSuccess"));
       } else {
-        toast.error(saveResult.error || "Failed to save profile photo");
+        toast.error(saveResult.error || t("errors.serverError"));
       }
     } catch (error) {
       console.error("Avatar upload error:", error);
-      toast.error("Failed to upload avatar");
+      toast.error(t("errors.serverError"));
     } finally {
       setIsUploadingAvatar(false);
+    }
+  };
+
+  const handleLanguageChange = async (language: SupportedLanguage) => {
+    // Update in database
+    const result = await updateUserLanguage(language);
+    if (result.success) {
+      await changeLanguage(language);
+      toast.success(t("settings.profile.updateSuccess"));
+    } else {
+      toast.error(result.error || t("errors.serverError"));
     }
   };
 
@@ -138,7 +156,9 @@ export function ProfileForm({
     <form action={formAction} className="space-y-6" ref={formRef}>
       {/* Avatar upload */}
       <div className="space-y-2">
-        <Label className="font-medium text-sm">Profile Photo</Label>
+        <Label className="font-medium text-sm">
+          {t("settings.profile.photo")}
+        </Label>
         <div className="flex items-center gap-4">
           <button
             className={cn(
@@ -190,17 +210,17 @@ export function ProfileForm({
               {isUploadingAvatar ? (
                 <>
                   <IconLoader2 className="h-4 w-4 animate-spin" />
-                  Uploading…
+                  {t("settings.profile.uploading")}
                 </>
               ) : (
                 <>
                   <IconCamera className="h-4 w-4" />
-                  Change Photo
+                  {t("settings.profile.changePhoto")}
                 </>
               )}
             </Button>
             <p className="text-muted-foreground text-xs">
-              PNG, JPG up to 2MB. Recommended 200x200px.
+              {t("settings.profile.uploadHint")}
             </p>
           </div>
         </div>
@@ -211,7 +231,7 @@ export function ProfileForm({
         {/* Display Name */}
         <div className="space-y-2">
           <Label className="font-medium text-sm" htmlFor="display-name">
-            Display Name
+            {t("settings.profile.displayName")}
           </Label>
           <div className="relative">
             <IconUser className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -221,7 +241,7 @@ export function ProfileForm({
               disabled={isPending}
               id="display-name"
               name="name"
-              placeholder="Your name"
+              placeholder={t("settings.profile.displayName")}
             />
           </div>
         </div>
@@ -229,7 +249,7 @@ export function ProfileForm({
         {/* Email (read-only) */}
         <div className="space-y-2">
           <Label className="font-medium text-sm" htmlFor="email">
-            Email Address
+            {t("settings.profile.email")}
           </Label>
           <Input
             className="bg-muted"
@@ -239,9 +259,23 @@ export function ProfileForm({
             readOnly
           />
           <p className="text-muted-foreground text-xs">
-            Email cannot be changed
+            {t("settings.profile.emailHint")}
           </p>
         </div>
+      </div>
+
+      {/* Language Selection */}
+      <div className="space-y-2">
+        <Label className="font-medium text-sm">
+          {t("settings.profile.language")}
+        </Label>
+        <p className="mb-2 text-muted-foreground text-xs">
+          {t("settings.profile.languageDesc")}
+        </p>
+        <LanguageSwitcher
+          onLanguageChange={handleLanguageChange}
+          variant="select"
+        />
       </div>
 
       {/* Save button */}
@@ -257,12 +291,12 @@ export function ProfileForm({
           {isPending ? (
             <>
               <IconLoader2 className="h-4 w-4 animate-spin" />
-              Saving…
+              {t("settings.profile.saving")}
             </>
           ) : (
             <>
               <IconDeviceFloppy className="h-4 w-4" />
-              Save Changes
+              {t("settings.profile.saveChanges")}
             </>
           )}
         </Button>

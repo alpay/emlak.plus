@@ -1,26 +1,30 @@
+"use client";
+
 import { IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
 import Link from "next/link";
-
-const footerLinks = {
-  product: [
-    { label: "Features", href: "#features" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Pricing", href: "#pricing" },
-  ],
-  company: [
-    { label: "About", href: "/about" },
-    { label: "Blog", href: "/blog" },
-    { label: "Help Center", href: "/help" },
-    { label: "Contact", href: "/contact" },
-  ],
-  legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
-  ],
-};
+import { useTranslation } from "react-i18next";
 
 export function LandingFooter() {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    product: [
+      { label: t("nav.features"), href: "#features" },
+      { label: t("nav.howItWorks"), href: "#how-it-works" },
+      { label: t("nav.pricing"), href: "#pricing" },
+    ],
+    company: [
+      { label: t("footer.about"), href: "/about" },
+      { label: t("footer.blog"), href: "/blog" },
+      { label: t("footer.helpCenter"), href: "/help" },
+      { label: t("footer.contact"), href: "/contact" },
+    ],
+    legal: [
+      { label: t("footer.privacy"), href: "/privacy" },
+      { label: t("footer.terms"), href: "/terms" },
+    ],
+  };
 
   return (
     <footer
@@ -45,8 +49,7 @@ export function LandingFooter() {
               className="mt-4 max-w-xs text-sm leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Transform your real estate photos with AI-powered enhancements.
-              Professional results in seconds.
+              {t("footer.description")}
             </p>
 
             {/* Social Links */}
@@ -92,7 +95,7 @@ export function LandingFooter() {
               className="font-semibold text-sm"
               style={{ color: "var(--landing-text)" }}
             >
-              Product
+              {t("footer.product")}
             </h3>
             <ul className="mt-4 space-y-3">
               {footerLinks.product.map((link) => (
@@ -115,7 +118,7 @@ export function LandingFooter() {
               className="font-semibold text-sm"
               style={{ color: "var(--landing-text)" }}
             >
-              Company
+              {t("footer.company")}
             </h3>
             <ul className="mt-4 space-y-3">
               {footerLinks.company.map((link) => (
@@ -138,7 +141,7 @@ export function LandingFooter() {
               className="font-semibold text-sm"
               style={{ color: "var(--landing-text)" }}
             >
-              Legal
+              {t("footer.legal")}
             </h3>
             <ul className="mt-4 space-y-3">
               {footerLinks.legal.map((link) => (
@@ -162,10 +165,10 @@ export function LandingFooter() {
           style={{ borderColor: "var(--landing-border)" }}
         >
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
-            &copy; {currentYear} Emlak. All rights reserved.
+            &copy; {currentYear} Emlak. {t("footer.allRightsReserved")}
           </p>
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
-            Made with care in Norway
+            {t("footer.madeWith")}
           </p>
         </div>
       </div>

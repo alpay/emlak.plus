@@ -1,32 +1,41 @@
 "use client";
 
 import { IconDownload, IconUpload, IconWand } from "@tabler/icons-react";
-
-const steps = [
-  {
-    step: "01",
-    icon: IconUpload,
-    title: "Upload Your Photos",
-    description:
-      "Drag and drop your property photos or select them from your device. We support all common image formats.",
-  },
-  {
-    step: "02",
-    icon: IconWand,
-    title: "Choose a Style",
-    description:
-      "Select from our collection of professional style templates designed for different property types and aesthetics.",
-  },
-  {
-    step: "03",
-    icon: IconDownload,
-    title: "Download & Share",
-    description:
-      "Get your enhanced photos instantly. Download in high resolution, ready for your listings and marketing.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export function LandingHowItWorks() {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      step: "01",
+      icon: IconUpload,
+      title: t("howItWorks.step1Title"),
+      description: t(
+        "howItWorks.step1Desc",
+        "Mülk fotoğraflarınızı sürükleyip bırakın veya cihazınızdan seçin. Tüm yaygın görüntü formatlarını destekliyoruz."
+      ),
+    },
+    {
+      step: "02",
+      icon: IconWand,
+      title: t("howItWorks.step2Title"),
+      description: t(
+        "howItWorks.step2Desc",
+        "Farklı mülk türleri ve estetikler için tasarlanmış profesyonel stil şablonlarımızdan seçin."
+      ),
+    },
+    {
+      step: "03",
+      icon: IconDownload,
+      title: t("howItWorks.step3Title"),
+      description: t(
+        "howItWorks.step3Desc",
+        "İyileştirilmiş fotoğraflarınızı anında alın. Yüksek çözünürlükte indirin, ilanlarınız ve pazarlamanız için hazır."
+      ),
+    },
+  ];
+
   return (
     <section
       className="px-6 py-24 md:py-32"
@@ -40,22 +49,24 @@ export function LandingHowItWorks() {
             className="font-semibold text-sm uppercase tracking-wider"
             style={{ color: "var(--landing-accent)" }}
           >
-            How It Works
+            {t("howItWorks.title")}
           </p>
           <h2
             className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            Three simple steps to
+            {t("howItWorks.heading", "Mükemmel fotoğraflar için")}
             <br />
-            perfect photos
+            {t("howItWorks.headingLine2", "üç basit adım")}
           </h2>
           <p
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            No complicated software or design experience required. Just upload,
-            select, and download.
+            {t(
+              "howItWorks.subtitle",
+              "Karmaşık yazılım veya tasarım deneyimi gerekmez. Sadece yükleyin, seçin ve indirin."
+            )}
           </p>
         </div>
 
@@ -136,7 +147,7 @@ export function LandingHowItWorks() {
                   border: "1px solid var(--landing-border)",
                 }}
               >
-                Before
+                {t("howItWorks.before", "Önce")}
               </span>
               <div
                 className="aspect-[4/3] rounded-xl"
@@ -147,7 +158,7 @@ export function LandingHowItWorks() {
                     className="text-sm"
                     style={{ color: "var(--landing-text-muted)" }}
                   >
-                    Original Photo
+                    {t("howItWorks.originalPhoto", "Orijinal Fotoğraf")}
                   </p>
                 </div>
               </div>
@@ -165,7 +176,7 @@ export function LandingHowItWorks() {
                   color: "var(--landing-accent-foreground)",
                 }}
               >
-                After
+                {t("howItWorks.after", "Sonra")}
               </span>
               <div
                 className="aspect-[4/3] rounded-xl"
@@ -179,7 +190,7 @@ export function LandingHowItWorks() {
                     className="text-sm"
                     style={{ color: "var(--landing-text-muted)" }}
                   >
-                    Enhanced Photo
+                    {t("howItWorks.enhancedPhoto", "İyileştirilmiş Fotoğraf")}
                   </p>
                 </div>
               </div>

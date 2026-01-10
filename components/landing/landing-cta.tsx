@@ -3,16 +3,12 @@
 import { IconArrowRight, IconCheck } from "@tabler/icons-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 import { useSession } from "@/lib/auth-client";
-
-const benefits = [
-  "No credit card required",
-  "Free trial included",
-  "Cancel anytime",
-];
 
 function CtaAuthButton() {
   const { data: session, isPending } = useSession();
+  const { t } = useTranslation();
 
   if (isPending) {
     return (
@@ -24,7 +20,7 @@ function CtaAuthButton() {
   }
 
   const href = session ? "/dashboard" : "/sign-in";
-  const text = session ? "Go to Dashboard" : "Get Started Free";
+  const text = session ? t("hero.goToDashboard") : t("cta.button");
 
   return (
     <Link
@@ -43,6 +39,14 @@ function CtaAuthButton() {
 }
 
 export function LandingCta() {
+  const { t } = useTranslation();
+
+  const benefits = [
+    t("cta.noCreditCard", "Kredi kartı gerekmez"),
+    t("cta.freeTrial", "Ücretsiz deneme dahil"),
+    t("cta.cancelAnytime", "İstediğiniz zaman iptal"),
+  ];
+
   return (
     <section
       className="relative overflow-hidden px-6 py-24 md:py-32"
@@ -70,9 +74,7 @@ export function LandingCta() {
           className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
           style={{ color: "var(--landing-accent-foreground)" }}
         >
-          Start Creating Stunning
-          <br />
-          Listings Today
+          {t("cta.title")}
         </h2>
         <p
           className="mx-auto mt-4 max-w-xl text-lg leading-relaxed"
@@ -81,8 +83,7 @@ export function LandingCta() {
             opacity: 0.85,
           }}
         >
-          Join top real estate professionals. Create professional photos in
-          seconds, not hours.
+          {t("cta.subtitle")}
         </p>
 
         {/* CTA Button */}

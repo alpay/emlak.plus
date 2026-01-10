@@ -286,3 +286,40 @@ export async function updateWorkspaceLogo(
     return { success: false, error: "Failed to update workspace logo" };
   }
 }
+
+/**
+ * Update user's language preference
+ */
+export async function updateUserLanguage(
+  language: "tr" | "en"
+): Promise<{ success: boolean; error?: string }> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    return { success: false, error: "Unauthorized" };
+  }
+
+  // Validate language
+  if (language !== "tr" && language !== "en") {
+    return { success: false, error: "Invalid language" };
+  }
+
+  try {
+    await db
+      .update(user)
+      .set({
+        language,
+        updatedAt: new Date(),
+      })
+      .where(eq(user.id, session.user.id));
+
+    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/settings");
+    return { success: true };
+  } catch (error) {
+    console.error("[profile:updateUserLanguage] Error:", error);
+    return { success: false, error: "Failed to update language" };
+  }
+}

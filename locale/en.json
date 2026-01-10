@@ -106,6 +106,14 @@
     "recentProjects": "Recent Listings",
     "noProjects": "No listings yet",
     "createFirstProject": "Create Your First Listing",
+    "subtitle": "Transform your real estate photos with AI",
+    "searchProjects": "Search listings...",
+    "allStyles": "All styles",
+    "noMatchingProjects": "No listings match your filters",
+    "aiEdits": "AI Edits",
+    "unknownStyle": "Unknown Style",
+    "user": "User",
+    "videoComingSoon": "Video (coming soon)",
     "stats": {
       "totalProjects": "Total Listings",
       "completedProjects": "Completed Listings",
@@ -252,5 +260,85 @@
     "title": "Help Center",
     "subtitle": "Find answers to your questions",
     "searchPlaceholder": "Search help articles..."
+  },
+  "project": {
+    "steps": {
+      "upload": "Upload",
+      "room": "Room",
+      "style": "Style",
+      "confirm": "Confirm"
+    },
+    "upload": {
+      "title": "Upload Images",
+      "description": "Add the real estate photos you want to enhance"
+    },
+    "roomType": {
+      "title": "Select Room Type",
+      "description": "Help the AI understand what kind of space this is"
+    },
+    "style": {
+      "title": "Choose Style",
+      "description": "Select a transformation style for your photos"
+    },
+    "confirm": {
+      "title": "Review & Confirm",
+      "description": "Name your project and review before processing"
+    },
+    "processing": "Processing..."
+  },
+  "upload": {
+    "dropHere": "Drop your images here",
+    "dragDrop": "Drag & drop images here",
+    "orClick": "or click to browse",
+    "maxSize": "up to 10MB",
+    "addMore": "Add more"
+  },
+  "roomType": {
+    "description": "Select the room type to help the AI better understand and transform your space."
+  },
+  "style": {
+    "description": "Choose a style to apply to your photos. Each style uses AI to transform your images.",
+    "comingSoon": "Coming Soon"
+  },
+  "confirm": {
+    "images": "Images",
+    "projectName": "Listing Name",
+    "namePlaceholder": "e.g., 123 Main Street",
+    "style": "Style"
+  },
+  "workspace": {
+    "logo": "Workspace Logo",
+    "uploadLogo": "Upload Logo",
+    "name": "Workspace Name",
+    "namePlaceholder": "Your company name",
+    "nameRequired": "Workspace name is required",
+    "orgNumber": "Organization Number",
+    "contactEmail": "Contact Email",
+    "contactPerson": "Contact Person",
+    "fullName": "Full name",
+    "saveSuccess": "Changes saved successfully",
+    "logoUploadSuccess": "Logo uploaded successfully",
+    "logoUploadFailed": "Failed to upload logo",
+    "logoSaveFailed": "Failed to save logo"
+  },
+  "password": {
+    "currentRequired": "Current password is required",
+    "newRequired": "New password is required",
+    "confirmRequired": "Please confirm your new password",
+    "mustBeDifferent": "New password must be different from current",
+    "incorrect": "Current password is incorrect",
+    "changeFailed": "Failed to change password",
+    "changeSuccess": "Password changed successfully",
+    "strength": "Password strength",
+    "match": "Passwords match",
+    "requirements": "Password requirements",
+    "req8chars": "At least 8 characters",
+    "reqMixedCase": "Mix of uppercase and lowercase letters",
+    "reqNumber": "At least one number",
+    "reqSpecial": "At least one special character",
+    "enterCurrent": "Enter your current password",
+    "enterNew": "Enter your new password",
+    "confirmNew": "Confirm your new password",
+    "changing": "Changing Password..."
   }
 }

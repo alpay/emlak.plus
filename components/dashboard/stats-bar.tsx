@@ -9,6 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { ProjectStatus } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
@@ -52,7 +53,6 @@ function StatItem({
       onClick={onClick}
       style={{
         ["--ring-color" as string]: accentColor,
-        ringColor: isActive || !isClickable ? undefined : "var(--foreground/5)",
       }}
       type="button"
     >
@@ -98,6 +98,7 @@ export function StatsBar({
   onStatusFilter,
   activeStatus,
 }: StatsBarProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -125,7 +126,7 @@ export function StatsBar({
         delay={0}
         icon={<IconBuilding className="h-4 w-4" />}
         isActive={currentStatus === null}
-        label="Total Projects"
+        label={t("dashboard.stats.totalProjects")}
         onClick={() => handleStatusClick(null)}
         value={totalProperties.toLocaleString()}
       />
@@ -134,7 +135,7 @@ export function StatsBar({
         delay={50}
         icon={<IconCheck className="h-4 w-4" />}
         isActive={currentStatus === "completed"}
-        label="Completed"
+        label={t("dashboard.status.completed")}
         onClick={() => handleStatusClick("completed")}
         value={completedProperties.toLocaleString()}
       />
@@ -143,7 +144,7 @@ export function StatsBar({
         delay={100}
         icon={<IconLoader2 className="h-4 w-4" />}
         isActive={currentStatus === "processing"}
-        label="Processing"
+        label={t("dashboard.status.processing")}
         onClick={() => handleStatusClick("processing")}
         value={processingProperties.toLocaleString()}
       />
@@ -153,7 +154,7 @@ export function StatsBar({
           delay={150}
           icon={<IconAlertTriangle className="h-4 w-4" />}
           isActive={currentStatus === "failed"}
-          label="Failed"
+          label={t("dashboard.status.failed")}
           onClick={() => handleStatusClick("failed")}
           value={failedProperties.toLocaleString()}
         />
@@ -163,7 +164,7 @@ export function StatsBar({
         delay={200}
         icon={<IconSparkles className="h-4 w-4" />}
         isClickable={false}
-        label="AI Edits"
+        label={t("dashboard.aiEdits", "AI Düzenlemeleri")}
         value={totalEdits.toLocaleString()}
       />
     </div>

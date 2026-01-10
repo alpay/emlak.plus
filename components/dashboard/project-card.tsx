@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import type * as React from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import type { Project, ProjectStatus } from "@/lib/db/schema";
 import { getTemplateById } from "@/lib/style-templates";
@@ -22,57 +23,67 @@ interface ProjectCardProps {
   style?: React.CSSProperties;
 }
 
-const statusConfig: Record<
-  ProjectStatus,
-  {
-    label: string;
-    variant:
-      | "status-active"
-      | "status-pending"
-      | "status-completed"
-      | "status-archived";
-    icon: React.ReactNode;
-  }
-> = {
-  completed: {
-    label: "Completed",
-    variant: "status-completed",
-    icon: <IconCheck className="h-3 w-3" />,
-  },
-  processing: {
-    label: "Processing",
-    variant: "status-active",
-    icon: <IconLoader2 className="h-3 w-3 animate-spin" />,
-  },
-  pending: {
-    label: "Pending",
-    variant: "status-pending",
-    icon: <IconClock className="h-3 w-3" />,
-  },
-  failed: {
-    label: "Failed",
-    variant: "status-archived",
-    icon: <IconAlertTriangle className="h-3 w-3" />,
-  },
-};
-
-function formatRelativeDate(date: Date): string {
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-  if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
-  return `${Math.floor(diffDays / 365)} years ago`;
-}
-
 export function ProjectCard({ project, className, style }: ProjectCardProps) {
+  const { t, i18n } = useTranslation();
   const template = getTemplateById(project.styleTemplateId);
-  const status =
-    statusConfig[project.status as ProjectStatus] || statusConfig.pending;
+
+  const statusConfig: Record<
+    ProjectStatus,
+    {
+      label: string;
+      variant:
+        | "status-active"
+        | "status-pending"
+        | "status-completed"
+        | "status-archived";
+      icon: React.ReactNode;
+    }
+  > = {
+    completed: {
+      label: t("dashboard.status.completed"),
+      variant: "status-completed",
+      icon: <IconCheck className="h-3 w-3" />,
+    },
+    processing: {
+      label: t("dashboard.status.processing"),
+      variant: "status-active",
+      icon: <IconLoader2 className="h-3 w-3 animate-spin" />,
+    },
+    pending: {
+      label: t("dashboard.status.pending"),
+      variant: "status-pending",
+      icon: <IconClock className="h-3 w-3" />,
+    },
+    failed: {
+      label: t("dashboard.status.failed"),
+      variant: "status-archived",
+      icon: <IconAlertTriangle className="h-3 w-3" />,
+    },
+  };
+
+  const status = statusConfig[project.status as ProjectStatus] || statusConfig.pending;
+
+  const formatRelativeDate = (date: Date): string => {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    const isTurkish = i18n.language === "tr";
+
+    if (diffDays === 0) return isTurkish ? "Bugün" : "Today";
+    if (diffDays === 1) return isTurkish ? "Dün" : "Yesterday";
+    if (diffDays < 7) return isTurkish ? `${diffDays} gün önce` : `${diffDays} days ago`;
+    if (diffDays < 30) {
+      const weeks = Math.floor(diffDays / 7);
+      return isTurkish ? `${weeks} hafta önce` : `${weeks} weeks ago`;
+    }
+    if (diffDays < 365) {
+      const months = Math.floor(diffDays / 30);
+      return isTurkish ? `${months} ay önce` : `${months} months ago`;
+    }
+    const years = Math.floor(diffDays / 365);
+    return isTurkish ? `${years} yıl önce` : `${years} years ago`;
+  };
 
   return (
     <Link
@@ -150,7 +161,7 @@ export function ProjectCard({ project, className, style }: ProjectCardProps) {
 
         <div className="flex items-center justify-between gap-2">
           <p className="line-clamp-1 text-muted-foreground text-sm">
-            {template?.name || "Unknown Style"}
+            {template?.name || t("dashboard.unknownStyle", "Bilinmeyen Stil")}
           </p>
           <span className="shrink-0 text-muted-foreground/70 text-xs">
             {formatRelativeDate(project.createdAt)}

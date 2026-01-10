@@ -27,7 +27,9 @@ export function LanguageSwitcher({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const currentLang = i18n.language as SupportedLanguage;
+  // Normalize language code (e.g., "tr-TR" -> "tr", "en-US" -> "en")
+  const rawLang = i18n.language || "tr";
+  const currentLang = (rawLang.split("-")[0] as SupportedLanguage) || "tr";
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

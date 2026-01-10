@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { ConfirmStep } from "@/components/projects/steps/confirm-step";
 import { RoomTypeStep } from "@/components/projects/steps/room-type-step";
 import { StyleStep } from "@/components/projects/steps/style-step";
@@ -37,18 +38,11 @@ interface NewProjectDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const STEPS: { id: CreationStep; label: string; icon: React.ReactNode }[] = [
-  { id: "upload", label: "Upload", icon: <IconUpload className="h-4 w-4" /> },
-  { id: "room-type", label: "Room", icon: <IconHome className="h-4 w-4" /> },
-  { id: "style", label: "Style", icon: <IconPalette className="h-4 w-4" /> },
-  { id: "confirm", label: "Confirm", icon: <IconCheck className="h-4 w-4" /> },
-];
-
 function StepIndicator({
   steps,
   currentStep,
 }: {
-  steps: typeof STEPS;
+  steps: { id: CreationStep; label: string; icon: React.ReactNode }[];
   currentStep: CreationStep;
 }) {
   const currentIndex = steps.findIndex((s) => s.id === currentStep);
@@ -64,8 +58,7 @@ function StepIndicator({
             <div
               className={cn(
                 "flex items-center gap-2 rounded-full px-3 py-1.5 font-medium text-sm transition-all duration-200",
-                isActive &&
-                  "bg-[var(--accent-teal)]/10 text-[var(--accent-teal)]",
+                isActive && "bg-[var(--accent-teal)]/10 text-[var(--accent-teal)]",
                 isCompleted && "text-[var(--accent-teal)]",
                 !(isActive || isCompleted) && "text-muted-foreground"
               )}
@@ -78,11 +71,7 @@ function StepIndicator({
                   !(isActive || isCompleted) && "bg-muted text-muted-foreground"
                 )}
               >
-                {isCompleted ? (
-                  <IconCheck className="h-3.5 w-3.5" />
-                ) : (
-                  index + 1
-                )}
+                {isCompleted ? <IconCheck className="h-3.5 w-3.5" /> : index + 1}
               </span>
               <span className="hidden sm:inline">{step.label}</span>
             </div>
@@ -102,13 +91,19 @@ function StepIndicator({
   );
 }
 
-export function NewProjectDialog({
-  open,
-  onOpenChange,
-}: NewProjectDialogProps) {
+export function NewProjectDialog({ open, onOpenChange }: NewProjectDialogProps) {
+  const { t, i18n } = useTranslation();
+  const isTurkish = i18n.language?.startsWith("tr");
   const router = useRouter();
   const creation = useProjectCreation();
   const imageUpload = useImageUpload();
+
+  const STEPS: { id: CreationStep; label: string; icon: React.ReactNode }[] = [
+    { id: "upload", label: t("project.steps.upload", "Yükle"), icon: <IconUpload className="h-4 w-4" /> },
+    { id: "room-type", label: t("project.steps.room", "Oda"), icon: <IconHome className="h-4 w-4" /> },
+    { id: "style", label: t("project.steps.style", "Stil"), icon: <IconPalette className="h-4 w-4" /> },
+    { id: "confirm", label: t("project.steps.confirm", "Onayla"), icon: <IconCheck className="h-4 w-4" /> },
+  ];
 
   const handleClose = React.useCallback(() => {
     creation.reset();
@@ -122,7 +117,6 @@ export function NewProjectDialog({
     creation.setIsSubmitting(true);
 
     try {
-      // Step 1: Create the project
       const projectFormData = new FormData();
       projectFormData.set("name", creation.projectName);
       projectFormData.set("styleTemplateId", creation.selectedTemplate.id);
@@ -140,16 +134,13 @@ export function NewProjectDialog({
 
       const project = projectResult.data;
 
-      // Step 2: Upload images directly to Supabase (client-side)
       const files = creation.images.map((img) => img.file);
       const uploadSuccess = await imageUpload.uploadImages(project.id, files);
 
       if (!uploadSuccess) {
         console.error("Failed to upload images:", imageUpload.error);
-        // Project was created but images failed - still redirect to project
       }
 
-      // Success - redirect to project detail page
       creation.reset();
       imageUpload.reset();
       onOpenChange(false);
@@ -160,71 +151,52 @@ export function NewProjectDialog({
     }
   }, [creation, imageUpload, onOpenChange, router]);
 
-  const stepTitles: Record<
-    CreationStep,
-    { title: string; description: string }
-  > = {
+  const stepTitles: Record<CreationStep, { title: string; description: string }> = {
     upload: {
-      title: "Upload Images",
-      description: "Add the real estate photos you want to enhance",
+      title: t("project.upload.title", "Görselleri Yükle"),
+      description: t("project.upload.description", "İyileştirmek istediğiniz gayrimenkul fotoğraflarını ekleyin"),
     },
     "room-type": {
-      title: "Select Room Type",
-      description: "Help the AI understand what kind of space this is",
+      title: t("project.roomType.title", "Oda Türü Seçin"),
+      description: t("project.roomType.description", "AI'ın bu alanın türünü anlamasına yardımcı olun"),
     },
     style: {
-      title: "Choose Style",
-      description: "Select a transformation style for your photos",
+      title: t("project.style.title", "Stil Seçin"),
+      description: t("project.style.description", "Fotoğraflarınız için bir dönüşüm stili seçin"),
     },
     confirm: {
-      title: "Review & Confirm",
-      description: "Name your project and review before processing",
+      title: t("project.confirm.title", "İncele ve Onayla"),
+      description: t("project.confirm.description", "İlanınızı adlandırın ve işleme başlamadan önce gözden geçirin"),
     },
   };
 
   const currentStepInfo = stepTitles[creation.step];
+  const creditText = isTurkish
+    ? `Oluştur (${creation.images.length} kredi)`
+    : `Generate (${creation.images.length} credit${creation.images.length !== 1 ? "s" : ""})`;
 
   return (
     <Dialog onOpenChange={handleClose} open={open}>
-      <DialogContent
-        className="flex max-h-[90vh] flex-col gap-0 overflow-hidden p-0"
-        size="2xl"
-      >
-        {/* Header */}
+      <DialogContent className="flex max-h-[90vh] flex-col gap-0 overflow-hidden p-0" size="2xl">
         <div className="border-b px-6 py-4">
           <DialogHeader className="space-y-3">
             <StepIndicator currentStep={creation.step} steps={STEPS} />
             <div className="pt-2 text-center">
-              <DialogTitle className="text-xl">
-                {currentStepInfo.title}
-              </DialogTitle>
-              <DialogDescription className="mt-1">
-                {currentStepInfo.description}
-              </DialogDescription>
+              <DialogTitle className="text-xl">{currentStepInfo.title}</DialogTitle>
+              <DialogDescription className="mt-1">{currentStepInfo.description}</DialogDescription>
             </div>
           </DialogHeader>
         </div>
 
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-6">
           {creation.step === "upload" && (
-            <UploadStep
-              images={creation.images}
-              onAddImages={creation.addImages}
-              onRemoveImage={creation.removeImage}
-            />
+            <UploadStep images={creation.images} onAddImages={creation.addImages} onRemoveImage={creation.removeImage} />
           )}
           {creation.step === "room-type" && (
-            <RoomTypeStep
-              onSelectRoomType={creation.setRoomType}
-              selectedRoomType={creation.roomType}
-            />
+            <RoomTypeStep onSelectRoomType={creation.setRoomType} selectedRoomType={creation.roomType} />
           )}
           {creation.step === "style" && (
-            <StyleStep
-              onSelectTemplate={creation.setSelectedTemplate}
-              selectedTemplate={creation.selectedTemplate}
-            />
+            <StyleStep onSelectTemplate={creation.setSelectedTemplate} selectedTemplate={creation.selectedTemplate} />
           )}
           {creation.step === "confirm" && (
             <ConfirmStep
@@ -236,29 +208,19 @@ export function NewProjectDialog({
           )}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between border-t bg-muted/30 px-6 py-4">
           <div>
             {creation.step !== "upload" && (
-              <Button
-                className="gap-2"
-                disabled={creation.isSubmitting}
-                onClick={creation.goToPreviousStep}
-                variant="ghost"
-              >
+              <Button className="gap-2" disabled={creation.isSubmitting} onClick={creation.goToPreviousStep} variant="ghost">
                 <IconArrowLeft className="h-4 w-4" />
-                Back
+                {t("common.back")}
               </Button>
             )}
           </div>
 
           <div className="flex items-center gap-3">
-            <Button
-              disabled={creation.isSubmitting}
-              onClick={handleClose}
-              variant="outline"
-            >
-              Cancel
+            <Button disabled={creation.isSubmitting} onClick={handleClose} variant="outline">
+              {t("common.cancel")}
             </Button>
 
             {creation.step === "confirm" ? (
@@ -271,13 +233,12 @@ export function NewProjectDialog({
                 {creation.isSubmitting ? (
                   <>
                     <IconLoader2 className="h-4 w-4 animate-spin" />
-                    Processing...
+                    {t("project.processing", "İşleniyor...")}
                   </>
                 ) : (
                   <>
                     <IconSparkles className="h-4 w-4" />
-                    Generate ({creation.images.length} credit
-                    {creation.images.length !== 1 ? "s" : ""})
+                    {creditText}
                   </>
                 )}
               </Button>
@@ -288,7 +249,7 @@ export function NewProjectDialog({
                 onClick={creation.goToNextStep}
                 style={{ backgroundColor: "var(--accent-teal)" }}
               >
-                Continue
+                {t("common.next")}
                 <IconArrowRight className="h-4 w-4" />
               </Button>
             )}

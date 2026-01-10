@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { EmptyProjects } from "@/components/dashboard/empty-projects";
 import { ProjectsGrid } from "@/components/dashboard/projects-grid";
 import { StatsBar } from "@/components/dashboard/stats-bar";
@@ -37,10 +38,12 @@ function ViewToggle({
   view: ViewMode;
   onViewChange: (view: ViewMode) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-center rounded-lg bg-muted/50 p-1 ring-1 ring-foreground/5">
       <button
-        aria-label="Grid view"
+        aria-label={t("dashboard.filters.grid")}
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200",
           view === "grid"
@@ -56,7 +59,7 @@ function ViewToggle({
         />
       </button>
       <button
-        aria-label="Table view"
+        aria-label={t("dashboard.filters.table")}
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded-md transition-all duration-200",
           view === "table"
@@ -100,6 +103,7 @@ function getUsedStyles(projects: Project[]) {
 }
 
 export function DashboardContent({ projects, stats }: DashboardContentProps) {
+  const { t } = useTranslation();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [view, setView] = useQueryState(
     "view",
@@ -167,9 +171,9 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
               <IconSparkles className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-2xl tracking-tight">Projects</h1>
+              <h1 className="font-bold text-2xl tracking-tight">{t("dashboard.projects")}</h1>
               <p className="text-muted-foreground text-sm">
-                Transform your real estate photos with AI
+                {t("dashboard.subtitle", "Gayrimenkul fotoğraflarınızı AI ile dönüştürün")}
               </p>
             </div>
           </div>
@@ -184,7 +188,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
                 style={{ backgroundColor: "var(--accent-teal)" }}
               >
                 <IconPlus className="h-4 w-4" />
-                <span className="hidden sm:inline">New Project</span>
+                <span className="hidden sm:inline">{t("dashboard.newProject")}</span>
               </Button>
             </div>
           )}
@@ -213,7 +217,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
                 <Input
                   className="border-foreground/10 bg-background/80 pl-9 transition-shadow focus:ring-2 focus:ring-[var(--accent-teal)]/20"
                   onChange={(e) => setSearchQuery(e.target.value || null)}
-                  placeholder="Search projects..."
+                  placeholder={t("dashboard.searchProjects", "İlan ara...")}
                   value={searchQuery || ""}
                 />
               </div>
@@ -227,10 +231,10 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
                   value={styleFilter || "all"}
                 >
                   <SelectTrigger className="w-full border-foreground/10 bg-background/80 sm:w-[180px]">
-                    <SelectValue placeholder="All styles" />
+                    <SelectValue placeholder={t("dashboard.allStyles", "Tüm stiller")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All styles</SelectItem>
+                    <SelectItem value="all">{t("dashboard.allStyles", "Tüm stiller")}</SelectItem>
                     {usedStyles.map((style) => (
                       <SelectItem key={style.id} value={style.id}>
                         {style.name}
@@ -249,7 +253,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
                   variant="ghost"
                 >
                   <IconX className="mr-1 h-3.5 w-3.5" />
-                  Clear filters
+                  {t("common.clearFilters")}
                 </Button>
               )}
             </div>
@@ -261,14 +265,14 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
               <div className="flex flex-col items-center justify-center rounded-xl border border-foreground/10 border-dashed py-12 text-center">
                 <IconSearch className="mb-4 h-10 w-10 text-muted-foreground/30" />
                 <p className="text-muted-foreground">
-                  No projects match your filters
+                  {t("dashboard.noMatchingProjects", "Filtrelerinize uygun ilan bulunamadı")}
                 </p>
                 <Button
                   className="mt-4"
                   onClick={clearAllFilters}
                   variant="outline"
                 >
-                  Clear all filters
+                  {t("common.clearFilters")}
                 </Button>
               </div>
             )}

@@ -27,10 +27,10 @@ import {
   IconWashMachine,
 } from "@tabler/icons-react";
 import type * as React from "react";
+import { useTranslation } from "react-i18next";
 import { ROOM_TYPES } from "@/lib/style-templates";
 import { cn } from "@/lib/utils";
 
-// Map icon names to actual icons
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   IconSofa,
   IconBed,
@@ -62,16 +62,14 @@ interface RoomTypeStepProps {
   onSelectRoomType: (roomType: string) => void;
 }
 
-export function RoomTypeStep({
-  selectedRoomType,
-  onSelectRoomType,
-}: RoomTypeStepProps) {
+export function RoomTypeStep({ selectedRoomType, onSelectRoomType }: RoomTypeStepProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div>
         <p className="text-muted-foreground text-sm">
-          Select the room type to help the AI better understand and transform
-          your space.
+          {t("roomType.description", "AI'ın alanınızı daha iyi anlaması ve dönüştürmesi için oda türünü seçin.")}
         </p>
       </div>
 
@@ -93,7 +91,6 @@ export function RoomTypeStep({
               style={{ animationDelay: `${index * 50}ms` }}
               type="button"
             >
-              {/* Icon */}
               <div
                 className={cn(
                   "flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-200",
@@ -105,22 +102,13 @@ export function RoomTypeStep({
                 {IconComponent && <IconComponent className="h-6 w-6" />}
               </div>
 
-              {/* Label */}
               <div className="space-y-1">
-                <h3
-                  className={cn(
-                    "font-semibold leading-tight",
-                    isSelected ? "text-foreground" : "text-foreground"
-                  )}
-                >
+                <h3 className={cn("font-semibold leading-tight", isSelected ? "text-foreground" : "text-foreground")}>
                   {roomType.label}
                 </h3>
-                <p className="text-muted-foreground text-xs">
-                  {roomType.description}
-                </p>
+                <p className="text-muted-foreground text-xs">{roomType.description}</p>
               </div>
 
-              {/* Selected checkmark */}
               {isSelected && (
                 <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-teal)]">
                   <IconCheck className="h-3 w-3 text-white" />

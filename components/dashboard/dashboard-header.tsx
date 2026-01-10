@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CreditBalance } from "@/components/credits/credit-balance";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,16 +36,16 @@ interface DashboardHeaderProps {
 
 interface NavItem {
   href: string;
-  label: string;
+  labelKey: string;
   icon: React.ComponentType<{ className?: string }>;
   disabled?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { href: "/dashboard", label: "Projects", icon: IconSparkles },
+  { href: "/dashboard", labelKey: "dashboard.projects", icon: IconSparkles },
   {
     href: "/video",
-    label: "Video (coming soon)",
+    labelKey: "dashboard.videoComingSoon",
     icon: IconMovie,
     disabled: true,
   },
@@ -56,11 +57,12 @@ export function DashboardHeader({
   userImage,
   credits,
 }: DashboardHeaderProps) {
+  const { t } = useTranslation();
   const pathname = usePathname();
   const router = useRouter();
   const [isSigningOut, setIsSigningOut] = useState(false);
 
-  const displayName = userName || userLabel || "User";
+  const displayName = userName || userLabel || t("dashboard.user", "Kullanıcı");
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -97,6 +99,9 @@ export function DashboardHeader({
                     : pathname.startsWith(item.href));
 
                 const Icon = item.icon;
+                const label = item.disabled
+                  ? t("dashboard.videoComingSoon", "Video (yakında)")
+                  : t(item.labelKey);
 
                 return (
                   <Button
@@ -114,12 +119,12 @@ export function DashboardHeader({
                     {item.disabled ? (
                       <div className="flex items-center gap-2">
                         <Icon className="size-4" />
-                        <span className="hidden sm:inline">{item.label}</span>
+                        <span className="hidden sm:inline">{label}</span>
                       </div>
                     ) : (
                       <Link href={item.href}>
                         <Icon className="size-4" />
-                        <span className="hidden sm:inline">{item.label}</span>
+                        <span className="hidden sm:inline">{label}</span>
                       </Link>
                     )}
                   </Button>
@@ -163,7 +168,7 @@ export function DashboardHeader({
                     href="/dashboard/settings"
                   >
                     <IconSettings className="size-4" />
-                    Settings
+                    {t("settings.title")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -177,7 +182,7 @@ export function DashboardHeader({
                   ) : (
                     <IconLogout className="size-4" />
                   )}
-                  Sign out
+                  {t("nav.signOut")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -9,6 +9,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ChangePasswordForm } from "@/components/settings/change-password-form";
 import { InviteMemberDialog } from "@/components/settings/invite-member-dialog";
 import { ProfileForm } from "@/components/settings/profile-form";
@@ -30,38 +31,6 @@ interface SettingsContentProps {
   userImage: string | null;
 }
 
-const SECTIONS: {
-  id: SettingsSection;
-  label: string;
-  icon: React.ReactNode;
-  description: string;
-}[] = [
-  {
-    id: "profile",
-    label: "Profile",
-    icon: <IconUser className="h-4 w-4" />,
-    description: "Your personal information",
-  },
-  {
-    id: "workspace",
-    label: "Workspace",
-    icon: <IconBuilding className="h-4 w-4" />,
-    description: "Organization details and branding",
-  },
-  {
-    id: "team",
-    label: "Team",
-    icon: <IconUsers className="h-4 w-4" />,
-    description: "Manage team members and invitations",
-  },
-  {
-    id: "security",
-    label: "Security",
-    icon: <IconLock className="h-4 w-4" />,
-    description: "Password and account security",
-  },
-];
-
 export function SettingsContent({
   workspace,
   members,
@@ -70,12 +39,45 @@ export function SettingsContent({
   userEmail,
   userImage,
 }: SettingsContentProps) {
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] =
     useState<SettingsSection>("profile");
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
 
   const activeMembers = members.filter((m) => m.status === "active").length;
   const pendingInvites = members.filter((m) => m.status === "pending").length;
+
+  const SECTIONS: {
+    id: SettingsSection;
+    label: string;
+    icon: React.ReactNode;
+    description: string;
+  }[] = [
+    {
+      id: "profile",
+      label: t("settings.profile.title"),
+      icon: <IconUser className="h-4 w-4" />,
+      description: t("settings.profile.description"),
+    },
+    {
+      id: "workspace",
+      label: t("settings.workspace.title"),
+      icon: <IconBuilding className="h-4 w-4" />,
+      description: t("settings.workspace.description"),
+    },
+    {
+      id: "team",
+      label: t("settings.team.title"),
+      icon: <IconUsers className="h-4 w-4" />,
+      description: t("settings.team.description"),
+    },
+    {
+      id: "security",
+      label: t("settings.security.title"),
+      icon: <IconLock className="h-4 w-4" />,
+      description: t("settings.security.description"),
+    },
+  ];
 
   return (
     <div className="px-4 pb-8 md:px-6 lg:px-8">
@@ -89,9 +91,9 @@ export function SettingsContent({
             <IconSettings className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-2xl tracking-tight">Settings</h1>
+            <h1 className="font-bold text-2xl tracking-tight">{t("settings.title")}</h1>
             <p className="text-muted-foreground text-sm">
-              Manage your workspace and account preferences
+              {t("settings.subtitle")}
             </p>
           </div>
         </div>
@@ -157,9 +159,9 @@ export function SettingsContent({
                     />
                   </div>
                   <div>
-                    <h2 className="font-semibold text-lg">Profile Settings</h2>
+                    <h2 className="font-semibold text-lg">{t("settings.profile.settings")}</h2>
                     <p className="text-muted-foreground text-sm">
-                      Your personal information and preferences
+                      {t("settings.profile.settingsDesc")}
                     </p>
                   </div>
                 </div>
@@ -192,10 +194,10 @@ export function SettingsContent({
                   </div>
                   <div>
                     <h2 className="font-semibold text-lg">
-                      Workspace Settings
+                      {t("settings.workspace.settings")}
                     </h2>
                     <p className="text-muted-foreground text-sm">
-                      Your organization details and branding
+                      {t("settings.workspace.settingsDesc")}
                     </p>
                   </div>
                 </div>
@@ -224,15 +226,13 @@ export function SettingsContent({
                       />
                     </div>
                     <div>
-                      <h2 className="font-semibold text-lg">Team Members</h2>
+                      <h2 className="font-semibold text-lg">{t("settings.team.members")}</h2>
                       <p className="text-muted-foreground text-sm">
-                        {activeMembers} active member
-                        {activeMembers !== 1 ? "s" : ""}
+                        {activeMembers} {activeMembers === 1 ? t("settings.team.activeMember") : t("settings.team.activeMembers")}
                         {pendingInvites > 0 && (
                           <span className="text-amber-600 dark:text-amber-400">
                             {" "}
-                            &bull; {pendingInvites} pending invite
-                            {pendingInvites !== 1 ? "s" : ""}
+                            &bull; {pendingInvites} {pendingInvites === 1 ? t("settings.team.pendingInvite") : t("settings.team.pendingInvites")}
                           </span>
                         )}
                       </p>
@@ -245,7 +245,7 @@ export function SettingsContent({
                     style={{ backgroundColor: "var(--accent-teal)" }}
                   >
                     <IconUserPlus className="h-4 w-4" />
-                    <span className="hidden sm:inline">Invite Member</span>
+                    <span className="hidden sm:inline">{t("settings.team.inviteMember")}</span>
                   </Button>
                 </div>
 
@@ -277,9 +277,9 @@ export function SettingsContent({
                       />
                     </div>
                     <div>
-                      <h2 className="font-semibold text-lg">Change Password</h2>
+                      <h2 className="font-semibold text-lg">{t("settings.security.changePassword")}</h2>
                       <p className="text-muted-foreground text-sm">
-                        Update your account password
+                        {t("settings.security.changePasswordDesc")}
                       </p>
                     </div>
                   </div>
@@ -292,44 +292,32 @@ export function SettingsContent({
                 {/* Additional security info */}
                 <div className="rounded-2xl border border-foreground/5 bg-card p-6 shadow-sm">
                   <h3 className="mb-4 font-semibold text-base">
-                    Security Tips
+                    {t("settings.security.tips")}
                   </h3>
                   <ul className="space-y-3 text-muted-foreground text-sm">
                     <li className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-green-500">
                         ✓
                       </span>
-                      <span>
-                        Use a strong, unique password that you don't use
-                        elsewhere
-                      </span>
+                      <span>{t("settings.security.tip1")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-green-500">
                         ✓
                       </span>
-                      <span>
-                        Never share your password with anyone, including support
-                        staff
-                      </span>
+                      <span>{t("settings.security.tip2")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-green-500">
                         ✓
                       </span>
-                      <span>
-                        Consider using a password manager to generate and store
-                        secure passwords
-                      </span>
+                      <span>{t("settings.security.tip3")}</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-green-500">
                         ✓
                       </span>
-                      <span>
-                        Change your password immediately if you suspect
-                        unauthorized access
-                      </span>
+                      <span>{t("settings.security.tip4")}</span>
                     </li>
                   </ul>
                 </div>

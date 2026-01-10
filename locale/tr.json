@@ -106,6 +106,14 @@
     "recentProjects": "Son İlanlar",
     "noProjects": "Henüz ilanınız yok",
     "createFirstProject": "İlk İlanınızı Oluşturun",
+    "subtitle": "Gayrimenkul fotoğraflarınızı AI ile dönüştürün",
+    "searchProjects": "İlan ara...",
+    "allStyles": "Tüm stiller",
+    "noMatchingProjects": "Filtrelerinize uygun ilan bulunamadı",
+    "aiEdits": "AI Düzenlemeleri",
+    "unknownStyle": "Bilinmeyen Stil",
+    "user": "Kullanıcı",
+    "videoComingSoon": "Video (yakında)",
     "stats": {
       "totalProjects": "Toplam İlan",
       "completedProjects": "Tamamlanan İlan",
@@ -252,5 +260,86 @@
     "title": "Yardım Merkezi",
     "subtitle": "Sorularınızın cevaplarını bulun",
     "searchPlaceholder": "Yardım makaleleri ara..."
+  },
+  "project": {
+    "steps": {
+      "upload": "Yükle",
+      "room": "Oda",
+      "style": "Stil",
+      "confirm": "Onayla"
+    },
+    "upload": {
+      "title": "Görselleri Yükle",
+      "description": "İyileştirmek istediğiniz gayrimenkul fotoğraflarını ekleyin"
+    },
+    "roomType": {
+      "title": "Oda Türü Seçin",
+      "description": "AI'ın bu alanın türünü anlamasına yardımcı olun"
+    },
+    "style": {
+      "title": "Stil Seçin",
+      "description": "Fotoğraflarınız için bir dönüşüm stili seçin"
+    },
+    "confirm": {
+      "title": "İncele ve Onayla",
+      "description": "İlanınızı adlandırın ve işleme başlamadan önce gözden geçirin"
+    },
+    "processing": "İşleniyor..."
+  },
+  "upload": {
+    "dropHere": "Görsellerinizi buraya bırakın",
+    "dragDrop": "Görselleri sürükleyip bırakın",
+    "orClick": "veya seçmek için tıklayın",
+    "maxSize": "10MB'a kadar",
+    "addMore": "Daha fazla ekle"
+  },
+  "roomType": {
+    "description": "AI'ın alanınızı daha iyi anlaması ve dönüştürmesi için oda türünü seçin."
+  },
+  "style": {
+    "description": "Fotoğraflarınıza uygulanacak bir stil seçin. Her stil, görsellerinizi dönüştürmek için AI kullanır.",
+    "comingSoon": "Yakında"
+  },
+  "confirm": {
+    "images": "Görseller",
+    "projectName": "İlan Adı",
+    "namePlaceholder": "örn. Atatürk Cad. No:123",
+    "style": "Stil"
+  },
+  "workspace": {
+    "logo": "Çalışma Alanı Logosu",
+    "uploadLogo": "Logo Yükle",
+    "name": "Çalışma Alanı Adı",
+    "namePlaceholder": "Şirket adı",
+    "nameRequired": "Çalışma alanı adı gerekli",
+    "orgNumber": "Organizasyon Numarası",
+    "contactEmail": "İletişim E-postası",
+    "contactPerson": "İletişim Kişisi",
+    "fullName": "Ad Soyad",
+    "saveSuccess": "Değişiklikler kaydedildi",
+    "logoUploadSuccess": "Logo yüklendi",
+    "logoUploadFailed": "Logo yüklenemedi",
+    "logoSaveFailed": "Logo kaydedilemedi"
+  },
+  "password": {
+    "currentRequired": "Mevcut şifre gerekli",
+    "newRequired": "Yeni şifre gerekli",
+    "confirmRequired": "Lütfen yeni şifrenizi onaylayın",
+    "mustBeDifferent": "Yeni şifre mevcut şifreden farklı olmalı",
+    "incorrect": "Mevcut şifre yanlış",
+    "changeFailed": "Şifre değiştirilemedi",
+    "changeSuccess": "Şifre başarıyla değiştirildi",
+    "strength": "Şifre gücü",
+    "match": "Şifreler eşleşiyor",
+    "requirements": "Şifre gereksinimleri",
+    "req8chars": "En az 8 karakter",
+    "reqMixedCase": "Büyük ve küçük harf karışımı",
+    "reqNumber": "En az bir rakam",
+    "reqSpecial": "En az bir özel karakter",
+    "enterCurrent": "Mevcut şifrenizi girin",
+    "enterNew": "Yeni şifrenizi girin",
+    "confirmNew": "Yeni şifrenizi onaylayın",
+    "changing": "Değiştiriliyor..."
   }
 }
+

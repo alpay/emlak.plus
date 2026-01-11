@@ -650,6 +650,26 @@
       "room": "Oda",
       "style": "Stil"
     },
+    "styles": {
+      "scandinavian": "İskandinav",
+      "modern-minimalist": "Modern Minimalist",
+      "industrial-loft": "Endüstriyel Loft",
+      "coastal-hamptons": "Sahil Evi",
+      "mid-century-modern": "Yüzyıl Ortası Modern",
+      "bohemian-eclectic": "Bohem Eklektik",
+      "japandi": "Japandi",
+      "luxury-contemporary": "Lüks Çağdaş",
+      "farmhouse-modern": "Modern Çiftlik Evi",
+      "art-deco": "Art Deco",
+      "mediterranean": "Akdeniz",
+      "transitional": "Geçiş Tarzı",
+      "golden-hour": "Altın Saat",
+      "bright-airy": "Aydınlık & Havadar",
+      "curb-appeal": "Dış Cephe Çekiciliği",
+      "twilight-exterior": "Alacakaranlık Çekimi",
+      "declutter": "Temizle & Düzenle",
+      "virtual-renovation": "Sanal Tadilat"
+    },
     "uploadLabel": {
       "title": "Fotoğrafları Yükle ve Etiketle",
       "description": "En iyi sonuçlar için fotoğrafları yükleyin ve oda detaylarını etiketleyin.",
@@ -729,8 +749,9 @@
              "comingSoon": "* Slider ayarı yakında aktif olacak"
           }
         },
+
         "grassGreening": {
-          "title": "Çim Yeşillendirme",
+          "title": "Çim Yeşillendir",
           "description": "Bahçe ve dış mekanlardaki çimleri canlı yeşil görünüme kavuşturur.",
           "note": "Bu özellik sadece bahçe, arka bahçe, cephe, havuz alanı ve teras fotoğraflarına uygulanır. Mevcut olmayan alanlara çim eklenmez.",
           "features": [
@@ -741,7 +762,7 @@
           ]
         },
         "blurSensitiveInfo": {
-          "title": "Hassas Bilgileri Bulanıklaştır",
+          "title": "Hassas Bilgileri Gizle",
           "description": "Fotoğraftaki hassas ve özel bilgileri otomatik olarak bulanıklaştırır.",
           "note": "Gizlilik için önemli: Aile fotoğrafları, plakalar, tam adresler ve kişisel belgeler otomatik olarak bulanıklaştırılır.",
           "features": [
@@ -798,6 +819,80 @@
     "terrace": { "label": "Teras" },
     "balcony": { "label": "Balkon" }
   },
+  "styles": {
+    "scandinavian": {
+      "name": "İskandinav",
+      "description": "Doğal ahşap ve minimal dekor ile aydınlık, ferah alanlar"
+    },
+    "modern-minimalist": {
+      "name": "Modern Minimalist",
+      "description": "Temiz çizgiler, açık alanlar ve sade şıklık"
+    },
+    "industrial-loft": {
+      "name": "Endüstriyel Loft",
+      "description": "Ham malzemeler, açık detaylar ve şehirli karakter"
+    },
+    "coastal-hamptons": {
+      "name": "Sahil Evi",
+      "description": "Denizci dokunuşları ve yumuşak maviler ile rahat zarafet"
+    },
+    "mid-century-modern": {
+      "name": "Yüzyıl Ortası Modern",
+      "description": "İkonik mobilyalar ve sıcak ahşap tonları ile retro cazibe"
+    },
+    "bohemian-eclectic": {
+      "name": "Bohem Eklektik",
+      "description": "Katmanlı dokular, küresel etkiler ve sanatsal hava"
+    },
+    "japandi": {
+      "name": "Japandi",
+      "description": "Japon sadeliği ve İskandinav sıcaklığının buluşması"
+    },
+    "luxury-contemporary": {
+      "name": "Lüks Çağdaş",
+      "description": "Birinci sınıf malzemeler ile sofistike zarafet"
+    },
+    "farmhouse-modern": {
+      "name": "Modern Çiftlik Evi",
+      "description": "Çağdaş konfor ile rustik cazibe"
+    },
+    "art-deco": {
+      "name": "Art Deco",
+      "description": "Cesur desenler ve metaller ile göz alıcı geometri"
+    },
+    "mediterranean": {
+      "name": "Akdeniz",
+      "description": "Sıcak terakota, kemerli detaylar ve güneşli atmosfer"
+    },
+    "transitional": {
+      "name": "Geçiş Tarzı",
+      "description": "Geleneksel ve çağdaş tarzın mükemmel dengesi"
+    },
+    "golden-hour": {
+      "name": "Altın Saat",
+      "description": "Sıcak gün batımı aydınlatması ile samimi ortam"
+    },
+    "bright-airy": {
+      "name": "Aydınlık & Havadar",
+      "description": "Ferah bir his için doğal ışığı maksimize eder"
+    },
+    "curb-appeal": {
+      "name": "Dış Cephe Çekiciliği",
+      "description": "Dış görünüm çekiciliğini artırın"
+    },
+    "twilight-exterior": {
+      "name": "Alacakaranlık Çekimi",
+      "description": "Dramatik akşam dış mekan aydınlatması"
+    },
+    "declutter": {
+      "name": "Temizle & Düzenle",
+      "description": "Kusursuz bir görünüm için dağınıklığı kaldırın"
+    },
+    "virtual-renovation": {
+      "name": "Sanal Tadilat",
+      "description": "Eski özellikleri modernleştirin"
+    }
+  },
   "aiTools": {
     "replaceFurniture": { "title": "Eşyaları Değiştir", "description": "Mevcut mobilyaları yenileriyle değiştirir" },
     "declutter": { "title": "Dağınıklığı Temizle", "description": "Yer çöplerini, dağınık eşyaları temizler" },
@@ -808,7 +903,7 @@
     "whiteBalance": { "title": "Beyaz Dengesi", "description": "Renk sıcaklığını optimize eder" },
     "grassGreening": { "title": "Çim Yeşillendirme", "description": "Bahçedeki çimleri yeşillendirir" },
     "blurSensitiveInfo": { "title": "Hassas Bilgileri Bulanıklaştır", "description": "Kişisel bilgileri, plakaları gizler" },
-    "skyReplacement": { "title": "Gökyüzü Değiştirme", "description": "Gökyüzünü değiştirir" },
+    "skyReplacement": { "title": "Gökyüzünü Değiştir", "description": "Gökyüzünü değiştirir" },
     "outdoorOnly": "Dış Mekan"
   },
   "skyOptions": {
@@ -818,27 +913,7 @@
     "twilight": "Alacakaranlık",
     "sunset": "Gün Batımı"
   },
-  "styles": {
-     "scandinavian": { "name": "İskandinav", "description": "Doğal ahşap ve minimal dekorlu aydınlık, ferah alanlar" },
-     "modern-minimalist": { "name": "Modern Minimalist", "description": "Temiz çizgiler, açık alanlar ve küratörlü sadelik" },
-     "industrial-loft": { "name": "Endüstriyel Loft", "description": "Ham maddeler, brüt unsurlar, şehir karakteri" },
-     "coastal-hamptons": { "name": "Coastal Hamptons", "description": "Denizci dokunuşları ve yumuşak mavilerle esintili zarafet" },
-     "mid-century-modern": { "name": "Mid-Century Modern", "description": "İkonik mobilyalar ve sıcak ahşap tonlarıyla retro çekicilik" },
-     "bohemian-eclectic": { "name": "Bohem Eklektik", "description": "Katmanlı dokular, küresel etkiler, sanatsal yetenek" },
-     "japandi": { "name": "Japandi", "description": "Japon minimalizmi İskandinav sıcaklığıyla buluşuyor" },
-     "luxury-contemporary": { "name": "Lüks Çağdaş", "description": "Birinci sınıf malzemelerle sofistike zarafet" },
-     "farmhouse-modern": { "name": "Modern Çiftlik Evi", "description": "Modern konforla rustik cazibe" },
-     "art-deco": { "name": "Art Deco", "description": "Cesur desenler ve metallerle göz alıcı geometri" },
-     "mediterranean": { "name": "Akdeniz", "description": "Sıcak pişmiş toprak, kemerli detaylar ve güneşli hisler" },
-     "transitional": { "name": "Geçiş", "description": "Geleneksel ve çağdaşın mükemmel dengesi" },
-     "golden-hour": { "name": "Altın Saat", "description": "Rahat bir ortam için sıcak gün batımı aydınlatması" },
-     "bright-airy": { "name": "Aydınlık & Ferah", "description": "Açık hissetmek için doğal ışığı en üst düzeye çıkarın" },
-     "curb-appeal": { "name": "Curb Appeal", "description": "Dış cephe çekiciliğini artırın" },
-     "twilight-exterior": { "name": "Alacakaranlık Çekimi", "description": "Dramatik akşam dış cephe aydınlatması" },
-     "declutter": { "name": "Dağınıklığı Gider & Temizle", "description": "Kusursuz bir görünüm için dağınıklığı kaldırın" },
-     "virtual-renovation": { "name": "Sanal Yenileme", "description": "Eski özellikleri modernize edin" },
-     "coming-soon": { "name": "Daha Fazla Stil Yakında", "description": "Yeni tasarım şablonları yolda" }
-  },
+
   "upload": {
     "dropHere": "Görsellerinizi buraya bırakın",
     "dragDrop": "Görselleri sürükleyip bırakın",

@@ -86,31 +86,36 @@ function ToolCard({
       onClick={onSelect}
       disabled={disabled}
       className={cn(
-        "w-full rounded-2xl border-2 bg-background p-3 text-left transition-all shadow-sm",
+        "w-full rounded-xl border bg-background py-2 px-3 text-left transition-all shadow-sm group relative",
         disabled
           ? "opacity-50 cursor-not-allowed border-border"
           : isSelected
-            ? "border-[var(--accent-teal)] ring-4 ring-[var(--accent-teal)]/10"
+            ? "border-[var(--accent-teal)] ring-1 ring-[var(--accent-teal)] bg-[var(--accent-teal)]/5"
             : checked
-              ? "border-[var(--accent-teal)]/50"
-              : "border-border hover:border-[var(--accent-teal)]/50"
+              ? "border-[var(--accent-teal)]/50 bg-[var(--accent-teal)]/5"
+              : "border-border hover:border-[var(--accent-teal)]/30 hover:bg-muted/30"
       )}
     >
+      {/* {tool.outdoorOnly && (
+        <span className="absolute top-1 right-12 z-10 rounded-[4px] bg-green-100 dark:bg-green-900/40 px-1 py-0.5 text-[9px] font-medium text-green-700 dark:text-green-400 leading-none">
+          {t("aiTools.outdoorOnly", "Dış Mekan")}
+        </span>
+      )} */}
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className={cn("rounded-xl p-2.5", tool.bgColor)}>
-            <IconComponent className={cn("h-6 w-6", tool.color)} />
+          <div className={cn("rounded-lg p-2 text-white shrink-0", tool.bgColor)}>
+             {/* Note: tool.color usually has text-color but if bgColor is solid, we might need white text.
+                 Checking original code: tool.color was applied to Icon. tool.bgColor to container.
+                 Original: className={cn("rounded-xl p-2.5", tool.bgColor)} and Icon className={cn("h-6 w-6", tool.color)}
+                 Let's keep original logic for colors but change sizing.
+             */}
+             <IconComponent className={cn("h-5 w-5", tool.color)} />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <h4 className="text-[14px] font-bold">{t(`aiTools.${tool.id}.title`, tool.title)}</h4>
-              {tool.outdoorOnly && (
-                <span className="rounded bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 text-[9px] font-medium text-green-700 dark:text-green-400">
-                  {t("aiTools.outdoorOnly", "Dış Mekan")}
-                </span>
-              )}
+            <div className="flex items-center gap-2">
+              <h4 className="text-sm font-semibold text-foreground/90">{t(`aiTools.${tool.id}.title`, tool.title)}</h4>
             </div>
-            <p className="text-[11px] leading-tight text-muted-foreground">
+            <p className="text-[11px] leading-tight text-muted-foreground line-clamp-1">
               {t(`aiTools.${tool.id}.description`, tool.description)}
             </p>
           </div>
@@ -130,7 +135,7 @@ function ToolCard({
         >
           <div
             className={cn(
-              "h-6 w-10 rounded-full transition-colors after:absolute after:left-[3px] after:top-[3px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-['']",
+              "h-5 w-9 rounded-full transition-colors after:absolute after:left-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-['']",
               checked && !disabled
                 ? "bg-[var(--accent-teal)] after:translate-x-full after:border-white"
                 : "bg-gray-200 dark:bg-gray-700"
@@ -294,8 +299,8 @@ export function AIEnhancementsStep({
   return (
     <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
       {/* Left sidebar - AI Tools */}
-      <aside className="space-y-3 lg:col-span-4 xl:col-span-3">
-        <h3 className="mb-4 px-1 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+      <aside className="space-y-2 lg:col-span-4 xl:col-span-3">
+        <h3 className="mb-3 px-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
           {t("project.aiEnhancements.toolsTitle", "AI Araçları")}
         </h3>
         {AI_TOOLS.map((tool) => {

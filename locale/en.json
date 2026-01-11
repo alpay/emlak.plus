@@ -62,7 +62,7 @@
     "twilightConversionDesc": "Transform daytime photos into stunning twilight shots",
     "objectRemoval": "Object Removal",
     "objectRemovalDesc": "Remove unwanted objects and clutter",
-    "skyReplacement": "Sky Replacement",
+    "skyReplacement": "Replace Sky",
     "skyReplacementDesc": "Replace cloudy skies with perfect blue skies",
     "hdrMerge": "HDR Merge",
     "hdrMergeDesc": "Combine multiple exposures into professional HDR images"
@@ -810,7 +810,7 @@
     "whiteBalance": { "title": "White Balance", "description": "Optimizes color temperature" },
     "grassGreening": { "title": "Grass Greening", "description": "Enhances lawn to vibrant green" },
     "blurSensitiveInfo": { "title": "Blur Sensitive Info", "description": "Hides personal info, plates" },
-    "skyReplacement": { "title": "Sky Replacement", "description": "Replaces the sky" },
+    "skyReplacement": { "title": "Replace Sky", "description": "Replaces the sky" },
     "outdoorOnly": "Outdoor"
   },
   "skyOptions": {
@@ -907,7 +907,7 @@
       "tabs": {
         "twilight": "Twilight",
         "window-pull": "Window Pull",
-        "sky-replacement": "Sky Replacement",
+        "sky-replacement": "Replace Sky",
         "water-enhancement": "Water Enhancement",
         "camera-removal": "Camera Removal",
         "hand-removal": "Hand Removal",

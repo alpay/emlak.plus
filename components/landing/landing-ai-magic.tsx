@@ -3,67 +3,57 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const aiMagicTabs = [
+  {
+    id: "twilight",
+    before:
+      "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20before_1758203006775.webp",
+    after:
+      "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20after_1758203006775.webp",
+  },
+  {
+    id: "window-pull",
+    before: "https://www.fotello.co/attached_assets/optimized/window-pull-before.webp",
+    after: "https://www.fotello.co/attached_assets/optimized/window-pull-after.webp",
+  },
+  {
+    id: "sky-replacement",
+    before: "https://www.fotello.co/attached_assets/optimized/sky-before.webp",
+    after: "https://www.fotello.co/attached_assets/optimized/sky-after.webp",
+  },
+  {
+    id: "water-enhancement",
+    before:
+      "https://www.fotello.co/attached_assets/optimized/water%20-%20before_1758203006775.webp",
+    after:
+      "https://www.fotello.co/attached_assets/optimized/water%20-%20after_1758203006775.webp",
+  },
+  {
+    id: "camera-removal",
+    before:
+      "https://www.fotello.co/attached_assets/optimized/Camera%20before_1758288924762.jpg",
+    after:
+      "https://www.fotello.co/attached_assets/optimized/Camera%20after_1758288924762.jpg",
+  },
+  {
+    id: "hand-removal",
+    before: "https://www.fotello.co/attached_assets/optimized/hand-before.webp",
+    after: "https://www.fotello.co/attached_assets/optimized/hand-after.webp",
+  },
+  {
+    id: "lens-correction",
+    before: "https://www.fotello.co/attached_assets/optimized/lens-before.webp",
+    after: "https://www.fotello.co/attached_assets/optimized/lens-after.webp",
+  },
+  {
+    id: "white-balancing",
+    before: "https://www.fotello.co/attached_assets/optimized/wb-before.webp",
+    after: "https://www.fotello.co/attached_assets/optimized/wb-after.webp",
+  },
+];
+
 export function LandingAiMagic() {
   const { t } = useTranslation();
-
-  const aiMagicTabs = [
-    {
-      id: "twilight",
-      label: t("landing.aiMagic.tabs.twilight"),
-      before:
-        "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20before_1758203006775.webp",
-      after:
-        "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20after_1758203006775.webp",
-    },
-    {
-      id: "window-pull",
-      label: t("landing.aiMagic.tabs.windowPull"),
-      before:
-        "https://www.fotello.co/attached_assets/optimized/window-pull-before.webp",
-      after:
-        "https://www.fotello.co/attached_assets/optimized/window-pull-after.webp",
-    },
-    {
-      id: "sky-replacement",
-      label: t("landing.aiMagic.tabs.skyReplacement"),
-      before: "https://www.fotello.co/attached_assets/optimized/sky-before.webp",
-      after: "https://www.fotello.co/attached_assets/optimized/sky-after.webp",
-    },
-    {
-      id: "water-enhancement",
-      label: t("landing.aiMagic.tabs.waterEnhancement"),
-      before:
-        "https://www.fotello.co/attached_assets/optimized/water%20-%20before_1758203006775.webp",
-      after:
-        "https://www.fotello.co/attached_assets/optimized/water%20-%20after_1758203006775.webp",
-    },
-    {
-      id: "camera-removal",
-      label: t("landing.aiMagic.tabs.cameraRemoval"),
-      before:
-        "https://www.fotello.co/attached_assets/optimized/Camera%20before_1758288924762.jpg",
-      after:
-        "https://www.fotello.co/attached_assets/optimized/Camera%20after_1758288924762.jpg",
-    },
-    {
-      id: "hand-removal",
-      label: t("landing.aiMagic.tabs.handRemoval"),
-      before: "https://www.fotello.co/attached_assets/optimized/hand-before.webp",
-      after: "https://www.fotello.co/attached_assets/optimized/hand-after.webp",
-    },
-    {
-      id: "lens-correction",
-      label: t("landing.aiMagic.tabs.lensCorrection"),
-      before: "https://www.fotello.co/attached_assets/optimized/lens-before.webp",
-      after: "https://www.fotello.co/attached_assets/optimized/lens-after.webp",
-    },
-    {
-      id: "white-balancing",
-      label: t("landing.aiMagic.tabs.whiteBalancing"),
-      before: "https://www.fotello.co/attached_assets/optimized/wb-before.webp",
-      after: "https://www.fotello.co/attached_assets/optimized/wb-after.webp",
-    },
-  ];
 
   const [activeTab, setActiveTab] = useState(0);
   const activeFeature = aiMagicTabs[activeTab];
@@ -126,7 +116,7 @@ export function LandingAiMagic() {
               }}
               type="button"
             >
-              {tab.label}
+              {t(`landing.aiMagic.tabs.${tab.id}`)}
             </button>
           ))}
         </div>

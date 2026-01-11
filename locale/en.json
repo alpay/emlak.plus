@@ -312,7 +312,7 @@
     "info": {
       "email": {
         "title": "Email us",
-        "value": "hello@emlak.tech"
+        "value": "info@emlak.plus"
       },
       "response": {
         "title": "Response time",
@@ -392,7 +392,7 @@
         "objection": "<strong>Objection:</strong> Object to processing of your personal data.",
         "restriction": "<strong>Restriction:</strong> Request restriction of processing."
       },
-      "p2": "To exercise any of these rights, please contact us at <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a>."
+      "p2": "To exercise any of these rights, please contact us at <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>."
     },
     "cookies": {
       "title": "7. Cookies",
@@ -409,7 +409,7 @@
     "contact": {
       "title": "10. Contact Us",
       "p1": "If you have any questions about this Privacy Policy or our data practices, please contact us at:",
-      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a><br />General inquiries: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />General inquiries: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
   "terms": {
@@ -447,7 +447,7 @@
     },
     "refund": {
       "title": "5. Refund Policy",
-      "p1": "If you are not satisfied with the results of our AI processing, you may request a refund within 24 hours of the processing completion. Refund requests should be submitted to <a href=\"mailto:support@emlak.tech\">support@emlak.tech</a> with your order details and reason for dissatisfaction.",
+      "p1": "If you are not satisfied with the results of our AI processing, you may request a refund within 24 hours of the processing completion. Refund requests should be submitted to <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a> with your order details and reason for dissatisfaction.",
       "p2": "We reserve the right to deny refund requests that we determine, in our sole discretion, to be fraudulent or abusive."
     },
     "content": {
@@ -511,7 +511,7 @@
     "contact": {
       "title": "14. Contact Us",
       "p1": "If you have any questions about these Terms, please contact us at:",
-      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:legal@emlak.tech\">legal@emlak.tech</a><br />General inquiries: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />General inquiries: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
   "project": {

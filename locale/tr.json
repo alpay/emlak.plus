@@ -312,7 +312,7 @@
     "info": {
       "email": {
         "title": "Bize e-posta gönderin",
-        "value": "hello@emlak.tech"
+        "value": "info@emlak.plus"
       },
       "response": {
         "title": "Yanıt süresi",
@@ -392,7 +392,7 @@
         "objection": "<strong>İtiraz:</strong> Kişisel verilerinizin işlenmesine itiraz etme.",
         "restriction": "<strong>Kısıtlama:</strong> İşlemenin kısıtlanmasını talep etme."
       },
-      "p2": "Bu haklardan herhangi birini kullanmak için lütfen bize ulaşın: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a>."
+      "p2": "Bu haklardan herhangi birini kullanmak için lütfen bize ulaşın: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>."
     },
     "cookies": {
       "title": "7. Çerezler",
@@ -409,7 +409,7 @@
     "contact": {
       "title": "10. İletişim",
       "p1": "Bu Gizlilik Politikası veya veri uygulamalarımız hakkında sorularınız varsa, lütfen bizimle iletişime geçin:",
-      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a><br />Genel sorular: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />Genel sorular: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
   "terms": {
@@ -447,7 +447,7 @@
     },
     "refund": {
       "title": "5. İade Politikası",
-      "p1": "AI işleminin sonuçlarından memnun kalmazsanız, işlem tamamlandıktan sonra 24 saat içinde iade talebinde bulunabilirsiniz. İade talepleri, sipariş detaylarınız ve memnuniyetsizlik nedeninizle birlikte <a href=\"mailto:support@emlak.tech\">support@emlak.tech</a> adresine gönderilmelidir.",
+      "p1": "AI işleminin sonuçlarından memnun kalmazsanız, işlem tamamlandıktan sonra 24 saat içinde iade talebinde bulunabilirsiniz. İade talepleri, sipariş detaylarınız ve memnuniyetsizlik nedeninizle birlikte <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a> adresine gönderilmelidir.",
       "p2": "Tamamen kendi takdirimize bağlı olarak, hileli veya kötüye kullanım olduğunu belirlediğimiz iade taleplerini reddetme hakkımız saklıdır."
     },
     "content": {
@@ -511,7 +511,7 @@
     "contact": {
       "title": "14. İletişim",
       "p1": "Bu Koşullar hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin:",
-      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:legal@emlak.tech\">legal@emlak.tech</a><br />Genel sorular: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />Genel sorular: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
   "project": {

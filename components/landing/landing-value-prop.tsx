@@ -3,32 +3,30 @@
 import { IconClock, IconPercentage, IconRefresh } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 
+const stats = [
+  {
+    icon: IconRefresh,
+    id: "revision",
+    value: "<1%",
+    color: "var(--landing-accent)",
+  },
+  {
+    icon: IconPercentage,
+    id: "cost",
+    value: ">76%",
+    color: "var(--accent-green)",
+  },
+  {
+    icon: IconClock,
+    id: "turnaround",
+    valueKey: "common.lessThan", // Special handling for value translation
+    valueDefault: "<2 dk",
+    color: "var(--accent-teal)",
+  },
+];
+
 export function LandingValueProp() {
   const { t } = useTranslation();
-
-  const stats = [
-    {
-      icon: IconRefresh,
-      value: "<1%",
-      label: t("landing.valueProp.stats.revisionRate"),
-      description: t("landing.valueProp.stats.revisionDesc"),
-      color: "var(--landing-accent)",
-    },
-    {
-      icon: IconPercentage,
-      value: ">76%",
-      label: t("landing.valueProp.stats.costSavings"),
-      description: t("landing.valueProp.stats.costDesc"),
-      color: "var(--accent-green)",
-    },
-    {
-      icon: IconClock,
-      value: t("common.lessThan", "<2 dk"),
-      label: t("landing.valueProp.stats.turnaround"),
-      description: t("landing.valueProp.stats.turnaroundDesc"),
-      color: "var(--accent-teal)",
-    },
-  ];
 
   return (
     <section
@@ -62,7 +60,7 @@ export function LandingValueProp() {
           {stats.map((stat) => (
             <div
               className="group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1"
-              key={stat.label}
+              key={stat.id}
               style={{
                 backgroundColor: "var(--landing-card)",
                 boxShadow: "0 4px 24px -4px var(--landing-shadow)",
@@ -88,7 +86,7 @@ export function LandingValueProp() {
                 className="font-bold text-4xl tabular-nums md:text-5xl"
                 style={{ color: stat.color }}
               >
-                {stat.value}
+                {stat.valueKey ? t(stat.valueKey, stat.valueDefault) : stat.value}
               </p>
 
               {/* Label */}
@@ -96,7 +94,7 @@ export function LandingValueProp() {
                 className="mt-2 font-semibold text-lg"
                 style={{ color: "var(--landing-text)" }}
               >
-                {stat.label}
+                {t(`landing.valueProp.stats.${stat.id}Rate`)}
               </p>
 
               {/* Description */}
@@ -104,7 +102,7 @@ export function LandingValueProp() {
                 className="mt-2 text-sm leading-relaxed"
                 style={{ color: "var(--landing-text-muted)" }}
               >
-                {stat.description}
+                {t(`landing.valueProp.stats.${stat.id}Desc`)}
               </p>
             </div>
           ))}

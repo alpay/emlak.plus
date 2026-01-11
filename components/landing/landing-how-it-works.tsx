@@ -3,38 +3,26 @@
 import { IconDownload, IconUpload, IconWand } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 
+const steps = [
+  {
+    step: "01",
+    icon: IconUpload,
+    id: "step1",
+  },
+  {
+    step: "02",
+    icon: IconWand,
+    id: "step2",
+  },
+  {
+    step: "03",
+    icon: IconDownload,
+    id: "step3",
+  },
+];
+
 export function LandingHowItWorks() {
   const { t } = useTranslation();
-
-  const steps = [
-    {
-      step: "01",
-      icon: IconUpload,
-      title: t("howItWorks.step1Title"),
-      description: t(
-        "howItWorks.step1Desc",
-        "Mülk fotoğraflarınızı sürükleyip bırakın veya cihazınızdan seçin. Tüm yaygın görüntü formatlarını destekliyoruz."
-      ),
-    },
-    {
-      step: "02",
-      icon: IconWand,
-      title: t("howItWorks.step2Title"),
-      description: t(
-        "howItWorks.step2Desc",
-        "Farklı mülk türleri ve estetikler için tasarlanmış profesyonel stil şablonlarımızdan seçin."
-      ),
-    },
-    {
-      step: "03",
-      icon: IconDownload,
-      title: t("howItWorks.step3Title"),
-      description: t(
-        "howItWorks.step3Desc",
-        "İyileştirilmiş fotoğraflarınızı anında alın. Yüksek çözünürlükte indirin, ilanlarınız ve pazarlamanız için hazır."
-      ),
-    },
-  ];
 
   return (
     <section
@@ -114,13 +102,13 @@ export function LandingHowItWorks() {
                   className="font-semibold text-xl"
                   style={{ color: "var(--landing-text)" }}
                 >
-                  {step.title}
+                  {t(`howItWorks.${step.id}Title`)}
                 </h3>
                 <p
                   className="mx-auto mt-3 max-w-xs text-sm leading-relaxed"
                   style={{ color: "var(--landing-text-muted)" }}
                 >
-                  {step.description}
+                  {t(`howItWorks.${step.id}Desc`)}
                 </p>
               </div>
             ))}

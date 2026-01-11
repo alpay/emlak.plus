@@ -10,59 +10,35 @@ import {
 } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 
+const features = [
+  {
+    icon: IconWand,
+    id: "aiPowered",
+  },
+  {
+    icon: IconPalette,
+    id: "multipleStyles",
+  },
+  {
+    icon: IconClockHour4,
+    id: "resultsInSeconds",
+  },
+  {
+    icon: IconPhoto,
+    id: "batchProcessing",
+  },
+  {
+    icon: IconDeviceDesktop,
+    id: "noSoftware",
+  },
+  {
+    icon: IconShieldCheck,
+    id: "securePrivate",
+  },
+];
+
 export function LandingFeatures() {
   const { t } = useTranslation();
-
-  const features = [
-    {
-      icon: IconWand,
-      title: t("features.aiPowered", "Yapay Zeka Destekli İyileştirme"),
-      description: t(
-        "features.aiPoweredDesc",
-        "Gelişmiş yapay zekamız sıradan fotoğrafları otomatik olarak profesyonel kalitede görüntülere dönüştürür."
-      ),
-    },
-    {
-      icon: IconPalette,
-      title: t("features.multipleStyles", "Çoklu Stil Şablonları"),
-      description: t(
-        "features.multipleStylesDesc",
-        "Markanıza ve mülk tipinize uygun profesyonelce tasarlanmış çeşitli stillerden seçin."
-      ),
-    },
-    {
-      icon: IconClockHour4,
-      title: t("features.resultsInSeconds", "Saniyeler İçinde Sonuç"),
-      description: t(
-        "features.resultsInSecondsDesc",
-        "Beklemeyin. İyileştirilmiş fotoğraflarınızı saatler veya günler değil, saniyeler içinde alın."
-      ),
-    },
-    {
-      icon: IconPhoto,
-      title: t("features.batchProcessing", "Toplu İşleme"),
-      description: t(
-        "features.batchProcessingDesc",
-        "Birden fazla fotoğrafı tek seferde yükleyin ve tüm mülk çekimlerini bir kerede işleyin."
-      ),
-    },
-    {
-      icon: IconDeviceDesktop,
-      title: t("features.noSoftware", "Yazılım Gerektirmez"),
-      description: t(
-        "features.noSoftwareDesc",
-        "Her şey tarayıcınızda çalışır. İndirme, kurulum veya teknik beceri gerekmez."
-      ),
-    },
-    {
-      icon: IconShieldCheck,
-      title: t("features.securePrivate", "Güvenli ve Gizli"),
-      description: t(
-        "features.securePrivateDesc",
-        "Fotoğraflarınız şifrelenir ve işlemden sonra otomatik olarak silinir. Verileriniz sizin kalır."
-      ),
-    },
-  ];
 
   return (
     <section
@@ -103,7 +79,7 @@ export function LandingFeatures() {
           {features.map((feature) => (
             <div
               className="group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 md:p-8"
-              key={feature.title}
+              key={feature.id}
               style={{
                 backgroundColor: "var(--landing-card)",
                 boxShadow: "0 4px 24px -4px var(--landing-shadow)",
@@ -137,13 +113,13 @@ export function LandingFeatures() {
                 className="font-semibold text-lg"
                 style={{ color: "var(--landing-text)" }}
               >
-                {feature.title}
+                {t(`features.${feature.id}`)}
               </h3>
               <p
                 className="mt-2 text-sm leading-relaxed"
                 style={{ color: "var(--landing-text-muted)" }}
               >
-                {feature.description}
+                {t(`features.${feature.id}Desc`)}
               </p>
 
               {/* Hover accent line */}

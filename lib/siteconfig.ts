@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "Emlak",
   description: "AI-powered real estate photo editor",
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.emlak.tech",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.emlak.plus",
 
   // Email settings
   email: {
-    from: "noreply@emlak.tech",
-    replyTo: "support@emlak.tech",
+    from: "noreply@emlak.plus",
+    replyTo: "info@emlak.plus",
   },
 
   // Links

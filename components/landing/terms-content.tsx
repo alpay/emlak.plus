@@ -50,7 +50,7 @@ export function TermsContent() {
         <p>
           <Trans
             i18nKey="terms.refund.p1"
-            components={{ a: <a className="underline" href="mailto:support@emlak.tech" /> }}
+            components={{ a: <a className="underline" href="mailto:info@emlak.plus" /> }}
           />
         </p>
         <p>{t("terms.refund.p2")}</p>

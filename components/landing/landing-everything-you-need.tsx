@@ -3,45 +3,40 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
+const features = [
+  {
+    id: "delivery",
+    videoUrl:
+      "https://www.fotello.co/attached_assets/optimized/TV_1758206030737.mp4",
+    size: "large",
+  },
+  {
+    id: "styleProfiles",
+    videoUrl:
+      "https://www.fotello.co/attached_assets/optimized/AI%20Style%20Profiles.mp4",
+    size: "small",
+  },
+  {
+    id: "humanRevision",
+    videoUrl:
+      "https://www.fotello.co/attached_assets/optimized/Human%20Revision.mp4",
+    size: "small",
+  },
+  {
+    id: "autoBracketing",
+    videoUrl:
+      "https://www.fotello.co/attached_assets/optimized/Auto%20Bracketing.mp4",
+    size: "small",
+  },
+  {
+    id: "culling",
+    videoUrl: "https://www.fotello.co/attached_assets/optimized/Culling.mp4",
+    size: "small",
+  },
+];
+
 export function LandingEverythingYouNeed() {
   const { t } = useTranslation();
-
-  const features = [
-    {
-      title: t("landing.everything.items.delivery.title"),
-      description: t("landing.everything.items.delivery.desc"),
-      videoUrl:
-        "https://www.fotello.co/attached_assets/optimized/TV_1758206030737.mp4",
-      size: "large",
-    },
-    {
-      title: t("landing.everything.items.styleProfiles.title"),
-      description: t("landing.everything.items.styleProfiles.desc"),
-      videoUrl:
-        "https://www.fotello.co/attached_assets/optimized/AI%20Style%20Profiles.mp4",
-      size: "small",
-    },
-    {
-      title: t("landing.everything.items.humanRevision.title"),
-      description: t("landing.everything.items.humanRevision.desc"),
-      videoUrl:
-        "https://www.fotello.co/attached_assets/optimized/Human%20Revision.mp4",
-      size: "small",
-    },
-    {
-      title: t("landing.everything.items.autoBracketing.title"),
-      description: t("landing.everything.items.autoBracketing.desc"),
-      videoUrl:
-        "https://www.fotello.co/attached_assets/optimized/Auto%20Bracketing.mp4",
-      size: "small",
-    },
-    {
-      title: t("landing.everything.items.culling.title"),
-      description: t("landing.everything.items.culling.desc"),
-      videoUrl: "https://www.fotello.co/attached_assets/optimized/Culling.mp4",
-      size: "small",
-    },
-  ];
 
   return (
     <section
@@ -75,7 +70,13 @@ export function LandingEverythingYouNeed() {
         {/* Features Grid */}
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {features.map((feature) => (
-            <FeatureCard key={feature.title} {...feature} />
+            <FeatureCard
+              description={t(`landing.everything.items.${feature.id}.desc`)}
+              key={feature.id}
+              size={feature.size}
+              title={t(`landing.everything.items.${feature.id}.title`)}
+              videoUrl={feature.videoUrl}
+            />
           ))}
         </div>
       </div>

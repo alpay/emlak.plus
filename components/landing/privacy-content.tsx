@@ -93,7 +93,7 @@ export function PrivacyContent() {
         <p>
           <Trans
             i18nKey="privacy.rights.p2"
-            components={{ a: <a className="underline" href="mailto:privacy@emlak.tech" /> }}
+            components={{ a: <a className="underline" href="mailto:info@emlak.plus" /> }}
           />
         </p>
       </LegalSection>

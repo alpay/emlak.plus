@@ -4,44 +4,40 @@ import { IconPlayerPlay, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const testimonials = [
+  {
+    id: 1,
+    name: "Natalia Diakon",
+    company: "3D Casas",
+    youtubeId: "HFMtueRrTTw",
+    thumbnail: "https://img.youtube.com/vi/HFMtueRrTTw/maxresdefault.jpg",
+  },
+  {
+    id: 2,
+    name: "Steven Tippet",
+    company: "Professional Photography",
+    youtubeId: "q_u7XTk_zZc",
+    thumbnail: "https://img.youtube.com/vi/q_u7XTk_zZc/maxresdefault.jpg",
+  },
+  {
+    id: 3,
+    name: "Dan Richard",
+    company: "Propicsta",
+    youtubeId: "MCyFDhwJiHg",
+    thumbnail: "https://img.youtube.com/vi/MCyFDhwJiHg/maxresdefault.jpg",
+  },
+  {
+    id: 4,
+    name: "Amit Kumar",
+    company: "Property Insights",
+    youtubeId: "4Wek4RP1nrk",
+    thumbnail: "https://img.youtube.com/vi/4Wek4RP1nrk/maxresdefault.jpg",
+  },
+];
+
 export function LandingTestimonials() {
   const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-
-  const testimonials = [
-    {
-      id: 1,
-      name: "Natalia Diakon",
-      company: "3D Casas",
-      quote: t("landing.testimonials.quotes.1"),
-      youtubeId: "HFMtueRrTTw",
-      thumbnail: "https://img.youtube.com/vi/HFMtueRrTTw/maxresdefault.jpg",
-    },
-    {
-      id: 2,
-      name: "Steven Tippet",
-      company: "Professional Photography",
-      quote: t("landing.testimonials.quotes.2"),
-      youtubeId: "q_u7XTk_zZc",
-      thumbnail: "https://img.youtube.com/vi/q_u7XTk_zZc/maxresdefault.jpg",
-    },
-    {
-      id: 3,
-      name: "Dan Richard",
-      company: "Propicsta",
-      quote: t("landing.testimonials.quotes.3"),
-      youtubeId: "MCyFDhwJiHg",
-      thumbnail: "https://img.youtube.com/vi/MCyFDhwJiHg/maxresdefault.jpg",
-    },
-    {
-      id: 4,
-      name: "Amit Kumar",
-      company: "Property Insights",
-      quote: t("landing.testimonials.quotes.4"),
-      youtubeId: "4Wek4RP1nrk",
-      thumbnail: "https://img.youtube.com/vi/4Wek4RP1nrk/maxresdefault.jpg",
-    },
-  ];
 
   return (
     <section
@@ -110,7 +106,7 @@ export function LandingTestimonials() {
                 {/* Quote Overlay */}
                 <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                   <p className="font-medium text-sm text-white">
-                    &quot;{testimonial.quote}&quot;
+                    &quot;{t(`landing.testimonials.quotes.${testimonial.id}`)}&quot;
                   </p>
                   <p className="mt-2 text-white/80 text-xs">
                     {testimonial.name} · {testimonial.company}

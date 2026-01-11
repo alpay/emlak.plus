@@ -62,18 +62,23 @@ export function LandingNav() {
         borderBottom: "1px solid var(--landing-border)",
       }}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:grid md:grid-cols-3 md:justify-normal">
         {/* Logo */}
-        <Link
-          className="font-bold text-lg tracking-tight transition-opacity hover:opacity-80"
-          href="/"
-          style={{ color: "var(--landing-text)" }}
-        >
-          Emlak<span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">+</span>
-        </Link>
+        <div className="flex justify-start">
+          <Link
+            className="font-bold text-lg tracking-tight transition-opacity hover:opacity-80"
+            href="/"
+            style={{ color: "var(--landing-text)" }}
+          >
+            Emlak
+            <span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">
+              +
+            </span>
+          </Link>
+        </div>
 
         {/* Navigation Links */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center justify-center gap-8 md:flex">
           <Link
             className="font-medium text-sm transition-colors hover:opacity-70"
             href="#features"
@@ -98,7 +103,7 @@ export function LandingNav() {
         </div>
 
         {/* Right section: Language Switcher + CTA */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <LanguageSwitcher />
           <Suspense
             fallback={

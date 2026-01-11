@@ -116,8 +116,7 @@ export function LanguageSwitcher({
         style={{ color: "var(--landing-text-muted)" }}
         type="button"
       >
-        <span>{LANGUAGE_FLAGS[currentLang]}</span>
-        <span className="uppercase">{currentLang}</span>
+        <span className="text-xl">{LANGUAGE_FLAGS[currentLang]}</span>
         <svg
           className={cn("h-3 w-3 transition-transform", isOpen && "rotate-180")}
           fill="none"

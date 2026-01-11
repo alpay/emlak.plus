@@ -113,11 +113,7 @@ export function InvoiceHistoryTable({ invoices }: InvoiceHistoryTableProps) {
     try {
       const result = await markInvoiceAsPaidAction(invoiceId);
       if (result.success) {
-        toast.success("Faktura markert som betalt", {
-          description: result.affiliateEarningCreated
-            ? "Affiliate-provisjon er også opprettet"
-            : undefined,
-        });
+        toast.success("Faktura markert som betalt");
         router.refresh();
       } else {
         toast.error("Feil", { description: result.error });

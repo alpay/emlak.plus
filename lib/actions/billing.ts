@@ -4,10 +4,8 @@ import { revalidatePath } from "next/cache";
 import { verifySystemAdmin } from "@/lib/admin-auth";
 import {
   type BillingStats,
-  createAffiliateEarning,
   createInvoice,
   createInvoiceLineItem,
-  getAffiliateRelationshipByReferred,
   getBillingStats,
   getInvoiceById,
   getInvoiceHistory,
@@ -283,7 +281,7 @@ export async function markInvoiceAsSentAction(
  */
 export async function markInvoiceAsPaidAction(
   invoiceId: string
-): Promise<ActionResult<Invoice> & { affiliateEarningCreated?: boolean }> {
+): Promise<ActionResult<Invoice>> {
   const adminCheck = await verifySystemAdmin();
   if (adminCheck.error) {
     return { success: false, error: adminCheck.error };
@@ -306,28 +304,10 @@ export async function markInvoiceAsPaidAction(
       return { success: false, error: "Failed to update invoice" };
     }
 
-    // Check for affiliate relationship and create earning
-    const affiliateRelationship = await getAffiliateRelationshipByReferred(
-      invoice.workspaceId
-    );
-
-    let affiliateEarningCreated = false;
-    if (affiliateRelationship) {
-      await createAffiliateEarning({
-        affiliateWorkspaceId: affiliateRelationship.affiliateWorkspaceId,
-        affiliateRelationshipId: affiliateRelationship.id,
-        invoiceId: invoice.id,
-        invoiceAmountOre: invoice.totalAmountOre,
-        commissionPercent: affiliateRelationship.commissionPercent,
-      });
-      affiliateEarningCreated = true;
-    }
-
     revalidatePath("/admin/billing");
     return {
       success: true,
       data: updated,
-      affiliateEarningCreated,
     };
   } catch (error) {
     console.error("[billing:markInvoiceAsPaid] Error:", error);

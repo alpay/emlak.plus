@@ -144,8 +144,10 @@ export function useVideoCreation() {
         VideoImageItem,
         | "sequenceOrder"
         | "startImageUrl"
+        | "startImageId"
         | "startImageGenerationId"
         | "endImageUrl"
+        | "endImageId"
         | "endImageGenerationId"
       >,
       slotIndex: number

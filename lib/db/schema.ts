@@ -614,92 +614,6 @@ export const invoiceLineItem = pgTable(
 );
 
 // ============================================================================
-// AFFILIATE SCHEMA
-// ============================================================================
-
-/**
- * Affiliate Relationship - Links affiliate workspace to referred workspace
- * Manual assignment by admin with flexible commission percentage
- */
-export const affiliateRelationship = pgTable(
-  "affiliate_relationship",
-  {
-    id: text("id").primaryKey(),
-
-    // The affiliate (earns commission)
-    affiliateWorkspaceId: text("affiliate_workspace_id")
-      .notNull()
-      .references(() => workspace.id, { onDelete: "cascade" }),
-
-    // The referred workspace (generates revenue for affiliate)
-    referredWorkspaceId: text("referred_workspace_id")
-      .notNull()
-      .references(() => workspace.id, { onDelete: "cascade" }),
-
-    // Commission percentage (e.g., 20 = 20%, 50 = 50%)
-    commissionPercent: integer("commission_percent").notNull().default(20),
-
-    // Active status (can be deactivated without deleting)
-    isActive: boolean("is_active").notNull().default(true),
-
-    // Notes for admin
-    notes: text("notes"),
-
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  },
-  (table) => [
-    index("affiliate_relationship_affiliate_idx").on(
-      table.affiliateWorkspaceId
-    ),
-    index("affiliate_relationship_referred_idx").on(table.referredWorkspaceId),
-  ]
-);
-
-/**
- * Affiliate Earning - Commission earned when referred workspace invoice is paid
- */
-export const affiliateEarning = pgTable(
-  "affiliate_earning",
-  {
-    id: text("id").primaryKey(),
-
-    // The affiliate earning this commission
-    affiliateWorkspaceId: text("affiliate_workspace_id")
-      .notNull()
-      .references(() => workspace.id, { onDelete: "cascade" }),
-
-    // Link to the relationship
-    affiliateRelationshipId: text("affiliate_relationship_id")
-      .notNull()
-      .references(() => affiliateRelationship.id, { onDelete: "cascade" }),
-
-    // The invoice that generated this earning
-    invoiceId: text("invoice_id")
-      .notNull()
-      .references(() => invoice.id, { onDelete: "cascade" }),
-
-    // Earning details
-    invoiceAmountOre: integer("invoice_amount_ore").notNull(), // Original invoice amount
-    commissionPercent: integer("commission_percent").notNull(), // Snapshot of % at time of earning
-    earningAmountOre: integer("earning_amount_ore").notNull(), // Calculated commission
-
-    // Payout status: pending | paid_out
-    status: text("status").notNull().default("pending"),
-    paidOutAt: timestamp("paid_out_at"),
-    paidOutReference: text("paid_out_reference"), // Bank transfer ref, invoice ref, etc.
-
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  },
-  (table) => [
-    index("affiliate_earning_affiliate_idx").on(table.affiliateWorkspaceId),
-    index("affiliate_earning_invoice_idx").on(table.invoiceId),
-    index("affiliate_earning_status_idx").on(table.status),
-  ]
-);
-
-// ============================================================================
 // CREDIT SYSTEM SCHEMA
 // ============================================================================
 
@@ -772,14 +686,6 @@ export type InvoiceStatus = "draft" | "sent" | "paid" | "cancelled" | "overdue";
 export type InvoiceLineItem = typeof invoiceLineItem.$inferSelect;
 export type NewInvoiceLineItem = typeof invoiceLineItem.$inferInsert;
 export type LineItemStatus = "pending" | "invoiced" | "cancelled";
-
-export type AffiliateRelationship = typeof affiliateRelationship.$inferSelect;
-export type NewAffiliateRelationship =
-  typeof affiliateRelationship.$inferInsert;
-
-export type AffiliateEarning = typeof affiliateEarning.$inferSelect;
-export type NewAffiliateEarning = typeof affiliateEarning.$inferInsert;
-export type AffiliateEarningStatus = "pending" | "paid_out";
 
 // Credit system type exports
 export type CreditPackage = typeof creditPackage.$inferSelect;

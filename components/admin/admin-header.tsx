@@ -46,12 +46,6 @@ const navItems = [
     icon: IconChartLine,
     exact: false as const,
   },
-  {
-    href: "/admin/affiliates",
-    label: "Affiliates",
-    icon: IconPercentage,
-    exact: false as const,
-  },
 ];
 
 export function AdminHeader() {

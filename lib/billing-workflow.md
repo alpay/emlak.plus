@@ -1,12 +1,12 @@
-# Billing & Affiliate System Workflow
+# Billing Workflow
 
-This document explains the billing workflow for Proppi, from project creation to affiliate payouts.
+This document explains the billing workflow for Emlak, from project creation to invoicing.
 
 ---
 
 ## Overview
 
-The billing system tracks revenue from image and video projects and supports an affiliate program with commission tracking.
+The billing system tracks revenue from image and video projects.
 
 **Default Pricing:**
 - Image projects: 1000 NOK (per project, up to 20 images)
@@ -67,38 +67,12 @@ When admin clicks "Send faktura" (`lib/actions/billing.ts`):
 
 ---
 
-### Stage 4: Payment & Affiliate Earnings
+### Stage 4: Payment
 
 When admin marks an invoice as paid (`markInvoiceAsPaidAction`):
 
 1. Updates invoice status to "paid"
 2. Sets `paidAt` timestamp
-3. **Checks for affiliate relationship** for the invoiced workspace
-4. If affiliate exists, creates an `affiliateEarning` record:
-   - Calculates commission based on relationship's `commissionPercent`
-   - Status set to "pending" (awaiting payout)
-
----
-
-### Stage 5: Affiliate Management (`/admin/affiliates`)
-
-The affiliates page shows:
-
-**Stats Bar:**
-- Total pending earnings (awaiting payout)
-- Total paid out
-- Active affiliate count
-- Pending payout count
-
-**Relationships Table:**
-- Affiliate workspace → Referred workspace
-- Commission percentage (e.g., 20%, 50%)
-- Active/Inactive status
-
-**Earnings Table:**
-- Lists all commission earnings
-- Shows invoice reference, amounts, commission rate
-- Admin can batch select and "Mark as paid out"
 
 ---
 
@@ -109,8 +83,6 @@ The affiliates page shows:
 | `workspacePricing` | Custom pricing per workspace (null = use defaults) |
 | `invoiceLineItem` | Individual billable items linked to projects/videos |
 | `invoice` | Invoice records |
-| `affiliateRelationship` | Links affiliate to referred workspace |
-| `affiliateEarning` | Commission tracking per paid invoice |
 
 ---
 
@@ -121,9 +93,7 @@ The affiliates page shows:
 | `lib/db/schema.ts` | Database table definitions |
 | `lib/db/queries.ts` | Billing queries + `updateProjectCounts` hook |
 | `lib/actions/billing.ts` | Invoice creation, payment actions |
-| `lib/actions/affiliate.ts` | Affiliate relationship and earnings management |
 | `app/admin/billing/page.tsx` | Admin billing page |
-| `app/admin/affiliates/page.tsx` | Admin affiliates page |
 
 ---
 
@@ -168,25 +138,6 @@ The affiliates page shows:
 ├─────────────────────────────────────────────────────────────────────┤
 │  • Click checkmark on sent invoice                                   │
 │  • Status: "paid"                                                    │
-└────────────────────────────┬────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    AUTOMATIC: Affiliate Check                        │
-├─────────────────────────────────────────────────────────────────────┤
-│  IF workspace has affiliate relationship:                            │
-│    → Create affiliateEarning with calculated commission              │
-│    → Status: "pending"                                               │
-└────────────────────────────┬────────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│                    ADMIN: /admin/affiliates                          │
-├─────────────────────────────────────────────────────────────────────┤
-│  1. Review pending earnings                                          │
-│  2. Select earnings to pay out                                       │
-│  3. Click "Marker som utbetalt"                                      │
-│  • Status: "paid_out"                                                │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 

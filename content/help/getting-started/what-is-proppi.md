@@ -1,15 +1,15 @@
 ---
-title: "What is Proppi?"
-description: "Learn about Proppi and how it can transform your real estate photography workflow."
+title: "What is Emlak+?"
+description: "Learn about Emlak+ and how it can transform your real estate photography workflow."
 order: 1
 popular: true
 ---
 
-Proppi is a powerful platform designed specifically for real estate professionals who want to create stunning property listings with minimal effort. Our AI-powered tools help you enhance photos, apply professional styles, and streamline your entire photography workflow.
+Emlak+ is a powerful platform designed specifically for real estate professionals who want to create stunning property listings with minimal effort. Our AI-powered tools help you enhance photos, apply professional styles, and streamline your entire photography workflow.
 
 <div class="callout-info">
 
-**Getting started is free.** Create an account and get 10 free credits to try Proppi with your own property photos.
+**Getting started is free.** Create an account and get 10 free credits to try Emlak+ with your own property photos.
 
 </div>
 
@@ -25,9 +25,9 @@ Choose from a variety of professionally designed style templates that instantly 
 Save hours of editing time by processing multiple photos at once. Upload an entire property shoot and apply consistent enhancements across all images.
 
 ### Easy Integration
-Proppi works seamlessly with your existing workflow. Export high-resolution images ready for MLS listings, social media, or print materials.
+Emlak+ works seamlessly with your existing workflow. Export high-resolution images ready for MLS listings, social media, or print materials.
 
-## Who Is Proppi For?
+## Who Is Emlak+ For?
 
 - **Real estate agents** looking to create professional listings quickly
 - **Property photographers** who want to streamline their editing process
@@ -36,7 +36,7 @@ Proppi works seamlessly with your existing workflow. Export high-resolution imag
 
 <div class="callout-tip">
 
-Most users see a 70% reduction in photo editing time after switching to Proppi.
+Most users see a 70% reduction in photo editing time after switching to Emlak+.
 
 </div>
 

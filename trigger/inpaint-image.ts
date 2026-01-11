@@ -262,6 +262,8 @@ export const inpaintImageTask = task({
         originalImageUrl: image.originalImageUrl,
         resultImageUrl: storedResultUrl,
         prompt,
+        environment: image.environment,
+        imageRoomType: image.imageRoomType,
         version: newVersion,
         parentId: rootImageId,
         status: "completed",

@@ -162,7 +162,7 @@ export function getProjectStats() {
   ).length;
   const totalImages = mockProjects.reduce((sum, p) => sum + p.imageCount, 0);
   const totalCost = mockProjects.reduce((sum, p) => {
-    const template = getTemplateById(p.styleTemplateId);
+    const template = getTemplateById(p.styleTemplateId) as { estimatedCost?: number } | undefined;
     return sum + (template?.estimatedCost || 0.039) * p.completedCount;
   }, 0);
 

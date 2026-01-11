@@ -8,6 +8,7 @@ import {
 } from "@/lib/db/queries";
 import {
   FLUX_FILL_PRO,
+  type FluxFillInput,
   type FluxFillOutput,
   fal,
   NANO_BANANA_PRO_EDIT,
@@ -132,7 +133,7 @@ export async function POST(request: NextRequest) {
             prompt,
             num_inference_steps: 28,
             output_format: "jpeg",
-          } as any,
+          } as FluxFillInput,
         })) as unknown as FluxFillOutput;
 
         console.log("FLUX Fill result:", JSON.stringify(result, null, 2));

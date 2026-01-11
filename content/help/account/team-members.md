@@ -1,11 +1,11 @@
 ---
 title: "Managing Team Members"
-description: "Learn how to invite team members, set permissions, and collaborate effectively in Proppi."
+description: "Learn how to invite team members, set permissions, and collaborate effectively in Emlak+."
 order: 2
 popular: false
 ---
 
-Proppi makes it easy to collaborate with your team. Invite colleagues, assign roles, and work together on property photo projects.
+Emlak+ makes it easy to collaborate with your team. Invite colleagues, assign roles, and work together on property photo projects.
 
 ## Team Roles
 

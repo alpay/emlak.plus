@@ -14,8 +14,8 @@ import {
   updateProject,
   updateProjectCounts,
 } from "@/lib/db/queries";
-import { type ImageGeneration, imageGeneration, user } from "@/lib/db/schema";
-import { generatePrompt, getTemplateById } from "@/lib/style-templates";
+import { type ImageGeneration, imageGeneration, user, type ProjectAITools } from "@/lib/db/schema";
+import { generatePrompt, getTemplateById, type AIToolsState } from "@/lib/style-templates";
 import {
   createSignedUploadUrl,
   deleteImage,
@@ -568,13 +568,19 @@ export async function regenerateImage(
 
   // Get metadata and project settings
   const projectData = await getProjectById(image.projectId);
-  const metadata = image.metadata as any;
+  const metadata = image.metadata as {
+    templateId?: string | null;
+    roomType?: string | null;
+    environment?: "indoor" | "outdoor" | null;
+    aiTools?: ProjectAITools | null;
+  } | null;
+
   const roomType =
     projectData?.project.roomType ||
     metadata?.roomType ||
     null;
   const environment = metadata?.environment || "indoor";
-  const aiTools = metadata?.aiTools || projectData?.project.aiTools;
+  const aiTools = (metadata?.aiTools || projectData?.project.aiTools) as AIToolsState | undefined;
 
   // Generate prompt with context
   const prompt = generatePrompt(template ?? null, roomType, environment, aiTools);

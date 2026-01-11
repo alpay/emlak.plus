@@ -1,6 +1,6 @@
 ---
 title: "Creating Your First Project"
-description: "Step-by-step guide to creating your first photo enhancement project in Proppi."
+description: "Step-by-step guide to creating your first photo enhancement project in Emlak+."
 order: 2
 popular: true
 ---
@@ -14,7 +14,7 @@ PREREQUISITES
 <div class="prereq-item">
 <div class="prereq-check"></div>
 <div class="prereq-content">
-<strong>A Proppi account</strong>
+<strong>A Emlak+ account</strong>
 <p>If you don't have one, you can <a href="/signup">create one for free</a>.</p>
 </div>
 </div>
@@ -35,15 +35,15 @@ PREREQUISITES
 </div>
 </div>
 
-Creating a project in Proppi is simple. Follow these steps to enhance your first batch of property photos.
+Creating a project in Emlak+ is simple. Follow these steps to enhance your first batch of property photos.
 
 ## Step 1: Start a New Project
 
 From your dashboard, click the **New Project** button. You'll be guided through a simple three-step process.
 
 <figure>
-<img src="https://placehold.co/800x500/f5f3ef/666?text=New+Project+Dialog" alt="New project dialog in Proppi" />
-<figcaption>The new project dialog in Proppi</figcaption>
+<img src="https://placehold.co/800x500/f5f3ef/666?text=New+Project+Dialog" alt="New project dialog in Emlak+" />
+<figcaption>The new project dialog in Emlak+</figcaption>
 </figure>
 
 <div class="callout-info">
@@ -54,7 +54,7 @@ From your dashboard, click the **New Project** button. You'll be guided through 
 
 ## Step 2: Upload Your Photos
 
-Drag and drop your photos into the upload area, or click to browse your files. Proppi supports:
+Drag and drop your photos into the upload area, or click to browse your files. Emlak+ supports:
 
 | Format | Max Size | Recommended |
 |--------|----------|-------------|
@@ -85,7 +85,7 @@ Browse our collection of professionally designed style templates. Each template 
 
 <div class="callout-tip">
 
-This step is optional. If you don't select a template, Proppi will use intelligent auto-enhancement based on your photo content.
+This step is optional. If you don't select a template, Emlak+ will use intelligent auto-enhancement based on your photo content.
 
 </div>
 
@@ -93,13 +93,13 @@ Preview how each style looks on your photos before committing.
 
 ## Step 4: Process & Review
 
-Click **Start Processing** to begin. Proppi will enhance each photo using your selected style. Processing typically takes 30–60 seconds per image.
+Click **Start Processing** to begin. Emlak+ will enhance each photo using your selected style. Processing typically takes 30–60 seconds per image.
 
 Once complete, review each enhanced photo and download your results in high resolution.
 
 <div class="note">
 
-Your original photos are always preserved – Proppi creates enhanced copies without modifying your originals.
+Your original photos are always preserved – Emlak+ creates enhanced copies without modifying your originals.
 
 </div>
 

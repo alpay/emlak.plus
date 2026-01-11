@@ -43,7 +43,7 @@ export function LandingValueProp() {
             className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            You don't have to choose between
+            You don&apos;t have to choose between
             <br />
             <span style={{ color: "var(--landing-accent)" }}>
               Quality, Cost and Time

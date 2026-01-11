@@ -248,7 +248,7 @@ export function getAIToolConfig(id: string): AIToolConfig | undefined {
 }
 
 // ProjectAITools type for reference (matches schema.ts)
-interface AIToolsState {
+export interface AIToolsState {
   replaceFurniture: boolean;
   cleanHands: boolean;
   cleanCamera: boolean;
@@ -267,7 +267,7 @@ export function generatePrompt(
   const preserveStructure =
     "Do not move, remove, or modify windows, walls, doors, or any architectural elements. Keep the room layout exactly as shown.";
 
-  let promptParts: string[] = [];
+  const promptParts: string[] = [];
 
   // Add room type and environment context
   if (roomType) {

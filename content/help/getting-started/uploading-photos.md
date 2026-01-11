@@ -1,15 +1,15 @@
 ---
 title: "Uploading Photos"
-description: "Everything you need to know about uploading photos to Proppi for best results."
+description: "Everything you need to know about uploading photos to Emlak+ for best results."
 order: 3
 popular: false
 ---
 
-Getting great results from Proppi starts with uploading quality source photos. Here's everything you need to know about the upload process.
+Getting great results from Emlak+ starts with uploading quality source photos. Here's everything you need to know about the upload process.
 
 ## Supported Formats
 
-Proppi accepts the following image formats:
+Emlak+ accepts the following image formats:
 
 | Format | Max Size | Recommended |
 |--------|----------|-------------|
@@ -59,7 +59,7 @@ Once uploaded, your photos are:
 
 <div class="note">
 
-Your original photos are always preserved—Proppi creates enhanced copies without modifying your originals.
+Your original photos are always preserved—Emlak+ creates enhanced copies without modifying your originals.
 
 </div>
 

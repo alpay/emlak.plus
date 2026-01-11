@@ -439,7 +439,7 @@ export function VideoDetailContent({
   const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
 
-  const status = statusConfig[videoProject.status];
+  const status = statusConfig[videoProject.status as VideoProjectStatus];
   const isProcessing =
     videoProject.status === "generating" || videoProject.status === "compiling";
   const isCompleted = videoProject.status === "completed";
@@ -597,7 +597,10 @@ export function VideoDetailContent({
                   const roomConfig = VIDEO_ROOM_TYPES.find(
                     (r) => r.id === clip.roomType
                   );
-                  const clipStatus = clipStatusConfig[clip.status];
+                  const clipStatus =
+                    clipStatusConfig[
+                      clip.status as keyof typeof clipStatusConfig
+                    ];
                   const nextClip = clips[index + 1];
                   const showTransition =
                     clip.transitionType === "seamless" &&

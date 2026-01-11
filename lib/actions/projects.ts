@@ -64,6 +64,7 @@ export async function createProjectAction(
       roomType: roomType || null,
       thumbnailUrl: null,
       status: "pending",
+      aiTools: [],
       imageCount: 0,
       completedCount: 0,
     });

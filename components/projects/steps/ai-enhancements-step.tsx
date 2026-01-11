@@ -197,6 +197,51 @@ export function AIEnhancementsStep({
     }
   };
 
+  return (
+    <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+      {/* Left sidebar - AI Tools */}
+      <aside className="space-y-3 lg:col-span-4 xl:col-span-3">
+        <h3 className="mb-4 px-1 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          AI Araçları
+        </h3>
+        {AI_TOOLS.map((tool) => (
+          <ToolCard
+            key={tool.id}
+            tool={tool}
+            checked={aiTools[tool.id]}
+            isSelected={selectedTool === tool.id}
+            onToggle={() => handleToolToggle(tool.id)}
+            onSelect={() => handleToolSelect(tool.id)}
+          />
+        ))}
+      </aside>
+
+      {/* Main area - Tool detail panel */}
+      <div className="lg:col-span-8 xl:col-span-9">
+        {!selectedTool ? (
+          <div className="flex h-64 items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30">
+            <p className="text-muted-foreground">
+              Detayları görmek için bir AI aracı seçin
+            </p>
+          </div>
+        ) : selectedTool === "replaceFurniture" ? (
+          <FurnitureSelectionPanel
+            selectableTemplates={selectableTemplates}
+            selectedTemplate={selectedTemplate}
+            onSelectTemplate={onSelectTemplate}
+            title={getPanelTitle(selectedTool)}
+          />
+        ) : (
+          <ToolDetailContent
+            toolId={selectedTool}
+            title={getPanelTitle(selectedTool)}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
 const getPanelTitle = (selectedTool: string | null) => {
   if (!selectedTool) return "Bir araç seçin";
   const tool = AI_TOOLS_CONFIG.find((t) => t.id === selectedTool);
@@ -349,49 +394,3 @@ function ToolDetailContent({
 
   return null;
 }
-
-  return (
-    <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
-      {/* Left sidebar - AI Tools */}
-      <aside className="space-y-3 lg:col-span-4 xl:col-span-3">
-        <h3 className="mb-4 px-1 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          AI Araçları
-        </h3>
-        {AI_TOOLS.map((tool) => (
-          <ToolCard
-            key={tool.id}
-            tool={tool}
-            checked={aiTools[tool.id]}
-            isSelected={selectedTool === tool.id}
-            onToggle={() => handleToolToggle(tool.id)}
-            onSelect={() => handleToolSelect(tool.id)}
-          />
-        ))}
-      </aside>
-
-      {/* Main area - Tool detail panel */}
-      <div className="lg:col-span-8 xl:col-span-9">
-        {!selectedTool ? (
-          <div className="flex h-64 items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30">
-            <p className="text-muted-foreground">
-              Detayları görmek için bir AI aracı seçin
-            </p>
-          </div>
-        ) : selectedTool === "replaceFurniture" ? (
-          <FurnitureSelectionPanel
-            selectableTemplates={selectableTemplates}
-            selectedTemplate={selectedTemplate}
-            onSelectTemplate={onSelectTemplate}
-            title={getPanelTitle(selectedTool)}
-          />
-        ) : (
-          <ToolDetailContent
-            toolId={selectedTool}
-            title={getPanelTitle(selectedTool)}
-          />
-        )}
-      </div>
-    </div>
-  );
-}
-

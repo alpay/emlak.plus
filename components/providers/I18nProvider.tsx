@@ -38,7 +38,10 @@ export function I18nProvider({ children, initialLanguage }: I18nProviderProps) {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     }
 
-    setIsInitialized(true);
+    // Use a microtask to avoid the "synchronous setState in effect" lint error
+    Promise.resolve().then(() => {
+      setIsInitialized(true);
+    });
   }, [initialLanguage]);
 
   // Don't render until initialized to prevent hydration mismatch

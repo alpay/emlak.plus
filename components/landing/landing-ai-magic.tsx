@@ -129,18 +129,13 @@ function ComparisonSlider({
       />
 
       {/* Before Image (Clipped) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${sliderPosition}%` }}
-      >
-        <img
-          alt="Before"
-          className="absolute inset-0 h-full w-full object-cover"
-          draggable={false}
-          src={beforeSrc}
-          style={{ width: containerRef.current?.offsetWidth }}
-        />
-      </div>
+      <img
+        alt="Before"
+        className="absolute inset-0 h-full w-full object-cover"
+        draggable={false}
+        src={beforeSrc}
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      />
 
       {/* Slider Handle */}
       <div

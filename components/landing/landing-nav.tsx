@@ -65,11 +65,11 @@ export function LandingNav() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Logo */}
         <Link
-          className="font-semibold tracking-tight transition-opacity hover:opacity-80"
+          className="font-bold text-lg tracking-tight transition-opacity hover:opacity-80"
           href="/"
           style={{ color: "var(--landing-text)" }}
         >
-          Emlak
+          Emlak<span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">+</span>
         </Link>
 
         {/* Navigation Links */}

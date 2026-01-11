@@ -82,10 +82,10 @@ export function DashboardHeader({
           {/* Left side: Logo + Navigation */}
           <div className="flex min-w-0 items-center gap-4">
             <Link
-              className="truncate font-semibold text-foreground tracking-tight transition-colors hover:text-foreground/80"
+              className="truncate font-bold text-lg text-foreground tracking-tight transition-colors hover:text-foreground/80"
               href="/"
             >
-              Emlak
+              Emlak<span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">+</span>
             </Link>
 
             <Separator className="h-6" orientation="vertical" />

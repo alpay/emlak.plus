@@ -88,7 +88,7 @@ export function DashboardHeader({
               Emlak<span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">+</span>
             </Link>
 
-            <Separator className="h-6" orientation="vertical" />
+            <Separator orientation="vertical" />
 
             <nav className="flex items-center gap-1">
               {navItems.map((item) => {

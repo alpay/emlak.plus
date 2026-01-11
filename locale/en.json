@@ -303,6 +303,32 @@
       "tip4": "Change your password immediately if you suspect unauthorized access"
     }
   },
+  "credits": {
+    "title": "Credits",
+    "subtitle": "Manage your credits and view transaction history",
+    "currentBalance": "Current Balance",
+    "credits": "credits",
+    "outOfCredits": "You're out of credits! Purchase more to continue generating images.",
+    "lowCredits": "Running low on credits. Consider purchasing more soon.",
+    "viewInvoices": "View Invoices",
+    "buyCredits": "Buy Credits",
+    "popular": "Popular",
+    "buyNow": "Buy Now",
+    "creditValue": "1 credit = 1 AI image generation or edit",
+    "videoValue": "10 credits = 1 video clip",
+    "history": {
+      "title": "Transaction History",
+      "noTransactions": "No transactions yet. Purchase credits to get started!",
+      "purchased": "Purchased",
+      "used": "Used",
+      "bonus": "Bonus",
+      "refunded": "Refunded",
+      "adjustment": "Adjustment",
+      "noDescription": "No description"
+    },
+    "back": "Back to Settings",
+    "perCredit": "{{price}}/credit"
+  },
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",

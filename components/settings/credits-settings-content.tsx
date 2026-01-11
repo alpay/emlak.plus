@@ -14,11 +14,13 @@ import {
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import type { CreditPackage, CreditTransaction } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 
 function ViewInvoicesButton() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,7 +59,7 @@ function ViewInvoicesButton() {
         ) : (
           <IconReceipt className="size-4" />
         )}
-        View Invoices
+        {t("credits.viewInvoices")}
         <IconExternalLink className="size-3" />
       </Button>
       {error && (
@@ -82,6 +84,7 @@ export function CreditsSettingsContent({
   packages,
   transactions,
 }: CreditsSettingsContentProps) {
+  const { t } = useTranslation();
   const [purchasing, setPurchasing] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -122,7 +125,8 @@ export function CreditsSettingsContent({
   }
 
   function getPricePerCredit(creditCount: number, cents: number): string {
-    return `$${(cents / 100 / creditCount).toFixed(2)}/credit`;
+    const price = (cents / 100 / creditCount).toFixed(2);
+    return t("credits.perCredit", { price: `$${price}` });
   }
 
   function getTransactionIcon(type: string) {
@@ -145,36 +149,36 @@ export function CreditsSettingsContent({
   function getTransactionLabel(type: string) {
     switch (type) {
       case "purchase":
-        return "Purchased";
+        return t("credits.history.purchased");
       case "usage":
-        return "Used";
+        return t("credits.history.used");
       case "bonus":
-        return "Bonus";
+        return t("credits.history.bonus");
       case "refund":
-        return "Refunded";
+        return t("credits.history.refunded");
       case "admin_adjustment":
-        return "Adjustment";
+        return t("credits.history.adjustment");
       default:
         return type;
     }
   }
 
   return (
-    <div className="space-y-6 px-4 py-6 md:px-6 lg:px-8">
+    <div className="space-y-6 px-4 md:px-6 lg:px-8">
       {/* Back link */}
       <Link
         className="inline-flex items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
         href="/dashboard/settings"
       >
         <IconArrowLeft className="size-4" />
-        Back to Settings
+        {t("credits.back")}
       </Link>
 
       {/* Header */}
       <div>
-        <h1 className="font-semibold text-2xl tracking-tight">Credits</h1>
+        <h1 className="font-semibold text-2xl tracking-tight">{t("credits.title")}</h1>
         <p className="text-muted-foreground">
-          Manage your credits and view transaction history
+          {t("credits.subtitle")}
         </p>
       </div>
 
@@ -182,7 +186,7 @@ export function CreditsSettingsContent({
       <div className="rounded-xl border bg-card p-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-muted-foreground text-sm">Current Balance</p>
+            <p className="text-muted-foreground text-sm">{t("credits.currentBalance")}</p>
             <div
               className={cn(
                 "mt-1 flex items-center gap-2 font-bold text-3xl",
@@ -194,7 +198,7 @@ export function CreditsSettingsContent({
               <IconCoins className="size-8" />
               {credits}
               <span className="font-normal text-lg text-muted-foreground">
-                credits
+                {t("credits.credits")}
               </span>
             </div>
           </div>
@@ -203,20 +207,19 @@ export function CreditsSettingsContent({
 
         {isEmpty && (
           <p className="mt-4 text-destructive text-sm">
-            You&apos;re out of credits! Purchase more to continue generating
-            images.
+            {t("credits.outOfCredits")}
           </p>
         )}
         {isLow && !isEmpty && (
           <p className="mt-4 text-amber-600 text-sm dark:text-amber-400">
-            Running low on credits. Consider purchasing more soon.
+            {t("credits.lowCredits")}
           </p>
         )}
       </div>
 
       {/* Credit Packages */}
       <div className="space-y-4">
-        <h2 className="font-semibold text-lg">Buy Credits</h2>
+        <h2 className="font-semibold text-lg">{t("credits.buyCredits")}</h2>
 
         {error && (
           <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-destructive text-sm">
@@ -231,8 +234,10 @@ export function CreditsSettingsContent({
             return (
               <button
                 className={cn(
-                  "group relative flex flex-col rounded-xl border p-5 text-left transition-all hover:border-primary/50 hover:shadow-md",
-                  isPopular && "border-primary/30 bg-primary/5"
+                  "group relative flex flex-col rounded-xl border p-5 text-left transition-all hover:shadow-md",
+                  isPopular
+                    ? "border-primary shadow-sm bg-primary/5 ring-1 ring-primary/20"
+                    : "hover:border-primary/50"
                 )}
                 disabled={purchasing !== null}
                 key={pkg.id}
@@ -240,30 +245,25 @@ export function CreditsSettingsContent({
                 type="button"
               >
                 {isPopular && (
-                  <div className="absolute -top-2.5 left-4 flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 font-medium text-primary-foreground text-xs">
+                  <div className="absolute -top-2.5 left-4 flex items-center gap-1 rounded-full bg-primary px-3 py-0.5 font-medium text-primary-foreground text-xs shadow-sm">
                     <IconSparkles className="size-3" />
-                    Popular
+                    {t("credits.popular")}
                   </div>
                 )}
 
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      "flex size-12 items-center justify-center rounded-full bg-muted",
-                      isPopular && "bg-primary/20"
+                      "flex size-12 items-center justify-center rounded-full transition-colors",
+                      isPopular ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground group-hover:text-foreground"
                     )}
                   >
-                    <IconCoins
-                      className={cn(
-                        "size-6 text-muted-foreground",
-                        isPopular && "text-primary"
-                      )}
-                    />
+                    <IconCoins className="size-6" />
                   </div>
                   <div>
                     <div className="font-semibold text-lg">{pkg.name}</div>
                     <div className="text-muted-foreground text-sm">
-                      {pkg.credits} credits
+                      {pkg.credits} {t("credits.credits")}
                     </div>
                   </div>
                 </div>
@@ -277,13 +277,22 @@ export function CreditsSettingsContent({
                   </span>
                 </div>
 
-                <div className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-muted py-2 text-sm transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <div className={cn(
+                  "mt-4 flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium transition-colors",
+                  isPopular
+                    ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+                    : "bg-muted text-foreground group-hover:bg-primary group-hover:text-primary-foreground"
+                )}>
                   {purchasing === pkg.id ? (
                     <IconLoader2 className="size-4 animate-spin" />
                   ) : (
                     <>
-                      <IconCheck className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
-                      Buy Now
+                      {isPopular ? (
+                         <IconCheck className="size-4" />
+                      ) : (
+                         <IconCheck className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                      )}
+                      {t("credits.buyNow")}
                     </>
                   )}
                 </div>
@@ -293,20 +302,20 @@ export function CreditsSettingsContent({
         </div>
 
         <div className="rounded-lg bg-muted/50 p-3 text-center text-muted-foreground text-xs">
-          <p>1 credit = 1 AI image generation or edit</p>
-          <p>10 credits = 1 video clip</p>
+          <p>{t("credits.creditValue")}</p>
+          <p>{t("credits.videoValue")}</p>
         </div>
       </div>
 
       {/* Transaction History */}
       <div className="space-y-4">
-        <h2 className="font-semibold text-lg">Transaction History</h2>
+        <h2 className="font-semibold text-lg">{t("credits.history.title")}</h2>
 
         {transactions.length === 0 ? (
           <div className="rounded-xl border bg-muted/30 p-8 text-center">
             <IconReceipt className="mx-auto size-10 text-muted-foreground/50" />
             <p className="mt-3 text-muted-foreground">
-              No transactions yet. Purchase credits to get started!
+              {t("credits.history.noTransactions")}
             </p>
           </div>
         ) : (
@@ -326,7 +335,7 @@ export function CreditsSettingsContent({
                         {getTransactionLabel(tx.type)}
                       </div>
                       <div className="text-muted-foreground text-sm">
-                        {tx.description || "No description"}
+                        {tx.description || t("credits.history.noDescription")}
                       </div>
                     </div>
                   </div>

@@ -301,6 +301,32 @@
       "tip4": "Yetkisiz erişimden şüpheleniyorsanız şifrenizi hemen değiştirin"
     }
   },
+  "credits": {
+    "title": "Krediler",
+    "subtitle": "Kredilerinizi yönetin ve işlem geçmişini görüntüleyin",
+    "currentBalance": "Mevcut Bakiye",
+    "credits": "kredi",
+    "outOfCredits": "Krediniz bitti! Görsel oluşturmaya devam etmek için daha fazla satın alın.",
+    "lowCredits": "Krediniz azalıyor. Yakında daha fazla satın almayı düşünün.",
+    "viewInvoices": "Faturaları Görüntüle",
+    "buyCredits": "Kredi Satın Al",
+    "popular": "Popüler",
+    "buyNow": "Satın Al",
+    "creditValue": "1 kredi = 1 AI görsel oluşturma veya düzenleme",
+    "videoValue": "10 kredi = 1 video klip",
+    "history": {
+      "title": "İşlem Geçmişi",
+      "noTransactions": "Henüz işlem yok. Başlamak için kredi satın alın!",
+      "purchased": "Satın Alındı",
+      "used": "Kullanıldı",
+      "bonus": "Bonus",
+      "refunded": "İade Edildi",
+      "adjustment": "Düzeltme",
+      "noDescription": "Açıklama yok"
+    },
+    "back": "Ayarlara Dön",
+    "perCredit": "{{price}}/kredi"
+  },
   "auth": {
     "signIn": "Giriş Yap",
     "signUp": "Kayıt Ol",

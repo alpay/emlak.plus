@@ -443,11 +443,16 @@ export type ImageEnvironment = "indoor" | "outdoor";
 // AI tools that can be applied to a project
 export interface ProjectAITools {
   replaceFurniture: boolean;
+  declutter: boolean;
   cleanHands: boolean;
   cleanCamera: boolean;
   turnOffScreens: boolean;
   lensCorrection: boolean;
   whiteBalance: boolean;
+  grassGreening: boolean;
+  blurSensitiveInfo: boolean;
+  skyReplacement: boolean;
+  selectedSkyOption?: string; // ID of the selected sky option
 }
 
 // Comprehensive Room Types (English keys, Norwegian UI labels)

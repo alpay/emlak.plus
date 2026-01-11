@@ -4,10 +4,15 @@ import {
   IconArmchair2,
   IconCamera,
   IconCheck,
+  IconCloud,
   IconDeviceTv,
+  IconEyeOff,
   IconFocusCentered,
   IconHandStop,
+  IconInfoCircle,
+  IconPlant,
   IconSun,
+  IconTrash,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import * as React from "react";
@@ -15,7 +20,9 @@ import { useTranslation } from "react-i18next";
 import type { ProjectAITools } from "@/lib/db/schema";
 import {
   AI_TOOLS_CONFIG,
+  SKY_OPTIONS,
   STYLE_TEMPLATES,
+  type SkyOption,
   type StyleTemplate,
 } from "@/lib/style-templates";
 import { cn } from "@/lib/utils";
@@ -28,6 +35,10 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   IconDeviceTv,
   IconFocusCentered,
   IconSun,
+  IconTrash,
+  IconPlant,
+  IconEyeOff,
+  IconCloud,
 };
 
 // Map config to component-usable format with actual icon components
@@ -38,6 +49,8 @@ const AI_TOOLS = AI_TOOLS_CONFIG.map((tool) => ({
   description: tool.description,
   color: tool.color,
   bgColor: tool.bgColor,
+  outdoorOnly: tool.outdoorOnly,
+  hasOptions: tool.hasOptions,
 }));
 
 interface AIEnhancementsStepProps {
@@ -45,6 +58,8 @@ interface AIEnhancementsStepProps {
   onToggleTool: (tool: keyof ProjectAITools) => void;
   selectedTemplate: StyleTemplate | null;
   onSelectTemplate: (template: StyleTemplate) => void;
+  onSelectSkyOption?: (skyOptionId: string | undefined) => void;
+  hasOutdoorImages?: boolean; // Whether any uploaded images are outdoor
 }
 
 function ToolCard({
@@ -53,12 +68,14 @@ function ToolCard({
   isSelected,
   onToggle,
   onSelect,
+  disabled,
 }: {
   tool: (typeof AI_TOOLS)[0];
   checked: boolean;
   isSelected: boolean;
   onToggle: () => void;
   onSelect: () => void;
+  disabled?: boolean;
 }) {
   const { t } = useTranslation();
   const IconComponent = tool.icon;
@@ -67,13 +84,16 @@ function ToolCard({
     <button
       type="button"
       onClick={onSelect}
+      disabled={disabled}
       className={cn(
         "w-full rounded-2xl border-2 bg-background p-3 text-left transition-all shadow-sm",
-        isSelected
-          ? "border-[var(--accent-teal)] ring-4 ring-[var(--accent-teal)]/10"
-          : checked
-            ? "border-[var(--accent-teal)]/50"
-            : "border-border hover:border-[var(--accent-teal)]/50"
+        disabled
+          ? "opacity-50 cursor-not-allowed border-border"
+          : isSelected
+            ? "border-[var(--accent-teal)] ring-4 ring-[var(--accent-teal)]/10"
+            : checked
+              ? "border-[var(--accent-teal)]/50"
+              : "border-border hover:border-[var(--accent-teal)]/50"
       )}
     >
       <div className="flex items-center justify-between gap-3">
@@ -82,7 +102,14 @@ function ToolCard({
             <IconComponent className={cn("h-6 w-6", tool.color)} />
           </div>
           <div>
-            <h4 className="text-[14px] font-bold">{t(`aiTools.${tool.id}.title`, tool.title)}</h4>
+            <div className="flex items-center gap-1.5">
+              <h4 className="text-[14px] font-bold">{t(`aiTools.${tool.id}.title`, tool.title)}</h4>
+              {tool.outdoorOnly && (
+                <span className="rounded bg-green-100 dark:bg-green-900/30 px-1.5 py-0.5 text-[9px] font-medium text-green-700 dark:text-green-400">
+                  {t("aiTools.outdoorOnly", "Dış Mekan")}
+                </span>
+              )}
+            </div>
             <p className="text-[11px] leading-tight text-muted-foreground">
               {t(`aiTools.${tool.id}.description`, tool.description)}
             </p>
@@ -90,16 +117,21 @@ function ToolCard({
         </div>
         {/* Toggle switch - click stops propagation */}
         <div
-          className="relative inline-flex shrink-0 cursor-pointer items-center"
+          className={cn(
+            "relative inline-flex shrink-0 items-center",
+            disabled ? "cursor-not-allowed" : "cursor-pointer"
+          )}
           onClick={(e) => {
             e.stopPropagation();
-            onToggle();
+            if (!disabled) {
+              onToggle();
+            }
           }}
         >
           <div
             className={cn(
               "h-6 w-10 rounded-full transition-colors after:absolute after:left-[3px] after:top-[3px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-['']",
-              checked
+              checked && !disabled
                 ? "bg-[var(--accent-teal)] after:translate-x-full after:border-white"
                 : "bg-gray-200 dark:bg-gray-700"
             )}
@@ -172,11 +204,66 @@ function StyleCard({
   );
 }
 
+function SkyOptionCard({
+  skyOption,
+  isSelected,
+  onClick,
+}: {
+  skyOption: SkyOption;
+  isSelected: boolean;
+  onClick: () => void;
+}) {
+  const { t } = useTranslation();
+  return (
+    <button
+      type="button"
+      className="group cursor-pointer text-left"
+      onClick={onClick}
+    >
+      <div
+        className={cn(
+          "relative aspect-[4/3] overflow-hidden rounded-xl border-2 transition-all",
+          isSelected
+            ? "border-[var(--accent-teal)] ring-4 ring-[var(--accent-teal)]/10 shadow-lg"
+            : "border-border shadow-sm group-hover:border-[var(--accent-teal)]/50"
+        )}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt={skyOption.label}
+          className={cn(
+            "h-full w-full object-cover transition-transform duration-300",
+            isSelected ? "scale-105" : "group-hover:scale-110"
+          )}
+          src={skyOption.thumbnail}
+        />
+        {isSelected && (
+          <div className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-teal)] text-white shadow-lg">
+            <IconCheck className="h-3 w-3" />
+          </div>
+        )}
+      </div>
+      <div className="mt-2 px-0.5">
+        <h5
+          className={cn(
+            "text-sm font-semibold transition-colors",
+            isSelected ? "text-[var(--accent-teal)]" : "group-hover:text-[var(--accent-teal)]"
+          )}
+        >
+          {t(`skyOptions.${skyOption.id}`, skyOption.label)}
+        </h5>
+      </div>
+    </button>
+  );
+}
+
 export function AIEnhancementsStep({
   aiTools,
   onToggleTool,
   selectedTemplate,
   onSelectTemplate,
+  onSelectSkyOption,
+  hasOutdoorImages = false,
 }: AIEnhancementsStepProps) {
   const { t } = useTranslation();
   const [selectedTool, setSelectedTool] = React.useState<keyof ProjectAITools | null>(
@@ -199,6 +286,11 @@ export function AIEnhancementsStep({
     }
   };
 
+  // Handle sky option selection
+  const handleSkyOptionSelect = (skyOptionId: string) => {
+    onSelectSkyOption?.(skyOptionId);
+  };
+
   return (
     <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
       {/* Left sidebar - AI Tools */}
@@ -206,16 +298,32 @@ export function AIEnhancementsStep({
         <h3 className="mb-4 px-1 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           {t("project.aiEnhancements.toolsTitle", "AI Araçları")}
         </h3>
-        {AI_TOOLS.map((tool) => (
-          <ToolCard
-            key={tool.id}
-            tool={tool}
-            checked={aiTools[tool.id]}
-            isSelected={selectedTool === tool.id}
-            onToggle={() => handleToolToggle(tool.id)}
-            onSelect={() => handleToolSelect(tool.id)}
-          />
-        ))}
+        {AI_TOOLS.map((tool) => {
+          // Disable outdoor-only tools if no outdoor images
+          const isDisabled = tool.outdoorOnly && !hasOutdoorImages;
+
+          return (
+            <ToolCard
+              key={tool.id}
+              tool={tool}
+              checked={Boolean(aiTools[tool.id])}
+              isSelected={selectedTool === tool.id}
+              onToggle={() => handleToolToggle(tool.id)}
+              onSelect={() => handleToolSelect(tool.id)}
+              disabled={isDisabled}
+            />
+          );
+        })}
+
+        {/* Info about outdoor-only tools */}
+        {!hasOutdoorImages && (
+          <div className="mt-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 p-3 text-xs text-amber-700 dark:text-amber-400">
+            <div className="flex items-start gap-2">
+              <IconInfoCircle className="h-4 w-4 mt-0.5 shrink-0" />
+              <p>{t("project.aiEnhancements.outdoorToolsInfo", "Dış mekan araçlarını kullanmak için en az bir dış mekan fotoğrafı yükleyin.")}</p>
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* Main area - Tool detail panel */}
@@ -232,6 +340,12 @@ export function AIEnhancementsStep({
             selectedTemplate={selectedTemplate}
             onSelectTemplate={onSelectTemplate}
             title={t("aiTools.replaceFurniture.title", "Eşyaları Değiştir")}
+          />
+        ) : selectedTool === "skyReplacement" ? (
+          <SkySelectionPanel
+            selectedSkyOption={aiTools.selectedSkyOption}
+            onSelectSkyOption={handleSkyOptionSelect}
+            title={t("aiTools.skyReplacement.title", "Gökyüzü Değiştirme")}
           />
         ) : (
           <ToolDetailContent
@@ -284,6 +398,43 @@ function FurnitureSelectionPanel({
   );
 }
 
+function SkySelectionPanel({
+  selectedSkyOption,
+  onSelectSkyOption,
+  title,
+}: {
+  selectedSkyOption: string | undefined;
+  onSelectSkyOption: (skyOptionId: string) => void;
+  title: string;
+}) {
+  const { t } = useTranslation();
+  return (
+    <>
+      <div className="mb-6 flex items-center justify-between">
+        <h3 className="text-lg font-bold">{title}</h3>
+        <span className="text-sm text-muted-foreground">
+          {t("project.aiEnhancements.selectSkyPrompt", "Dış mekan fotoğrafları için gökyüzü seçin")}
+        </span>
+      </div>
+      <div className="rounded-xl bg-sky-50 dark:bg-sky-900/20 p-4 mb-6">
+        <p className="text-sm text-sky-700 dark:text-sky-300">
+          {t("project.aiEnhancements.skyReplacementInfo", "Bu özellik sadece dış mekan fotoğraflarına uygulanır. Mevcut gökyüzü seçtiğiniz stil ile değiştirilecektir.")}
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {SKY_OPTIONS.map((skyOption) => (
+          <SkyOptionCard
+            key={skyOption.id}
+            skyOption={skyOption}
+            isSelected={selectedSkyOption === skyOption.id}
+            onClick={() => onSelectSkyOption(skyOption.id)}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
 function ToolDetailContent({
   toolId,
   title,
@@ -292,6 +443,28 @@ function ToolDetailContent({
   title: string;
 }) {
   const { t } = useTranslation();
+
+  // Declutter tool
+  if (toolId === "declutter") {
+    const features = t("project.aiEnhancements.toolDetails.declutter.features", { returnObjects: true }) as string[];
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.declutter.description", "Fotoğraftaki dağınıklığı, yerdeki eşyaları ve çer çöpü otomatik olarak temizler.")}
+        </p>
+        <div className="rounded-xl bg-muted/50 p-4">
+          <p className="text-sm text-muted-foreground">
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (toolId === "cleanHands") {
     const features = t("project.aiEnhancements.toolDetails.cleanHands.features", { returnObjects: true }) as string[];
@@ -405,6 +578,60 @@ function ToolDetailContent({
           </div>
           <p className="text-xs text-muted-foreground italic">
             {t("project.aiEnhancements.toolDetails.whiteBalance.labels.comingSoon", "* Slider ayarı yakında aktif olacak")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Grass Greening tool
+  if (toolId === "grassGreening") {
+    const features = t("project.aiEnhancements.toolDetails.grassGreening.features", { returnObjects: true }) as string[];
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.grassGreening.description", "Bahçe ve dış mekanlardaki çimleri canlı yeşil görünüme kavuşturur.")}
+        </p>
+        <div className="rounded-xl bg-green-50 dark:bg-green-900/20 p-4 mb-4">
+          <p className="text-sm text-green-700 dark:text-green-300">
+            {t("project.aiEnhancements.toolDetails.grassGreening.note", "Bu özellik sadece bahçe, arka bahçe, cephe, havuz alanı ve teras fotoğraflarına uygulanır. Mevcut olmayan alanlara çim eklenmez.")}
+          </p>
+        </div>
+        <div className="rounded-xl bg-muted/50 p-4">
+          <p className="text-sm text-muted-foreground">
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Blur Sensitive Info tool
+  if (toolId === "blurSensitiveInfo") {
+    const features = t("project.aiEnhancements.toolDetails.blurSensitiveInfo.features", { returnObjects: true }) as string[];
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.blurSensitiveInfo.description", "Fotoğraftaki hassas ve özel bilgileri otomatik olarak bulanıklaştırır.")}
+        </p>
+        <div className="rounded-xl bg-red-50 dark:bg-red-900/20 p-4 mb-4">
+          <p className="text-sm text-red-700 dark:text-red-300">
+            {t("project.aiEnhancements.toolDetails.blurSensitiveInfo.note", "Gizlilik için önemli: Aile fotoğrafları, plakalar, tam adresler ve kişisel belgeler otomatik olarak bulanıklaştırılır.")}
+          </p>
+        </div>
+        <div className="rounded-xl bg-muted/50 p-4">
+          <p className="text-sm text-muted-foreground">
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
           </p>
         </div>
       </div>

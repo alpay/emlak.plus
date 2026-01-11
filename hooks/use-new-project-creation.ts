@@ -26,11 +26,16 @@ export interface NewProjectCreationState {
 
 const DEFAULT_AI_TOOLS: ProjectAITools = {
   replaceFurniture: true,
+  declutter: false,
   cleanHands: false,
   cleanCamera: false,
   turnOffScreens: false,
   lensCorrection: false,
   whiteBalance: false,
+  grassGreening: false,
+  blurSensitiveInfo: false,
+  skyReplacement: false,
+  selectedSkyOption: undefined,
 };
 
 const INITIAL_STATE: NewProjectCreationState = {
@@ -96,6 +101,16 @@ export function useNewProjectCreation() {
       aiTools: {
         ...prev.aiTools,
         [tool]: !prev.aiTools[tool],
+      },
+    }));
+  }, []);
+
+  const setSelectedSkyOption = useCallback((skyOptionId: string | undefined) => {
+    setState((prev) => ({
+      ...prev,
+      aiTools: {
+        ...prev.aiTools,
+        selectedSkyOption: skyOptionId,
       },
     }));
   }, []);
@@ -178,6 +193,7 @@ export function useNewProjectCreation() {
     updateImage,
     toggleAITool,
     setSelectedTemplate,
+    setSelectedSkyOption,
     setProjectName,
     setIsSubmitting,
     reset,

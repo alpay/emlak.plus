@@ -204,6 +204,8 @@ export function NewProjectPage({ workspaceId, credits }: NewProjectPageProps) {
               onToggleTool={creation.toggleAITool}
               selectedTemplate={creation.selectedTemplate}
               onSelectTemplate={creation.setSelectedTemplate}
+              onSelectSkyOption={creation.setSelectedSkyOption}
+              hasOutdoorImages={creation.images.some((img) => img.environment === "outdoor")}
             />
           )}
           {creation.step === "confirm" && (

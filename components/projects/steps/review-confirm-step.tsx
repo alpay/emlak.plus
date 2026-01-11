@@ -4,21 +4,21 @@ import {
   IconArmchair,
   IconArmchair2,
   IconCamera,
+  IconCloud,
   IconCoin,
   IconDeviceTv,
+  IconEyeOff,
   IconFocusCentered,
   IconHandStop,
-  IconPencil,
-  IconSparkles,
+  IconPlant,
   IconSun,
-  IconWallet,
+  IconTrash,
   IconWand,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import * as React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import type { NewUploadedImage } from "@/hooks/use-new-project-creation";
 import type { ProjectAITools } from "@/lib/db/schema";
 import {
@@ -36,6 +36,10 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   IconDeviceTv,
   IconFocusCentered,
   IconSun,
+  IconTrash,
+  IconPlant,
+  IconEyeOff,
+  IconCloud,
 };
 
 interface ReviewConfirmStepProps {

@@ -667,8 +667,21 @@
       "toolsTitle": "AI Araçları",
       "selectToolPrompt": "Detayları görmek için bir AI aracı seçin",
       "selectStylePrompt": "Eşyaları değiştirmek için bir stil seçin",
+      "selectSkyPrompt": "Dış mekan fotoğrafları için gökyüzü seçin",
       "chooseTool": "Bir araç seçin",
+      "outdoorToolsInfo": "Dış mekan araçlarını kullanmak için en az bir dış mekan fotoğrafı yükleyin.",
+      "skyReplacementInfo": "Bu özellik sadece dış mekan fotoğraflarına uygulanır. Mevcut gökyüzü seçtiğiniz stil ile değiştirilecektir.",
       "toolDetails": {
+        "declutter": {
+          "title": "Dağınıklığı Temizle",
+          "description": "Fotoğraftaki dağınıklığı, yerdeki eşyaları ve çer çöpü otomatik olarak temizler.",
+          "features": [
+            "Yerdeki ayakkabılar, çoraplar, oyuncaklar temizlenir",
+            "Tezgah ve masalardaki dağınıklık kaldırılır",
+            "Kablolar ve çöpler temizlenir",
+            "Profesyonel liste fotoğrafı görünümü sağlanır"
+          ]
+        },
         "cleanHands": {
           "title": "Elleri Temizle",
           "description": "Fotoğraftaki yansımalarda görünen elleri otomatik olarak algılar ve temizler.",
@@ -709,11 +722,34 @@
           "title": "Beyaz Dengesi",
           "description": "Renk sıcaklığını optimize eder ve doğal beyaz dengesi sağlar.",
           "labels": {
+             "temperature": "Sıcaklık Ayarı",
              "cool": "Soğuk",
              "natural": "Doğal",
              "warm": "Sıcak",
              "comingSoon": "* Slider ayarı yakında aktif olacak"
           }
+        },
+        "grassGreening": {
+          "title": "Çim Yeşillendirme",
+          "description": "Bahçe ve dış mekanlardaki çimleri canlı yeşil görünüme kavuşturur.",
+          "note": "Bu özellik sadece bahçe, arka bahçe, cephe, havuz alanı ve teras fotoğraflarına uygulanır. Mevcut olmayan alanlara çim eklenmez.",
+          "features": [
+            "Sararmiş çimler yeşillendirilir",
+            "Doğal ve bakımlı görünüm sağlanır",
+            "Sadece mevcut çim alanları iyileştirilir",
+            "Peyzaj görünümü profesyonelleştirilir"
+          ]
+        },
+        "blurSensitiveInfo": {
+          "title": "Hassas Bilgileri Bulanıklaştır",
+          "description": "Fotoğraftaki hassas ve özel bilgileri otomatik olarak bulanıklaştırır.",
+          "note": "Gizlilik için önemli: Aile fotoğrafları, plakalar, tam adresler ve kişisel belgeler otomatik olarak bulanıklaştırılır.",
+          "features": [
+            "Araç plakaları bulanıklaştırılır",
+            "Aile fotoğrafları ve portreler gizlenir",
+            "Tam adresler ve ev numaraları kapatılır",
+            "Kişisel belgeler ve bilgiler korunur"
+          ]
         }
       }
     },
@@ -764,11 +800,23 @@
   },
   "aiTools": {
     "replaceFurniture": { "title": "Eşyaları Değiştir", "description": "Mevcut mobilyaları yenileriyle değiştirir" },
+    "declutter": { "title": "Dağınıklığı Temizle", "description": "Yer çöplerini, dağınık eşyaları temizler" },
     "cleanHands": { "title": "Elleri Temizle", "description": "Yansımadaki elleri siler" },
     "cleanCamera": { "title": "Kamerayı Temizle", "description": "Tripod ve ekipmanı siler" },
     "turnOffScreens": { "title": "Ekranları Kapat", "description": "TV ve monitörleri karartır" },
     "lensCorrection": { "title": "Lens Düzeltme", "description": "Geniş açı distorsiyonunu giderir" },
-    "whiteBalance": { "title": "Beyaz Dengesi", "description": "Renk sıcaklığını optimize eder" }
+    "whiteBalance": { "title": "Beyaz Dengesi", "description": "Renk sıcaklığını optimize eder" },
+    "grassGreening": { "title": "Çim Yeşillendirme", "description": "Bahçedeki çimleri yeşillendirir" },
+    "blurSensitiveInfo": { "title": "Hassas Bilgileri Bulanıklaştır", "description": "Kişisel bilgileri, plakaları gizler" },
+    "skyReplacement": { "title": "Gökyüzü Değiştirme", "description": "Gökyüzünü değiştirir" },
+    "outdoorOnly": "Dış Mekan"
+  },
+  "skyOptions": {
+    "clear-blue": "Açık Mavi Gökyüzü",
+    "partly-cloudy": "Parçalı Bulutlu",
+    "golden-hour": "Altın Saat",
+    "twilight": "Alacakaranlık",
+    "sunset": "Gün Batımı"
   },
   "styles": {
      "scandinavian": { "name": "İskandinav", "description": "Doğal ahşap ve minimal dekorlu aydınlık, ferah alanlar" },

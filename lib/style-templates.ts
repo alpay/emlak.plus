@@ -175,6 +175,51 @@ export function getRoomTypeById(id: string): RoomTypeOption | undefined {
   return ROOM_TYPES.find((r) => r.id === id);
 }
 
+// Sky replacement options for outdoor photos
+export interface SkyOption {
+  id: string;
+  label: string;
+  thumbnail: string; // Unsplash image URL
+  prompt: string;
+}
+
+export const SKY_OPTIONS: SkyOption[] = [
+  {
+    id: "clear-blue",
+    label: "Açık Mavi Gökyüzü",
+    thumbnail: "https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?w=200&h=150&fit=crop",
+    prompt: "Replace the sky with a perfectly clear, vibrant blue sky with no clouds. The sky should have a natural gradient from deep blue at the top to lighter blue near the horizon.",
+  },
+  {
+    id: "partly-cloudy",
+    label: "Parçalı Bulutlu",
+    thumbnail: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=200&h=150&fit=crop",
+    prompt: "Replace the sky with a beautiful partly cloudy sky featuring soft, white cumulus clouds scattered across a bright blue background. The clouds should look natural and inviting.",
+  },
+  {
+    id: "golden-hour",
+    label: "Altın Saat",
+    thumbnail: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=200&h=150&fit=crop",
+    prompt: "Replace the sky with a warm golden hour sky. Include soft orange, pink, and golden tones near the horizon transitioning to a deeper blue above. Add a few wispy clouds catching the warm light.",
+  },
+  {
+    id: "twilight",
+    label: "Alacakaranlık",
+    thumbnail: "https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=200&h=150&fit=crop",
+    prompt: "Replace the sky with a stunning twilight/dusk sky. Use deep blue and purple tones transitioning to warm orange and pink at the horizon. This creates a dramatic, professional real estate look.",
+  },
+  {
+    id: "sunset",
+    label: "Gün Batımı",
+    thumbnail: "https://images.unsplash.com/photo-1472120435266-53107fd0c44a?w=200&h=150&fit=crop",
+    prompt: "Replace the sky with a dramatic sunset sky. Feature rich orange, red, and purple colors with dramatic cloud formations. The sky should look natural and enhance the property's appeal.",
+  },
+];
+
+export function getSkyOptionById(id: string): SkyOption | undefined {
+  return SKY_OPTIONS.find((s) => s.id === id);
+}
+
 // AI Tools Configuration - shared between components
 export interface AIToolConfig {
   id: string;
@@ -184,6 +229,8 @@ export interface AIToolConfig {
   color: string;
   bgColor: string;
   promptAddition: string;
+  outdoorOnly?: boolean; // If true, only available for outdoor photos
+  hasOptions?: boolean; // If true, shows a selection panel (like skyReplacement)
 }
 
 export const AI_TOOLS_CONFIG: AIToolConfig[] = [
@@ -195,6 +242,15 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     color: "text-blue-500",
     bgColor: "bg-blue-50 dark:bg-blue-900/20",
     promptAddition: "", // Style template handles this
+  },
+  {
+    id: "declutter",
+    icon: "IconTrash",
+    title: "Dağınıklığı Temizle",
+    description: "Yer çöplerini, dağınık eşyaları temizler",
+    color: "text-rose-500",
+    bgColor: "bg-rose-50 dark:bg-rose-900/20",
+    promptAddition: "Remove all clutter and mess from the photo. This includes items on the floor like shoes, socks, toys, clothes, bags, cables, trash, and any disorganized items. Remove items that look out of place on counters, tables, and surfaces. Keep only essential, well-placed furniture and decor. The space should look clean, organized, and ready for a professional listing photo. Do not remove permanent fixtures or built-in items.",
   },
   {
     id: "cleanHands",
@@ -241,6 +297,36 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
     promptAddition: "Correct the white balance to achieve natural, neutral colors. Remove any yellow, blue, or green color casts. Make whites appear pure white and ensure accurate color representation throughout the image.",
   },
+  {
+    id: "grassGreening",
+    icon: "IconPlant",
+    title: "Çim Yeşillendirme",
+    description: "Bahçedeki çimleri yeşillendirir",
+    color: "text-green-500",
+    bgColor: "bg-green-50 dark:bg-green-900/20",
+    promptAddition: "", // Handled dynamically in generatePrompt based on room type
+    outdoorOnly: true,
+  },
+  {
+    id: "blurSensitiveInfo",
+    icon: "IconEyeOff",
+    title: "Hassas Bilgileri Bulanıklaştır",
+    description: "Kişisel bilgileri, plakaları gizler",
+    color: "text-red-500",
+    bgColor: "bg-red-50 dark:bg-red-900/20",
+    promptAddition: "Blur and obscure any sensitive or private information visible in the photo. This includes: license plates on vehicles, full street addresses or house numbers that could identify the exact location, family photos or portraits of people, personal documents, computer screens showing personal information, name plates, and any other identifying information. Apply a natural-looking blur that protects privacy while maintaining the professional appearance of the photo.",
+  },
+  {
+    id: "skyReplacement",
+    icon: "IconCloud",
+    title: "Gökyüzü Değiştirme",
+    description: "Gökyüzünü değiştirir",
+    color: "text-sky-500",
+    bgColor: "bg-sky-50 dark:bg-sky-900/20",
+    promptAddition: "", // Handled dynamically based on selected sky option
+    outdoorOnly: true,
+    hasOptions: true,
+  },
 ];
 
 export function getAIToolConfig(id: string): AIToolConfig | undefined {
@@ -250,11 +336,16 @@ export function getAIToolConfig(id: string): AIToolConfig | undefined {
 // ProjectAITools type for reference (matches schema.ts)
 export interface AIToolsState {
   replaceFurniture: boolean;
+  declutter: boolean;
   cleanHands: boolean;
   cleanCamera: boolean;
   turnOffScreens: boolean;
   lensCorrection: boolean;
   whiteBalance: boolean;
+  grassGreening: boolean;
+  blurSensitiveInfo: boolean;
+  skyReplacement: boolean;
+  selectedSkyOption?: string; // ID of the selected sky option
 }
 
 // Generate a prompt with room type context, AI tools, and architectural preservation
@@ -280,7 +371,6 @@ export function generatePrompt(
   if (template) {
     if (environment === "outdoor") {
       // For outdoor, we ONLY want to change specific furniture/items, NOT the whole atmosphere/walls
-      // User request: "outdoor icin secilen resimlerde secilen stil asla uygulanmamali, cunku o outdoor... sadece esyalari degistirsin"
       promptParts.push(
         `Update the furniture and movable items to match ${template.name} style. Do NOT apply interior design styles to the exterior building or landscape. Keep the facade, plants, and structural elements exactly as is.`
       );
@@ -294,7 +384,30 @@ export function generatePrompt(
   if (aiTools) {
     for (const tool of AI_TOOLS_CONFIG) {
       const toolId = tool.id as keyof AIToolsState;
-      if (aiTools[toolId] && tool.promptAddition) {
+      // Skip tools that aren't enabled
+      if (!aiTools[toolId]) continue;
+
+      // Handle special cases with dynamic prompts
+      if (toolId === "grassGreening") {
+        // Only apply grass greening for outdoor photos with garden/yard areas
+        if (environment === "outdoor" && roomType) {
+          const grassRoomTypes = ["garden", "backyard", "facade", "pool-area", "terrace"];
+          if (grassRoomTypes.includes(roomType)) {
+            promptParts.push(
+              "If there is a lawn or grass area visible in the photo, enhance it to look lush, healthy, and vibrant green. Only enhance existing grass areas - do not add grass where there is none. The grass should look naturally green and well-maintained, as if professionally landscaped. Do not change paved areas, decking, or non-grass surfaces."
+            );
+          }
+        }
+      } else if (toolId === "skyReplacement") {
+        // Only apply sky replacement for outdoor photos
+        if (environment === "outdoor" && aiTools.selectedSkyOption) {
+          const skyOption = getSkyOptionById(aiTools.selectedSkyOption);
+          if (skyOption) {
+            promptParts.push(skyOption.prompt);
+          }
+        }
+      } else if (tool.promptAddition) {
+        // Standard tools with static prompts
         promptParts.push(tool.promptAddition);
       }
     }

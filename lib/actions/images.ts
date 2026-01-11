@@ -124,14 +124,7 @@ export async function recordUploadedImages(
     roomType?: string | null;
     environment?: "indoor" | "outdoor";
   }[],
-  aiTools?: {
-    replaceFurniture: boolean;
-    cleanHands: boolean;
-    cleanCamera: boolean;
-    turnOffScreens: boolean;
-    lensCorrection: boolean;
-    whiteBalance: boolean;
-  }
+  aiTools?: ProjectAITools
 ): Promise<ActionResult<ImageWithRunId[]>> {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -185,7 +178,7 @@ export async function recordUploadedImages(
       // Use per-image room type and environment if provided
       const roomType = image.roomType || projectData.project.roomType;
       const environment = image.environment || "indoor";
-      const prompt = generatePrompt(template ?? null, roomType, environment, aiTools);
+      const prompt = generatePrompt(template ?? null, roomType, environment, aiTools as AIToolsState | undefined);
 
       // Create database record
       const imageRecord = await createImageGeneration({

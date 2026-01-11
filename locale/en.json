@@ -669,8 +669,21 @@
       "toolsTitle": "AI Tools",
       "selectToolPrompt": "Select an AI tool to view details",
       "selectStylePrompt": "Select a style to replace furniture",
+      "selectSkyPrompt": "Select a sky style for outdoor photos",
       "chooseTool": "Choose a tool",
+      "outdoorToolsInfo": "Upload at least one outdoor photo to use outdoor tools.",
+      "skyReplacementInfo": "This feature only applies to outdoor photos. The existing sky will be replaced with your selected style.",
       "toolDetails": {
+        "declutter": {
+          "title": "Declutter",
+          "description": "Automatically removes clutter, floor items, and mess from the photo.",
+          "features": [
+            "Shoes, socks, toys on floor removed",
+            "Counter and table clutter cleared",
+            "Cables and trash removed",
+            "Professional listing-ready appearance"
+          ]
+        },
         "cleanHands": {
           "title": "Clean Hands",
           "description": "Automatically detects and removes hands in reflections.",
@@ -711,11 +724,34 @@
           "title": "White Balance",
           "description": "Optimizes color temperature and ensures natural white balance.",
           "labels": {
+             "temperature": "Temperature Setting",
              "cool": "Cool",
              "natural": "Natural",
              "warm": "Warm",
              "comingSoon": "* Slider setting coming soon"
           }
+        },
+        "grassGreening": {
+          "title": "Grass Greening",
+          "description": "Enhances lawn and grass areas to look lush and vibrant.",
+          "note": "This feature only applies to garden, backyard, facade, pool area, and terrace photos. Grass will not be added where none exists.",
+          "features": [
+            "Yellow/brown grass enhanced to green",
+            "Natural, manicured appearance",
+            "Only existing grass areas improved",
+            "Professional landscaping look"
+          ]
+        },
+        "blurSensitiveInfo": {
+          "title": "Blur Sensitive Info",
+          "description": "Automatically blurs sensitive and private information in photos.",
+          "note": "Important for privacy: Family photos, license plates, full addresses, and personal documents are automatically blurred.",
+          "features": [
+            "License plates blurred",
+            "Family photos and portraits obscured",
+            "Full addresses and house numbers hidden",
+            "Personal documents and info protected"
+          ]
         }
       }
     },
@@ -766,11 +802,23 @@
   },
   "aiTools": {
     "replaceFurniture": { "title": "Replace Furniture", "description": "Replaces existing furniture with new ones" },
+    "declutter": { "title": "Declutter", "description": "Removes floor clutter and mess" },
     "cleanHands": { "title": "Clean Hands", "description": "Removes hands in reflections" },
     "cleanCamera": { "title": "Clean Camera", "description": "Removes tripod and equipment" },
     "turnOffScreens": { "title": "Turn Off Screens", "description": "Blackens TVs and monitors" },
     "lensCorrection": { "title": "Lens Correction", "description": "Fixes wide-angle distortion" },
-    "whiteBalance": { "title": "White Balance", "description": "Optimizes color temperature" }
+    "whiteBalance": { "title": "White Balance", "description": "Optimizes color temperature" },
+    "grassGreening": { "title": "Grass Greening", "description": "Enhances lawn to vibrant green" },
+    "blurSensitiveInfo": { "title": "Blur Sensitive Info", "description": "Hides personal info, plates" },
+    "skyReplacement": { "title": "Sky Replacement", "description": "Replaces the sky" },
+    "outdoorOnly": "Outdoor"
+  },
+  "skyOptions": {
+    "clear-blue": "Clear Blue Sky",
+    "partly-cloudy": "Partly Cloudy",
+    "golden-hour": "Golden Hour",
+    "twilight": "Twilight",
+    "sunset": "Sunset"
   },
   "styles": {
      "scandinavian": { "name": "Scandinavian", "description": "Light, airy spaces with natural wood and minimal decor" },

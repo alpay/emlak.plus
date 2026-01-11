@@ -340,5 +340,108 @@
     "enterNew": "Enter your new password",
     "confirmNew": "Confirm your new password",
     "changing": "Changing Password..."
+  },
+  "landing": {
+    "badge": "Best AI Real Estate Media Platform",
+    "aiMagic": {
+      "eyebrow": "AI Enhancements",
+      "title": "One-Click AI Magic",
+      "title2": "for Every Shot",
+      "subtitle": "Professional edits in seconds. Drag the slider to see the transformation.",
+      "dragHint": "Drag the slider to compare before and after",
+      "tabs": {
+        "twilight": "Twilight",
+        "windowPull": "Window Pull",
+        "skyReplacement": "Sky Replacement",
+        "waterEnhancement": "Water Enhancement",
+        "cameraRemoval": "Camera Removal",
+        "handRemoval": "Hand Removal",
+        "lensCorrection": "Lens Correction",
+        "whiteBalancing": "White Balancing"
+      }
+    },
+    "valueProp": {
+      "title": "You don't have to choose between",
+      "title2": "Quality, Cost and Time",
+      "subtitle": "Get all three with our AI-powered editing platform designed for real estate professionals.",
+      "stats": {
+        "revisionRate": "Revision Rate",
+        "revisionDesc": "Consistent, hand-blend quality edits with fewer revisions needed each month.",
+        "costSavings": "Cost Savings",
+        "costDesc": "Our clients save significant amounts annually in post-production costs.",
+        "turnaround": "Turnaround",
+        "turnaroundDesc": "Edit 25+ listings in under 30 minutes every day with our platform."
+      }
+    },
+    "features": {
+       "title": "Features",
+       "heading": "Everything you need",
+       "headingLine2": "to transform your real estate photos",
+       "subtitle": "Powerful features designed specifically for real estate professionals who want to save time and impress clients.",
+       "aiPowered": "AI-Powered Enhancement",
+       "aiPoweredDesc": "Our advanced AI automatically transforms ordinary photos into professional-quality images.",
+       "multipleStyles": "Multiple Style Templates",
+       "multipleStylesDesc": "Choose from a variety of professionally designed styles to match your brand and property type.",
+       "resultsInSeconds": "Results in Seconds",
+       "resultsInSecondsDesc": "Don't wait. Get your enhanced photos in seconds, not hours or days.",
+       "batchProcessing": "Batch Processing",
+       "batchProcessingDesc": "Upload multiple photos at once and process entire property shoots in one go.",
+       "noSoftware": "No Software Required",
+       "noSoftwareDesc": "Everything runs in your browser. No downloads, installation, or technical skills needed.",
+       "securePrivate": "Secure & Private",
+       "securePrivateDesc": "Your photos are encrypted and automatically deleted after processing. Your data stays yours."
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "Loved by Real Estate Pros",
+      "subtitle": "See what our customers have to say about their experience.",
+      "quotes": {
+        "1": "Solved consistency across our 6 different markets",
+        "2": "Edited 8 shoots in 20 minutes and I could spend time with my family",
+        "3": "Has been saving me money since January",
+        "4": "Results are spot on which allowed to streamline my workflow"
+      }
+    },
+    "spotlight": {
+      "eyebrow": "Creator Spotlight",
+      "title": "See the Transformation",
+      "subtitle": "Real results from real estate professionals using our AI editing platform.",
+      "hint": "Hover over images to see the transformation"
+    },
+    "everything": {
+      "eyebrow": "Features",
+      "title": "Everything You Need",
+      "subtitle": "A complete platform designed for real estate media professionals.",
+      "items": {
+        "delivery": {
+          "title": "Delivery that builds your brand",
+          "desc": "Impress clients with a seamless, branded delivery experience."
+        },
+        "styleProfiles": {
+          "title": "AI Style Profiles",
+          "desc": "Create consistent looks across all your properties."
+        },
+        "humanRevision": {
+          "title": "Human Revision",
+          "desc": "Get expert human touch when you need it."
+        },
+        "autoBracketing": {
+          "title": "Auto Bracketing",
+          "desc": "Automatic exposure blending for perfect HDR results."
+        },
+        "culling": {
+          "title": "Culling",
+          "desc": "AI-powered photo selection saves hours of manual work."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Transform Your Real Estate Photos?",
+      "subtitle": "Join thousands of professionals and elevate your listings",
+      "button": "Try for Free",
+      "noCreditCard": "No credit card required",
+      "freeTrial": "Free trial included",
+      "cancelAnytime": "Cancel anytime"
+    }
   }
 }

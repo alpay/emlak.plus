@@ -340,6 +340,109 @@
     "enterNew": "Yeni şifrenizi girin",
     "confirmNew": "Yeni şifrenizi onaylayın",
     "changing": "Değiştiriliyor..."
+  },
+  "landing": {
+    "badge": "En İyi Yapay Zeka Emlak Medya Platformu",
+    "aiMagic": {
+      "eyebrow": "Yapay Zeka İyileştirmeleri",
+      "title": "Her Kare İçin",
+      "title2": "Tek Tıkla Sihir",
+      "subtitle": "Saniyeler içinde profesyonel düzenlemeler. Dönüşümü görmek için kaydırıcıyı sürükleyin.",
+      "dragHint": "Öncesi ve sonrasını karşılaştırmak için sürükleyin",
+      "tabs": {
+        "twilight": "Alacakaranlık",
+        "windowPull": "Pencere Netleştirme",
+        "skyReplacement": "Gökyüzü Değiştirme",
+        "waterEnhancement": "Su İyileştirme",
+        "cameraRemoval": "Kamera Kaldırma",
+        "handRemoval": "El Kaldırma",
+        "lensCorrection": "Lens Düzeltme",
+        "whiteBalancing": "Beyaz Dengesi"
+      }
+    },
+    "valueProp": {
+      "title": "Kalite, Maliyet ve Zaman arasında",
+      "title2": "seçim yapmak zorunda değilsiniz",
+      "subtitle": "Emlak profesyonelleri için tasarlanmış yapay zeka destekli platformumuzla üçüne de sahip olun.",
+      "stats": {
+        "revisionRate": "Revizyon Oranı",
+        "revisionDesc": "Tutarlı, el yapımı kalitesinde düzenlemelerle her ay daha az revizyon.",
+        "costSavings": "Maliyet Tasarrufu",
+        "costDesc": "Müşterilerimiz prodüksiyon sonrası maliyetlerinde yıllık önemli miktarda tasarruf sağlıyor.",
+        "turnaround": "Teslim Süresi",
+        "turnaroundDesc": "Platformumuzla her gün 25+ ilanı 30 dakikadan kısa sürede düzenleyin."
+      }
+    },
+    "features": {
+       "title": "Özellikler",
+       "heading": "Çarpıcı ilanlar oluşturmak için",
+       "headingLine2": "ihtiyacınız olan her şey",
+       "subtitle": "Zaman kazanmak ve müşterilerinizi etkilemek isteyen gayrimenkul profesyonelleri için özel olarak tasarlanmış güçlü özellikler.",
+       "aiPowered": "Yapay Zeka Destekli İyileştirme",
+       "aiPoweredDesc": "Gelişmiş yapay zekamız sıradan fotoğrafları otomatik olarak profesyonel kalitede görüntülere dönüştürür.",
+       "multipleStyles": "Çoklu Stil Şablonları",
+       "multipleStylesDesc": "Markanıza ve mülk tipinize uygun profesyonelce tasarlanmış çeşitli stillerden seçin.",
+       "resultsInSeconds": "Saniyeler İçinde Sonuç",
+       "resultsInSecondsDesc": "Beklemeyin. İyileştirilmiş fotoğraflarınızı saatler veya günler değil, saniyeler içinde alın.",
+       "batchProcessing": "Toplu İşleme",
+       "batchProcessingDesc": "Birden fazla fotoğrafı tek seferde yükleyin ve tüm mülk çekimlerini bir kerede işleyin.",
+       "noSoftware": "Yazılım Gerektirmez",
+       "noSoftwareDesc": "Her şey tarayıcınızda çalışır. İndirme, kurulum veya teknik beceri gerekmez.",
+       "securePrivate": "Güvenli ve Gizli",
+       "securePrivateDesc": "Fotoğraflarınız şifrelenir ve işlemden sonra otomatik olarak silinir. Verileriniz sizin kalır."
+    },
+    "testimonials": {
+      "eyebrow": "Referanslar",
+      "title": "Emlak Profesyonelleri Tarafından Seviliyor",
+      "subtitle": "Müşterilerimizin deneyimleri hakkında neler söylediklerini görün.",
+      "quotes": {
+        "1": "6 farklı pazarımızda tutarlılık sorununu çözdü",
+        "2": "8 çekimi 20 dakikada düzenledim ve aileme zaman ayırabildim",
+        "3": "Ocak ayından beri bana para kazandırıyor",
+        "4": "Sonuçlar tam isabet, iş akışımı düzene sokmamı sağladı"
+      }
+    },
+    "spotlight": {
+      "eyebrow": "Yaratıcı Vitrini",
+      "title": "Dönüşümü Görün",
+      "subtitle": "Yapay zeka düzenleme platformumuzu kullanan emlak profesyonellerinden gerçek sonuçlar.",
+      "hint": "Dönüşümü görmek için görsellerin üzerine gelin"
+    },
+    "everything": {
+      "eyebrow": "Özellikler",
+      "title": "İhtiyacınız Olan Her Şey",
+      "subtitle": "Emlak medya profesyonelleri için tasarlanmış eksiksiz bir platform.",
+      "items": {
+        "delivery": {
+          "title": "Markanızı güçlendiren teslimat",
+          "desc": "Kusursuz, markalı bir teslimat deneyimiyle müşterilerinizi etkileyin."
+        },
+        "styleProfiles": {
+          "title": "AI Stil Profilleri",
+          "desc": "Tüm mülklerinizde tutarlı görünümler yaratın."
+        },
+        "humanRevision": {
+          "title": "İnsan Revizyonu",
+          "desc": "İhtiyacınız olduğunda uzman insan dokunuşu alın."
+        },
+        "autoBracketing": {
+          "title": "Otomatik Basamaklama",
+          "desc": "Mükemmel HDR sonuçları için otomatik pozlama harmanlama."
+        },
+        "culling": {
+          "title": "Ayıklama",
+          "desc": "AI destekli fotoğraf seçimi ile saatlerce süren manuel işten tasarruf edin."
+        }
+      }
+    },
+    "cta": {
+      "title": "Emlak Fotoğraflarınızı Dönüştürmeye Hazır mısınız?",
+      "subtitle": "Binlerce profesyonele katılın ve ilanlarınızı bir üst seviyeye taşıyın.",
+      "button": "Ücretsiz Deneyin",
+      "noCreditCard": "Kredi kartı gerekmez",
+      "freeTrial": "Ücretsiz deneme dahil",
+      "cancelAnytime": "İstediğiniz zaman iptal edin"
+    }
   }
 }
 

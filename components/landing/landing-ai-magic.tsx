@@ -1,65 +1,156 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-const aiMagicTabs = [
-  {
-    id: "twilight",
-    label: "Twilight",
-    before:
-      "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20before_1758203006775.webp",
-    after:
-      "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20after_1758203006775.webp",
-  },
-  {
-    id: "window-pull",
-    label: "Window Pull",
-    before:
-      "https://www.fotello.co/attached_assets/optimized/window-pull-before.webp",
-    after:
-      "https://www.fotello.co/attached_assets/optimized/window-pull-after.webp",
-  },
-  {
-    id: "sky-replacement",
-    label: "Sky Replacement",
-    before: "https://www.fotello.co/attached_assets/optimized/sky-before.webp",
-    after: "https://www.fotello.co/attached_assets/optimized/sky-after.webp",
-  },
-  {
-    id: "water-enhancement",
-    label: "Water Enhancement",
-    before:
-      "https://www.fotello.co/attached_assets/optimized/water%20-%20before_1758203006775.webp",
-    after:
-      "https://www.fotello.co/attached_assets/optimized/water%20-%20after_1758203006775.webp",
-  },
-  {
-    id: "camera-removal",
-    label: "Camera Removal",
-    before:
-      "https://www.fotello.co/attached_assets/optimized/Camera%20before_1758288924762.jpg",
-    after:
-      "https://www.fotello.co/attached_assets/optimized/Camera%20after_1758288924762.jpg",
-  },
-  {
-    id: "hand-removal",
-    label: "Hand Removal",
-    before: "https://www.fotello.co/attached_assets/optimized/hand-before.webp",
-    after: "https://www.fotello.co/attached_assets/optimized/hand-after.webp",
-  },
-  {
-    id: "lens-correction",
-    label: "Lens Correction",
-    before: "https://www.fotello.co/attached_assets/optimized/lens-before.webp",
-    after: "https://www.fotello.co/attached_assets/optimized/lens-after.webp",
-  },
-  {
-    id: "white-balancing",
-    label: "White Balancing",
-    before: "https://www.fotello.co/attached_assets/optimized/wb-before.webp",
-    after: "https://www.fotello.co/attached_assets/optimized/wb-after.webp",
-  },
-];
+export function LandingAiMagic() {
+  const { t } = useTranslation();
+
+  const aiMagicTabs = [
+    {
+      id: "twilight",
+      label: t("landing.aiMagic.tabs.twilight"),
+      before:
+        "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20before_1758203006775.webp",
+      after:
+        "https://www.fotello.co/attached_assets/optimized/twilight%202%20-%20after_1758203006775.webp",
+    },
+    {
+      id: "window-pull",
+      label: t("landing.aiMagic.tabs.windowPull"),
+      before:
+        "https://www.fotello.co/attached_assets/optimized/window-pull-before.webp",
+      after:
+        "https://www.fotello.co/attached_assets/optimized/window-pull-after.webp",
+    },
+    {
+      id: "sky-replacement",
+      label: t("landing.aiMagic.tabs.skyReplacement"),
+      before: "https://www.fotello.co/attached_assets/optimized/sky-before.webp",
+      after: "https://www.fotello.co/attached_assets/optimized/sky-after.webp",
+    },
+    {
+      id: "water-enhancement",
+      label: t("landing.aiMagic.tabs.waterEnhancement"),
+      before:
+        "https://www.fotello.co/attached_assets/optimized/water%20-%20before_1758203006775.webp",
+      after:
+        "https://www.fotello.co/attached_assets/optimized/water%20-%20after_1758203006775.webp",
+    },
+    {
+      id: "camera-removal",
+      label: t("landing.aiMagic.tabs.cameraRemoval"),
+      before:
+        "https://www.fotello.co/attached_assets/optimized/Camera%20before_1758288924762.jpg",
+      after:
+        "https://www.fotello.co/attached_assets/optimized/Camera%20after_1758288924762.jpg",
+    },
+    {
+      id: "hand-removal",
+      label: t("landing.aiMagic.tabs.handRemoval"),
+      before: "https://www.fotello.co/attached_assets/optimized/hand-before.webp",
+      after: "https://www.fotello.co/attached_assets/optimized/hand-after.webp",
+    },
+    {
+      id: "lens-correction",
+      label: t("landing.aiMagic.tabs.lensCorrection"),
+      before: "https://www.fotello.co/attached_assets/optimized/lens-before.webp",
+      after: "https://www.fotello.co/attached_assets/optimized/lens-after.webp",
+    },
+    {
+      id: "white-balancing",
+      label: t("landing.aiMagic.tabs.whiteBalancing"),
+      before: "https://www.fotello.co/attached_assets/optimized/wb-before.webp",
+      after: "https://www.fotello.co/attached_assets/optimized/wb-after.webp",
+    },
+  ];
+
+  const [activeTab, setActiveTab] = useState(0);
+  const activeFeature = aiMagicTabs[activeTab];
+
+  return (
+    <section
+      className="px-6 py-24 md:py-32"
+      id="one-click-ai-magic"
+      style={{ backgroundColor: "var(--landing-bg-alt)" }}
+    >
+      <div className="mx-auto max-w-6xl">
+        {/* Section Header */}
+        <div className="mx-auto max-w-2xl text-center">
+          <p
+            className="font-semibold text-sm uppercase tracking-wider"
+            style={{ color: "var(--landing-accent)" }}
+          >
+            {t("landing.aiMagic.eyebrow")}
+          </p>
+          <h2
+            className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
+            style={{ color: "var(--landing-text)" }}
+          >
+            {t("landing.aiMagic.title")}
+            <br />
+            {t("landing.aiMagic.title2")}
+          </h2>
+          <p
+            className="mt-4 text-lg leading-relaxed"
+            style={{ color: "var(--landing-text-muted)" }}
+          >
+            {t("landing.aiMagic.subtitle")}
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-12 flex flex-wrap justify-center gap-2">
+          {aiMagicTabs.map((tab, index) => (
+            <button
+              className={`rounded-full px-4 py-2 font-medium text-sm transition-all duration-200 ${
+                activeTab === index
+                  ? "scale-105"
+                  : "opacity-70 hover:scale-[1.02] hover:opacity-100"
+              }`}
+              key={tab.id}
+              onClick={() => setActiveTab(index)}
+              style={{
+                backgroundColor:
+                  activeTab === index
+                    ? "var(--landing-accent)"
+                    : "var(--landing-card)",
+                color:
+                  activeTab === index
+                    ? "var(--landing-accent-foreground)"
+                    : "var(--landing-text)",
+                border:
+                  activeTab === index
+                    ? "none"
+                    : "1px solid var(--landing-border)",
+              }}
+              type="button"
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Comparison Slider */}
+        <div className="mx-auto mt-10 max-w-4xl">
+          <ComparisonSlider
+            afterSrc={activeFeature.after}
+            beforeSrc={activeFeature.before}
+            key={activeFeature.id}
+          />
+        </div>
+
+        {/* Hint */}
+        <p
+          className="mt-6 text-center text-sm"
+          style={{ color: "var(--landing-text-muted)" }}
+        >
+          {t("landing.aiMagic.dragHint")}
+        </p>
+      </div>
+    </section>
+  );
+}
 
 function ComparisonSlider({
   beforeSrc,
@@ -186,94 +277,5 @@ function ComparisonSlider({
         After
       </span>
     </div>
-  );
-}
-
-export function LandingAiMagic() {
-  const [activeTab, setActiveTab] = useState(0);
-  const activeFeature = aiMagicTabs[activeTab];
-
-  return (
-    <section
-      className="px-6 py-24 md:py-32"
-      id="one-click-ai-magic"
-      style={{ backgroundColor: "var(--landing-bg-alt)" }}
-    >
-      <div className="mx-auto max-w-6xl">
-        {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p
-            className="font-semibold text-sm uppercase tracking-wider"
-            style={{ color: "var(--landing-accent)" }}
-          >
-            AI Enhancements
-          </p>
-          <h2
-            className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
-            style={{ color: "var(--landing-text)" }}
-          >
-            One-Click AI Magic
-            <br />
-            for Every Shot
-          </h2>
-          <p
-            className="mt-4 text-lg leading-relaxed"
-            style={{ color: "var(--landing-text-muted)" }}
-          >
-            Professional edits in seconds. Drag the slider to see the
-            transformation.
-          </p>
-        </div>
-
-        {/* Tabs */}
-        <div className="mt-12 flex flex-wrap justify-center gap-2">
-          {aiMagicTabs.map((tab, index) => (
-            <button
-              className={`rounded-full px-4 py-2 font-medium text-sm transition-all duration-200 ${
-                activeTab === index
-                  ? "scale-105"
-                  : "opacity-70 hover:scale-[1.02] hover:opacity-100"
-              }`}
-              key={tab.id}
-              onClick={() => setActiveTab(index)}
-              style={{
-                backgroundColor:
-                  activeTab === index
-                    ? "var(--landing-accent)"
-                    : "var(--landing-card)",
-                color:
-                  activeTab === index
-                    ? "var(--landing-accent-foreground)"
-                    : "var(--landing-text)",
-                border:
-                  activeTab === index
-                    ? "none"
-                    : "1px solid var(--landing-border)",
-              }}
-              type="button"
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Comparison Slider */}
-        <div className="mx-auto mt-10 max-w-4xl">
-          <ComparisonSlider
-            afterSrc={activeFeature.after}
-            beforeSrc={activeFeature.before}
-            key={activeFeature.id}
-          />
-        </div>
-
-        {/* Hint */}
-        <p
-          className="mt-6 text-center text-sm"
-          style={{ color: "var(--landing-text-muted)" }}
-        >
-          Drag the slider to compare before and after
-        </p>
-      </div>
-    </section>
   );
 }

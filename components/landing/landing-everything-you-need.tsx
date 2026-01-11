@@ -1,44 +1,87 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
-const features = [
-  {
-    title: "Delivery that builds your brand",
-    description:
-      "Impress clients with a seamless, branded delivery experience.",
-    videoUrl:
-      "https://www.fotello.co/attached_assets/optimized/TV_1758206030737.mp4",
-    size: "large",
-  },
-  {
-    title: "AI Style Profiles",
-    description: "Create consistent looks across all your properties.",
-    videoUrl:
-      "https://www.fotello.co/attached_assets/optimized/AI%20Style%20Profiles.mp4",
-    size: "small",
-  },
-  {
-    title: "Human Revision",
-    description: "Get expert human touch when you need it.",
-    videoUrl:
-      "https://www.fotello.co/attached_assets/optimized/Human%20Revision.mp4",
-    size: "small",
-  },
-  {
-    title: "Auto Bracketing",
-    description: "Automatic exposure blending for perfect HDR results.",
-    videoUrl:
-      "https://www.fotello.co/attached_assets/optimized/Auto%20Bracketing.mp4",
-    size: "small",
-  },
-  {
-    title: "Culling",
-    description: "AI-powered photo selection saves hours of manual work.",
-    videoUrl: "https://www.fotello.co/attached_assets/optimized/Culling.mp4",
-    size: "small",
-  },
-];
+export function LandingEverythingYouNeed() {
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      title: t("landing.everything.items.delivery.title"),
+      description: t("landing.everything.items.delivery.desc"),
+      videoUrl:
+        "https://www.fotello.co/attached_assets/optimized/TV_1758206030737.mp4",
+      size: "large",
+    },
+    {
+      title: t("landing.everything.items.styleProfiles.title"),
+      description: t("landing.everything.items.styleProfiles.desc"),
+      videoUrl:
+        "https://www.fotello.co/attached_assets/optimized/AI%20Style%20Profiles.mp4",
+      size: "small",
+    },
+    {
+      title: t("landing.everything.items.humanRevision.title"),
+      description: t("landing.everything.items.humanRevision.desc"),
+      videoUrl:
+        "https://www.fotello.co/attached_assets/optimized/Human%20Revision.mp4",
+      size: "small",
+    },
+    {
+      title: t("landing.everything.items.autoBracketing.title"),
+      description: t("landing.everything.items.autoBracketing.desc"),
+      videoUrl:
+        "https://www.fotello.co/attached_assets/optimized/Auto%20Bracketing.mp4",
+      size: "small",
+    },
+    {
+      title: t("landing.everything.items.culling.title"),
+      description: t("landing.everything.items.culling.desc"),
+      videoUrl: "https://www.fotello.co/attached_assets/optimized/Culling.mp4",
+      size: "small",
+    },
+  ];
+
+  return (
+    <section
+      className="px-6 py-24 md:py-32"
+      id="everything-you-need"
+      style={{ backgroundColor: "var(--landing-bg)" }}
+    >
+      <div className="mx-auto max-w-6xl">
+        {/* Section Header */}
+        <div className="mx-auto max-w-2xl text-center">
+          <p
+            className="font-semibold text-sm uppercase tracking-wider"
+            style={{ color: "var(--landing-accent)" }}
+          >
+            {t("landing.everything.eyebrow")}
+          </p>
+          <h2
+            className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
+            style={{ color: "var(--landing-text)" }}
+          >
+            {t("landing.everything.title")}
+          </h2>
+          <p
+            className="mt-4 text-lg leading-relaxed"
+            style={{ color: "var(--landing-text-muted)" }}
+          >
+            {t("landing.everything.subtitle")}
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {features.map((feature) => (
+            <FeatureCard key={feature.title} {...feature} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function FeatureCard({
   title,
@@ -101,46 +144,5 @@ function FeatureCard({
         </div>
       </div>
     </div>
-  );
-}
-
-export function LandingEverythingYouNeed() {
-  return (
-    <section
-      className="px-6 py-24 md:py-32"
-      id="everything-you-need"
-      style={{ backgroundColor: "var(--landing-bg)" }}
-    >
-      <div className="mx-auto max-w-6xl">
-        {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <p
-            className="font-semibold text-sm uppercase tracking-wider"
-            style={{ color: "var(--landing-accent)" }}
-          >
-            Features
-          </p>
-          <h2
-            className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
-            style={{ color: "var(--landing-text)" }}
-          >
-            Everything You Need
-          </h2>
-          <p
-            className="mt-4 text-lg leading-relaxed"
-            style={{ color: "var(--landing-text-muted)" }}
-          >
-            A complete platform designed for real estate media professionals.
-          </p>
-        </div>
-
-        {/* Features Grid */}
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {features.map((feature) => (
-            <FeatureCard key={feature.title} {...feature} />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }

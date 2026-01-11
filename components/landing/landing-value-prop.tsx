@@ -1,35 +1,35 @@
 "use client";
 
 import { IconClock, IconPercentage, IconRefresh } from "@tabler/icons-react";
-
-const stats = [
-  {
-    icon: IconRefresh,
-    value: "<1%",
-    label: "Revision Rate",
-    description:
-      "Consistent, hand-blend quality edits with fewer revisions needed each month.",
-    color: "var(--landing-accent)",
-  },
-  {
-    icon: IconPercentage,
-    value: ">76%",
-    label: "Cost Savings",
-    description:
-      "Our clients save significant amounts annually in post-production costs.",
-    color: "var(--accent-green)",
-  },
-  {
-    icon: IconClock,
-    value: "<2 min",
-    label: "Turnaround",
-    description:
-      "Edit 25+ listings in under 30 minutes every day with our platform.",
-    color: "var(--accent-teal)",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export function LandingValueProp() {
+  const { t } = useTranslation();
+
+  const stats = [
+    {
+      icon: IconRefresh,
+      value: "<1%",
+      label: t("landing.valueProp.stats.revisionRate"),
+      description: t("landing.valueProp.stats.revisionDesc"),
+      color: "var(--landing-accent)",
+    },
+    {
+      icon: IconPercentage,
+      value: ">76%",
+      label: t("landing.valueProp.stats.costSavings"),
+      description: t("landing.valueProp.stats.costDesc"),
+      color: "var(--accent-green)",
+    },
+    {
+      icon: IconClock,
+      value: t("common.lessThan", "<2 dk"),
+      label: t("landing.valueProp.stats.turnaround"),
+      description: t("landing.valueProp.stats.turnaroundDesc"),
+      color: "var(--accent-teal)",
+    },
+  ];
+
   return (
     <section
       className="px-6 py-24 md:py-32"
@@ -43,18 +43,17 @@ export function LandingValueProp() {
             className="font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            You don&apos;t have to choose between
+            {t("landing.valueProp.title")}
             <br />
             <span style={{ color: "var(--landing-accent)" }}>
-              Quality, Cost and Time
+              {t("landing.valueProp.title2")}
             </span>
           </h2>
           <p
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            Get all three with our AI-powered editing platform designed for real
-            estate professionals.
+            {t("landing.valueProp.subtitle")}
           </p>
         </div>
 

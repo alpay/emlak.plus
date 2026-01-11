@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 // Showcase data - property tabs with before/after images
 const showcaseData = [
@@ -64,6 +65,7 @@ function getImageUrl(
 }
 
 export function LandingCreatorSpotlight() {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
   const activeShowcase = showcaseData[activeTab];
 
@@ -80,20 +82,19 @@ export function LandingCreatorSpotlight() {
             className="font-semibold text-sm uppercase tracking-wider"
             style={{ color: "var(--landing-accent)" }}
           >
-            Creator Spotlight
+            {t("landing.spotlight.eyebrow")}
           </p>
           <h2
             className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            See the Transformation
+            {t("landing.spotlight.title")}
           </h2>
           <p
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            Real results from real estate professionals using our AI editing
-            platform.
+            {t("landing.spotlight.subtitle")}
           </p>
         </div>
 
@@ -196,7 +197,7 @@ export function LandingCreatorSpotlight() {
             className="mt-6 text-center text-sm"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            Hover over images to see the transformation
+            {t("landing.spotlight.hint")}
           </p>
         </div>
       </div>

@@ -42,9 +42,9 @@ export function LandingCta() {
   const { t } = useTranslation();
 
   const benefits = [
-    t("cta.noCreditCard", "Kredi kartı gerekmez"),
-    t("cta.freeTrial", "Ücretsiz deneme dahil"),
-    t("cta.cancelAnytime", "İstediğiniz zaman iptal"),
+    t("cta.noCreditCard"),
+    t("cta.freeTrial"),
+    t("cta.cancelAnytime"),
   ];
 
   return (

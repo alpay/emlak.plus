@@ -2,45 +2,46 @@
 
 import { IconPlayerPlay, IconX } from "@tabler/icons-react";
 import { useState } from "react";
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Natalia Diakon",
-    company: "3D Casas",
-    quote: "Solved consistency across our 6 different markets",
-    youtubeId: "HFMtueRrTTw",
-    thumbnail: "https://img.youtube.com/vi/HFMtueRrTTw/maxresdefault.jpg",
-  },
-  {
-    id: 2,
-    name: "Steven Tippet",
-    company: "Professional Photography",
-    quote:
-      "Edited 8 shoots in 20 minutes and I could spend time with my family",
-    youtubeId: "q_u7XTk_zZc",
-    thumbnail: "https://img.youtube.com/vi/q_u7XTk_zZc/maxresdefault.jpg",
-  },
-  {
-    id: 3,
-    name: "Dan Richard",
-    company: "Propicsta",
-    quote: "Has been saving me money since January",
-    youtubeId: "MCyFDhwJiHg",
-    thumbnail: "https://img.youtube.com/vi/MCyFDhwJiHg/maxresdefault.jpg",
-  },
-  {
-    id: 4,
-    name: "Amit Kumar",
-    company: "Property Insights",
-    quote: "Results are spot on which allowed to streamline my workflow",
-    youtubeId: "4Wek4RP1nrk",
-    thumbnail: "https://img.youtube.com/vi/4Wek4RP1nrk/maxresdefault.jpg",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export function LandingTestimonials() {
+  const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  const testimonials = [
+    {
+      id: 1,
+      name: "Natalia Diakon",
+      company: "3D Casas",
+      quote: t("landing.testimonials.quotes.1"),
+      youtubeId: "HFMtueRrTTw",
+      thumbnail: "https://img.youtube.com/vi/HFMtueRrTTw/maxresdefault.jpg",
+    },
+    {
+      id: 2,
+      name: "Steven Tippet",
+      company: "Professional Photography",
+      quote: t("landing.testimonials.quotes.2"),
+      youtubeId: "q_u7XTk_zZc",
+      thumbnail: "https://img.youtube.com/vi/q_u7XTk_zZc/maxresdefault.jpg",
+    },
+    {
+      id: 3,
+      name: "Dan Richard",
+      company: "Propicsta",
+      quote: t("landing.testimonials.quotes.3"),
+      youtubeId: "MCyFDhwJiHg",
+      thumbnail: "https://img.youtube.com/vi/MCyFDhwJiHg/maxresdefault.jpg",
+    },
+    {
+      id: 4,
+      name: "Amit Kumar",
+      company: "Property Insights",
+      quote: t("landing.testimonials.quotes.4"),
+      youtubeId: "4Wek4RP1nrk",
+      thumbnail: "https://img.youtube.com/vi/4Wek4RP1nrk/maxresdefault.jpg",
+    },
+  ];
 
   return (
     <section
@@ -55,19 +56,19 @@ export function LandingTestimonials() {
             className="font-semibold text-sm uppercase tracking-wider"
             style={{ color: "var(--landing-accent)" }}
           >
-            Testimonials
+            {t("landing.testimonials.eyebrow")}
           </p>
           <h2
             className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl"
             style={{ color: "var(--landing-text)" }}
           >
-            Loved by Real Estate Pros
+            {t("landing.testimonials.title")}
           </h2>
           <p
             className="mt-4 text-lg leading-relaxed"
             style={{ color: "var(--landing-text-muted)" }}
           >
-            See what our customers have to say about their experience.
+            {t("landing.testimonials.subtitle")}
           </p>
         </div>
 

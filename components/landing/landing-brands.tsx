@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
+
 // Brand logos from Fotello's partners section
 const brandLogos = [
   {
@@ -33,6 +35,7 @@ const brandLogos = [
 ];
 
 export function LandingBrands() {
+  const { t } = useTranslation();
   // Double the logos for seamless infinite scroll
   const duplicatedLogos = [...brandLogos, ...brandLogos];
 
@@ -47,7 +50,7 @@ export function LandingBrands() {
           className="mb-10 text-center font-semibold text-xs uppercase tracking-widest"
           style={{ color: "var(--landing-text-muted)" }}
         >
-          Empowering Top Real Estate Creators
+          {t("landing.brands.empowering")}
         </p>
 
         {/* Infinite Scroll Container */}

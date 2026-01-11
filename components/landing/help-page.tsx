@@ -7,6 +7,7 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useHelpFilters } from "@/hooks/use-help-filters";
 import type { HelpArticleMeta, HelpCategory } from "@/lib/help";
 import { HelpArticleCard } from "./help-article-card";
@@ -27,6 +28,7 @@ export function HelpPage({
   categories,
   articleCountByCategory,
 }: HelpPageProps) {
+  const { t } = useTranslation();
   const { search, setSearch, clearSearch } = useHelpFilters();
 
   // Filter articles based on search
@@ -60,13 +62,13 @@ export function HelpPage({
               className="font-bold text-4xl tracking-tight sm:text-5xl"
               style={{ color: "var(--landing-text)" }}
             >
-              How can we help?
+              {t("help.title")}
             </h1>
             <p
               className="mx-auto mt-4 max-w-lg text-lg leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Search our knowledge base or browse categories below
+              {t("help.subtitle")}
             </p>
 
             {/* Search Input */}
@@ -79,7 +81,7 @@ export function HelpPage({
                 aria-label="Search help articles"
                 className="h-14 w-full rounded-2xl pr-5 pl-14 text-base outline-none transition-all placeholder:opacity-50 focus:ring-2"
                 onChange={(e) => setSearch(e.target.value || null)}
-                placeholder="Search for articles…"
+                placeholder={t("help.searchPlaceholder")}
                 style={{
                   backgroundColor: "var(--landing-card)",
                   color: "var(--landing-text)",
@@ -102,7 +104,7 @@ export function HelpPage({
                   className="font-semibold text-sm uppercase tracking-wider"
                   style={{ color: "var(--landing-text-muted)" }}
                 >
-                  Search Results
+                  {t("help.searchResults")}
                   {searchResults && ` (${searchResults.length})`}
                 </h2>
                 <button
@@ -111,7 +113,7 @@ export function HelpPage({
                   style={{ color: "var(--landing-accent)" }}
                   type="button"
                 >
-                  Clear search
+                  {t("help.clearSearch")}
                 </button>
               </div>
 
@@ -143,13 +145,13 @@ export function HelpPage({
                     className="font-semibold text-lg"
                     style={{ color: "var(--landing-text)" }}
                   >
-                    No articles found
+                    {t("help.noResults")}
                   </h3>
                   <p
                     className="mx-auto mt-2 max-w-sm text-sm"
                     style={{ color: "var(--landing-text-muted)" }}
                   >
-                    Try a different search term or browse categories below
+                    {t("help.noResultsDesc")}
                   </p>
                 </div>
               )}
@@ -168,7 +170,7 @@ export function HelpPage({
                 className="mb-8 text-center font-semibold text-sm uppercase tracking-wider"
                 style={{ color: "var(--landing-text-muted)" }}
               >
-                Popular Articles
+                {t("help.popularArticles")}
               </h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {popularArticles.map((article) => (
@@ -190,7 +192,7 @@ export function HelpPage({
                 className="mb-8 text-center font-semibold text-sm uppercase tracking-wider"
                 style={{ color: "var(--landing-text-muted)" }}
               >
-                Browse by Category
+                {t("help.browseByCategory")}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {categories.map((category) => (
@@ -231,14 +233,13 @@ export function HelpPage({
               className="font-bold text-2xl tracking-tight"
               style={{ color: "var(--landing-text)" }}
             >
-              Still need help?
+              {t("help.cta.title")}
             </h2>
             <p
               className="mx-auto mt-3 max-w-md text-base leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Can&apos;t find what you&apos;re looking for? Our support team is
-              here to help.
+              {t("help.cta.subtitle")}
             </p>
             <Link
               className="mt-6 inline-flex h-11 items-center rounded-full px-6 font-medium text-sm transition-all duration-200 hover:scale-[1.03]"
@@ -248,7 +249,7 @@ export function HelpPage({
                 color: "var(--landing-accent-foreground)",
               }}
             >
-              Contact Support
+              {t("help.cta.button")}
             </Link>
           </div>
         </section>

@@ -93,7 +93,7 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "allRightsReserved": "All rights reserved.",
-    "madeWith": "Made with care in Turkey"
+    "madeWith": "Made with ❤️ in Turkey"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -244,22 +244,275 @@
     "images": "Images"
   },
   "about": {
-    "title": "About Us",
-    "subtitle": "Redefining real estate photography"
+    "eyebrow": "About Us",
+    "title": "Making property photos",
+    "titleLine2": "look incredible",
+    "subtitle": "Emlak is an AI-powered photo enhancement platform built specifically for real estate professionals. We help agents, photographers, and property managers create stunning visuals that sell properties faster.",
+    "story": {
+      "title": "Our Story",
+      "p1": "We started Emlak because we saw a gap in the market. Real estate professionals needed high-quality photo enhancement, but existing solutions were either too expensive, too slow, or required technical expertise.",
+      "p2": "Professional photography services can cost hundreds of dollars per property and take days to deliver. DIY editing tools require hours of learning and manual work. Neither option works when you have multiple listings and tight deadlines.",
+      "p3": "Emlak bridges this gap. Our AI understands real estate photography. It knows how to brighten rooms, enhance curb appeal, and make properties look their absolute best. All automatically, in seconds.",
+      "p4": "Today, we've processed over 50,000 images for real estate professionals across Norway. Our users report up to 85% higher engagement on their listings. And we're just getting started."
+    },
+    "values": {
+      "eyebrow": "Our Values",
+      "title": "What we believe in",
+      "items": {
+        "quality": {
+          "title": "Quality First",
+          "desc": "Every image we process meets professional standards. We never compromise on the output quality."
+        },
+        "speed": {
+          "title": "Speed Matters",
+          "desc": "Real estate moves fast. Our AI delivers results in seconds, not hours or days."
+        },
+        "builtForYou": {
+          "title": "Built for You",
+          "desc": "Designed specifically for real estate professionals. Every feature solves a real problem."
+        },
+        "simplePricing": {
+          "title": "Simple Pricing",
+          "desc": "No subscriptions, no hidden fees. Pay only for what you use, when you use it."
+        }
+      }
+    },
+    "mission": {
+      "eyebrow": "Our Mission",
+      "title": "Empowering real estate professionals",
+      "desc": "Our mission is to democratize professional-quality real estate photography. We believe every property deserves to be presented at its best, regardless of budget or technical expertise. By harnessing the power of AI, we make this possible for everyone."
+    },
+    "cta": {
+      "title": "Want to learn more?",
+      "subtitle": "We'd love to hear from you. Whether you have questions about our service or just want to say hello, get in touch.",
+      "button": "Contact Us"
+    }
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "How can we help you?",
-    "name": "Your Name",
-    "email": "Email",
-    "message": "Your Message",
-    "send": "Send",
-    "sending": "Sending..."
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "subtitle": "Have questions? We'd love to hear from you.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "topic": "Topic",
+      "topicPlaceholder": "Select a topic",
+      "message": "Message",
+      "messagePlaceholder": "How can we help you?",
+      "submit": "Send Message",
+      "topics": {
+        "general": "General Inquiry",
+        "support": "Technical Support",
+        "sales": "Sales & Pricing",
+        "partnership": "Partnership"
+      }
+    },
+    "info": {
+      "email": {
+        "title": "Email us",
+        "value": "hello@emlak.tech"
+      },
+      "response": {
+        "title": "Response time",
+        "value": "We typically respond within 24 hours during business days."
+      }
+    }
   },
   "help": {
-    "title": "Help Center",
-    "subtitle": "Find answers to your questions",
-    "searchPlaceholder": "Search help articles..."
+    "title": "How can we help?",
+    "subtitle": "Search our knowledge base or browse categories below",
+    "searchPlaceholder": "Search for articles…",
+    "searchResults": "Search Results",
+    "clearSearch": "Clear search",
+    "noResults": "No articles found",
+    "noResultsDesc": "Try a different search term or browse categories below",
+    "popularArticles": "Popular Articles",
+    "browseByCategory": "Browse by Category",
+    "cta": {
+      "title": "Still need help?",
+      "subtitle": "Can't find what you're looking for? Our support team is here to help.",
+      "button": "Contact Support"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated: {{date}}",
+    "subtitle": "How we collect, use, and protect your personal information",
+    "intro": {
+      "title": "1. Introduction",
+      "p1": "Emlak (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our AI-powered real estate photo enhancement service.",
+      "p2": "By using Emlak, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies, please do not use our service."
+    },
+    "collection": {
+      "title": "2. Information We Collect",
+      "p1": "We collect information that you provide directly to us:",
+      "list": {
+        "account": "<strong>Account Information:</strong> Name, email address, and password when you create an account.",
+        "payment": "<strong>Payment Information:</strong> Billing details processed securely through our payment provider. We do not store your full credit card information.",
+        "images": "<strong>Images:</strong> Photos you upload for AI enhancement. These are processed and stored temporarily to deliver our service.",
+        "usage": "<strong>Usage Data:</strong> Information about how you interact with our service, including features used and processing preferences."
+      }
+    },
+    "usage": {
+      "title": "3. How We Use Your Information",
+      "p1": "We use the information we collect to:",
+      "list": {
+        "provide": "Provide, maintain, and improve our AI photo enhancement service",
+        "process": "Process your transactions and send related information",
+        "communicate": "Send you technical notices, updates, and support messages",
+        "respond": "Respond to your comments, questions, and customer service requests",
+        "analyze": "Monitor and analyze trends, usage, and activities",
+        "prevent": "Detect, investigate, and prevent fraudulent or unauthorized activity"
+      }
+    },
+    "storage": {
+      "title": "4. Data Storage and Security",
+      "p1": "Your data is stored securely on servers located in the European Economic Area (EEA). We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.",
+      "p2": "Uploaded images are stored temporarily for processing and delivery. You may request deletion of your images at any time through your account settings or by contacting us."
+    },
+    "sharing": {
+      "title": "5. Data Sharing",
+      "p1": "We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:",
+      "list": {
+        "providers": "<strong>Service Providers:</strong> With third-party vendors who assist us in operating our service (e.g., cloud hosting, payment processing).",
+        "legal": "<strong>Legal Requirements:</strong> When required by law or to respond to legal process.",
+        "business": "<strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets."
+      }
+    },
+    "rights": {
+      "title": "6. Your Rights (GDPR)",
+      "p1": "Under the General Data Protection Regulation (GDPR), you have the following rights:",
+      "list": {
+        "access": "<strong>Access:</strong> Request a copy of your personal data.",
+        "rectification": "<strong>Rectification:</strong> Request correction of inaccurate data.",
+        "erasure": "<strong>Erasure:</strong> Request deletion of your personal data.",
+        "portability": "<strong>Portability:</strong> Request transfer of your data to another service.",
+        "objection": "<strong>Objection:</strong> Object to processing of your personal data.",
+        "restriction": "<strong>Restriction:</strong> Request restriction of processing."
+      },
+      "p2": "To exercise any of these rights, please contact us at <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a>."
+    },
+    "cookies": {
+      "title": "7. Cookies",
+      "p1": "We use essential cookies to maintain your session and preferences. Analytics cookies help us understand how visitors interact with our service. You can control cookie preferences through your browser settings."
+    },
+    "retention": {
+      "title": "8. Data Retention",
+      "p1": "We retain your account information for as long as your account is active. Uploaded images are retained for 30 days after processing to allow for re-downloads, after which they are automatically deleted. You may request earlier deletion at any time."
+    },
+    "changes": {
+      "title": "9. Changes to This Policy",
+      "p1": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last updated\" date."
+    },
+    "contact": {
+      "title": "10. Contact Us",
+      "p1": "If you have any questions about this Privacy Policy or our data practices, please contact us at:",
+      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a><br />General inquiries: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated: {{date}}",
+    "subtitle": "Please read these terms carefully before using our service",
+    "intro": {
+      "title": "1. Acceptance of Terms",
+      "p1": "By accessing or using Emlak (\"the Service\"), you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access the Service.",
+      "p2": "These terms apply to all visitors, users, and others who access or use the Service."
+    },
+    "description": {
+      "title": "2. Description of Service",
+      "p1": "Emlak provides AI-powered photo enhancement and video creation services for real estate professionals. Our service allows you to upload property images, apply AI enhancements, and generate professional marketing materials."
+    },
+    "accounts": {
+      "title": "3. User Accounts",
+      "p1": "To use certain features of the Service, you must register for an account. You agree to:",
+      "list": {
+        "accurate": "Provide accurate, current, and complete information",
+        "update": "Maintain and promptly update your account information",
+        "security": "Maintain the security of your password and account",
+        "responsibility": "Accept responsibility for all activities under your account",
+        "notify": "Notify us immediately of any unauthorized use of your account"
+      }
+    },
+    "payment": {
+      "title": "4. Payment and Pricing",
+      "p1": "Emlak operates on a pay-per-use model. Current pricing is as follows:",
+      "list": {
+        "photo": "<strong>Photo Enhancement:</strong> 1000&nbsp;NOK per property (up to 20 images)",
+        "video": "<strong>Video Creation:</strong> 1000&nbsp;NOK per video"
+      },
+      "p2": "Prices are subject to change with reasonable notice. All payments are processed securely through our payment provider. Payments are non-refundable except as outlined in our refund policy."
+    },
+    "refund": {
+      "title": "5. Refund Policy",
+      "p1": "If you are not satisfied with the results of our AI processing, you may request a refund within 24 hours of the processing completion. Refund requests should be submitted to <a href=\"mailto:support@emlak.tech\">support@emlak.tech</a> with your order details and reason for dissatisfaction.",
+      "p2": "We reserve the right to deny refund requests that we determine, in our sole discretion, to be fraudulent or abusive."
+    },
+    "content": {
+      "title": "6. User Content",
+      "p1": "You retain ownership of all images and content you upload to the Service.",
+      "p2": "By uploading content, you grant us a limited license to:",
+      "list": {
+        "process": "Process and enhance your images using our AI technology",
+        "store": "Store your content temporarily to deliver the Service",
+        "derivative": "Create derivative works (enhanced images) for your use"
+      },
+      "p3": "You represent and warrant that you have all necessary rights to upload and use the content, and that your content does not violate any third-party rights."
+    },
+    "ip": {
+      "title": "7. Intellectual Property",
+      "p1": "The Service, including its original content, features, and functionality, is owned by Emlak and is protected by international copyright, trademark, and other intellectual property laws.",
+      "p2": "Enhanced images produced by our Service are owned by you, subject to any underlying rights in the original images."
+    },
+    "prohibited": {
+      "title": "8. Prohibited Uses",
+      "p1": "You agree not to use the Service to:",
+      "list": {
+        "rights": "Upload content that you do not have the right to use",
+        "illegal": "Upload illegal, harmful, or objectionable content",
+        "access": "Attempt to gain unauthorized access to any part of the Service",
+        "interfere": "Interfere with or disrupt the Service or servers",
+        "fraud": "Use the Service for any fraudulent or deceptive purposes",
+        "violate": "Violate any applicable laws or regulations"
+      }
+    },
+    "liability": {
+      "title": "9. Limitation of Liability",
+      "p1": "To the maximum extent permitted by law, Emlak shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or other intangible losses, resulting from:",
+      "list": {
+        "usage": "Your use or inability to use the Service",
+        "unauthorized": "Any unauthorized access to or use of our servers",
+        "interruption": "Any interruption or cessation of transmission to or from the Service",
+        "bugs": "Any bugs, viruses, or other harmful code transmitted through the Service"
+      },
+      "p2": "Our total liability for any claims under these terms shall not exceed the amount you paid us in the 12 months preceding the claim."
+    },
+    "warranty": {
+      "title": "10. Disclaimer of Warranties",
+      "p1": "The Service is provided \"as is\" and \"as available\" without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.",
+      "p2": "We do not warrant that the Service will be uninterrupted, secure, or error-free, or that any defects will be corrected."
+    },
+    "termination": {
+      "title": "11. Termination",
+      "p1": "We may terminate or suspend your account immediately, without prior notice, for any reason, including breach of these Terms. Upon termination, your right to use the Service will immediately cease.",
+      "p2": "You may terminate your account at any time by contacting us. Upon termination, we will delete your account data in accordance with our Privacy Policy."
+    },
+    "governing": {
+      "title": "12. Governing Law",
+      "p1": "These Terms shall be governed by and construed in accordance with the laws of Norway, without regard to its conflict of law provisions. Any disputes arising from these Terms shall be resolved in the courts of Norway."
+    },
+    "changes": {
+      "title": "13. Changes to Terms",
+      "p1": "We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect.",
+      "p2": "By continuing to access or use our Service after revisions become effective, you agree to be bound by the revised terms."
+    },
+    "contact": {
+      "title": "14. Contact Us",
+      "p1": "If you have any questions about these Terms, please contact us at:",
+      "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:legal@emlak.tech\">legal@emlak.tech</a><br />General inquiries: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+    }
   },
   "project": {
     "steps": {
@@ -442,6 +695,9 @@
       "noCreditCard": "No credit card required",
       "freeTrial": "Free trial included",
       "cancelAnytime": "Cancel anytime"
+    },
+    "brands": {
+      "empowering": "Empowering Top Real Estate Creators"
     }
   }
 }

@@ -93,7 +93,7 @@
     "privacy": "Gizlilik",
     "terms": "Şartlar",
     "allRightsReserved": "Tüm hakları saklıdır.",
-    "madeWith": "Türkiye'de özenle yapıldı"
+    "madeWith": "Türkiye'de ❤️ ile yapıldı"
   },
   "dashboard": {
     "title": "Panel",
@@ -244,22 +244,275 @@
     "images": "Görsel"
   },
   "about": {
-    "title": "Hakkımızda",
-    "subtitle": "Emlak fotoğrafçılığını yeniden tanımlıyoruz"
+    "eyebrow": "Hakkımızda",
+    "title": "Emlak fotoğraflarınızı",
+    "titleLine2": "inanılmaz gösterin",
+    "subtitle": "Emlak, gayrimenkul profesyonelleri için özel olarak geliştirilmiş yapay zeka destekli bir fotoğraf iyileştirme platformudur. Emlakçıların, fotoğrafçıların ve mülk yöneticilerinin mülkleri daha hızlı satan çarpıcı görseller oluşturmasına yardımcı oluyoruz.",
+    "story": {
+      "title": "Hikayemiz",
+      "p1": "Emlak'ı başlattık çünkü pazarda büyük bir boşluk gördük. Gayrimenkul profesyonellerinin yüksek kaliteli fotoğraf iyileştirmeye ihtiyacı vardı, ancak mevcut çözümler ya çok pahalıydı, ya çok yavaştı ya da teknik uzmanlık gerektiriyordu.",
+      "p2": "Profesyonel fotoğrafçılık hizmetleri mülk başına yüzlerce dolara mal olabilir ve teslim edilmesi günler sürebilir. DIY düzenleme araçları saatlerce öğrenme ve manuel çalışma gerektirir. Birden fazla ilanınız ve sıkı teslim tarihleriniz olduğunda her iki seçenek de işe yaramaz.",
+      "p3": "Emlak bu boşluğu dolduruyor. Yapay zekamız gayrimenkul fotoğrafçılığını anlıyor. Odaları nasıl aydınlatacağını, dış cephe çekiciliğini nasıl artıracağını ve mülkleri nasıl en iyi şekilde göstereceğini biliyor. Tümü otomatik olarak, saniyeler içinde.",
+      "p4": "Bugün, Norveç genelindeki gayrimenkul profesyonelleri için 50.000'den fazla görüntüyü işledik. Kullanıcılarımız ilanlarında %85'e varan daha yüksek etkileşim bildiriyor. Ve daha yeni başlıyoruz."
+    },
+    "values": {
+      "eyebrow": "Değerlerimiz",
+      "title": "İnandığımız şeyler",
+      "items": {
+        "quality": {
+          "title": "Önce Kalite",
+          "desc": "İşlediğimiz her görüntü profesyonel standartları karşılar. Çıktı kalitesinden asla ödün vermeyiz."
+        },
+        "speed": {
+          "title": "Hız Önemlidir",
+          "desc": "Gayrimenkul hızlı hareket eder. Yapay zekamız sonuçları saatler veya günler değil, saniyeler içinde sunar."
+        },
+        "builtForYou": {
+          "title": "Sizin İçin Geliştirildi",
+          "desc": "Gayrimenkul profesyonelleri için özel olarak tasarlandı. Her özellik gerçek bir sorunu çözer."
+        },
+        "simplePricing": {
+          "title": "Basit Fiyatlandırma",
+          "desc": "Abonelik yok, gizli ücret yok. Sadece kullandığınız kadar ödeyin, kullandığınızda ödeyin."
+        }
+      }
+    },
+    "mission": {
+      "eyebrow": "Misyonumuz",
+      "title": "Gayrimenkul profesyonellerini güçlendirmek",
+      "desc": "Misyonumuz, profesyonel kalitede gayrimenkul fotoğrafçılığını demokratikleştirmektir. Bütçe veya teknik uzmanlık ne olursa olsun, her mülkün en iyi şekilde sunulmayı hak ettiğine inanıyoruz. Yapay zekanın gücünden yararlanarak bunu herkes için mümkün kılıyoruz."
+    },
+    "cta": {
+      "title": "Daha fazlasını öğrenmek ister misiniz?",
+      "subtitle": "Sizden haber almayı çok isteriz. Hizmetimiz hakkında sorularınız varsa veya sadece merhaba demek istiyorsanız, iletişime geçin.",
+      "button": "Bize Ulaşın"
+    }
   },
   "contact": {
-    "title": "İletişim",
-    "subtitle": "Size nasıl yardımcı olabiliriz?",
-    "name": "Adınız",
-    "email": "E-posta",
-    "message": "Mesajınız",
-    "send": "Gönder",
-    "sending": "Gönderiliyor..."
+    "eyebrow": "İletişim",
+    "title": "İletişime geçin",
+    "subtitle": "Sorularınız mı var? Sizden haber almayı çok isteriz.",
+    "form": {
+      "name": "İsim",
+      "namePlaceholder": "Adınız",
+      "email": "E-posta",
+      "emailPlaceholder": "siz@ornek.com",
+      "topic": "Konu",
+      "topicPlaceholder": "Bir konu seçin",
+      "message": "Mesaj",
+      "messagePlaceholder": "Size nasıl yardımcı olabiliriz?",
+      "submit": "Mesaj Gönder",
+      "topics": {
+        "general": "Genel Soru",
+        "support": "Teknik Destek",
+        "sales": "Satış ve Fiyatlandırma",
+        "partnership": "İş Ortaklığı"
+      }
+    },
+    "info": {
+      "email": {
+        "title": "Bize e-posta gönderin",
+        "value": "hello@emlak.tech"
+      },
+      "response": {
+        "title": "Yanıt süresi",
+        "value": "İş günlerinde genellikle 24 saat içinde yanıt veriyoruz."
+      }
+    }
   },
   "help": {
-    "title": "Yardım Merkezi",
-    "subtitle": "Sorularınızın cevaplarını bulun",
-    "searchPlaceholder": "Yardım makaleleri ara..."
+    "title": "Nasıl yardımcı olabiliriz?",
+    "subtitle": "Bilgi tabanımızda arama yapın veya aşağıdaki kategorilere göz atın",
+    "searchPlaceholder": "Makalelerde ara...",
+    "searchResults": "Arama Sonuçları",
+    "clearSearch": "Aramayı temizle",
+    "noResults": "Makale bulunamadı",
+    "noResultsDesc": "Farklı bir arama terimi deneyin veya aşağıdaki kategorilere göz atın",
+    "popularArticles": "Popüler Makaleler",
+    "browseByCategory": "Kategoriye Göre Göz At",
+    "cta": {
+      "title": "Hala yardıma mı ihtiyacınız var?",
+      "subtitle": "Aradığınızı bulamıyor musunuz? Destek ekibimiz yardım etmek için burada.",
+      "button": "Destek ile İletişime Geçin"
+    }
+  },
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "lastUpdated": "Son Güncelleme: {{date}}",
+    "subtitle": "Kişisel bilgilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz hakkında.",
+    "intro": {
+      "title": "1. Giriş",
+      "p1": "Emlak (\"biz\" veya \"bizim\") gizliliğinizi korumayı taahhüt eder. Bu Gizlilik Politikası, yapay zeka destekli gayrimenkul fotoğraf iyileştirme hizmetimizi kullandığınızda bilgilerinizi nasıl topladığımızı, kullandığımızı, ifşa ettiğimizi ve koruduğumuzu açıklar.",
+      "p2": "Emlak'ı kullanarak, bu politikaya uygun olarak bilgilerin toplanmasını ve kullanılmasını kabul edersiniz. Politikalarımızı kabul etmiyorsanız, lütfen hizmetimizi kullanmayın."
+    },
+    "collection": {
+      "title": "2. Topladığımız Bilgiler",
+      "p1": "Doğrudan bize sağladığınız bilgileri topluyoruz:",
+      "list": {
+        "account": "<strong>Hesap Bilgileri:</strong> Hesap oluşturduğunuzda adınız, e-posta adresiniz ve şifreniz.",
+        "payment": "<strong>Ödeme Bilgileri:</strong> Ödeme sağlayıcımız aracılığıyla güvenli bir şekilde işlenen fatura bilgileri. Tam kredi kartı bilgilerinizi saklamıyoruz.",
+        "images": "<strong>Görseller:</strong> AI iyileştirmesi için yüklediğiniz fotoğraflar. Bunlar hizmetimizi sunmak için geçici olarak işlenir ve saklanır.",
+        "usage": "<strong>Kullanım Verileri:</strong> Kullanılan özellikler ve işlem tercihleri dahil olmak üzere hizmetimizle nasıl etkileşimde bulunduğunuzla ilgili bilgiler."
+      }
+    },
+    "usage": {
+      "title": "3. Bilgilerinizi Nasıl Kullanıyoruz",
+      "p1": "Topladığımız bilgileri şu amaçlarla kullanıyoruz:",
+      "list": {
+        "provide": "AI fotoğraf iyileştirme hizmetimizi sağlamak, sürdürmek ve geliştirmek",
+        "process": "İşlemlerinizi gerçekleştirmek ve ilgili bilgileri göndermek",
+        "communicate": "Size teknik bildirimler, güncellemeler ve destek mesajları göndermek",
+        "respond": "Yorumlarınıza, sorularınıza ve müşteri hizmetleri taleplerinize yanıt vermek",
+        "analyze": "Trendleri, kullanımı ve etkinlikleri izlemek ve analiz etmek",
+        "prevent": "Hileli veya yetkisiz etkinlikleri tespit etmek, araştırmak ve önlemek"
+      }
+    },
+    "storage": {
+      "title": "4. Veri Depolama ve Güvenlik",
+      "p1": "Verileriniz, Avrupa Ekonomik Alanı'nda (AEA) bulunan sunucularda güvenli bir şekilde saklanmaktadır. Kişisel bilgilerinizin yetkisiz erişime, değiştirilmeye, ifşaya veya imhaya karşı korunması için uygun teknik ve organizasyonel önlemler uyguluyoruz.",
+      "p2": "Yüklenen görseller işleme ve teslimat için geçici olarak saklanır. Hesap ayarlarınızdan veya bizimle iletişime geçerek görsellerinizin silinmesini istediğiniz zaman talep edebilirsiniz."
+    },
+    "sharing": {
+      "title": "5. Veri Paylaşımı",
+      "p1": "Kişisel bilgilerinizi üçüncü taraflara satmıyoruz, takas etmiyoruz veya kiralamıyoruz. Bilgilerinizi yalnızca aşağıdaki durumlarda paylaşabiliriz:",
+      "list": {
+        "providers": "<strong>Hizmet Sağlayıcılar:</strong> Hizmetimizi işletmemize yardımcı olan üçüncü taraf satıcılarla (örn. bulut barındırma, ödeme işleme).",
+        "legal": "<strong>Yasal Gereklilikler:</strong> Yasalarca gerekli görüldüğünde veya yasal sürece yanıt vermek için.",
+        "business": "<strong>İş Transferleri:</strong> Birleşme, satın alma veya varlık satışı ile bağlantılı olarak."
+      }
+    },
+    "rights": {
+      "title": "6. Haklarınız (GDPR)",
+      "p1": "Genel Veri Koruma Yönetmeliği (GDPR) kapsamında aşağıdaki haklara sahipsiniz:",
+      "list": {
+        "access": "<strong>Erişim:</strong> Kişisel verilerinizin bir kopyasını talep etme.",
+        "rectification": "<strong>Düzeltme:</strong> Yanlış verilerin düzeltilmesini talep etme.",
+        "erasure": "<strong>Silme:</strong> Kişisel verilerinizin silinmesini talep etme.",
+        "portability": "<strong>Taşınabilirlik:</strong> Verilerinizin başka bir hizmete aktarılmasını talep etme.",
+        "objection": "<strong>İtiraz:</strong> Kişisel verilerinizin işlenmesine itiraz etme.",
+        "restriction": "<strong>Kısıtlama:</strong> İşlemenin kısıtlanmasını talep etme."
+      },
+      "p2": "Bu haklardan herhangi birini kullanmak için lütfen bize ulaşın: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a>."
+    },
+    "cookies": {
+      "title": "7. Çerezler",
+      "p1": "Oturumunuzu ve tercihlerinizi korumak için gerekli çerezleri kullanıyoruz. Analitik çerezleri, ziyaretçilerin hizmetimizle nasıl etkileşimde bulunduğunu anlamamıza yardımcı olur. Çerez tercihlerinizi tarayıcı ayarlarınızdan kontrol edebilirsiniz."
+    },
+    "retention": {
+      "title": "8. Veri Saklama",
+      "p1": "Hesap bilgilerinizi hesabınız aktif olduğu sürece saklıyoruz. Yüklenen görseller, yeniden indirmeye olanak sağlamak için işlemden sonra 30 gün boyunca saklanır, ardından otomatik olarak silinir. İstediğiniz zaman daha erken silinmesini talep edebilirsiniz."
+    },
+    "changes": {
+      "title": "9. Bu Politikadaki Değişiklikler",
+      "p1": "Bu Gizlilik Politikasını zaman zaman güncelleyebiliriz. Herhangi bir değişikliği bu sayfada yeni Gizlilik Politikasını yayınlayarak ve \"Son güncelleme\" tarihini güncelleyerek size bildireceğiz."
+    },
+    "contact": {
+      "title": "10. İletişim",
+      "p1": "Bu Gizlilik Politikası veya veri uygulamalarımız hakkında sorularınız varsa, lütfen bizimle iletişime geçin:",
+      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:privacy@emlak.tech\">privacy@emlak.tech</a><br />Genel sorular: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+    }
+  },
+  "terms": {
+    "title": "Kullanım Koşulları",
+    "lastUpdated": "Son Güncelleme: {{date}}",
+    "subtitle": "Hizmetimizi kullanmadan önce lütfen bu koşulları dikkatlice okuyun",
+    "intro": {
+      "title": "1. Koşulların Kabulü",
+      "p1": "Emlak'a (\"Hizmet\") erişerek veya kullanarak, bu Kullanım Koşullarına bağlı kalmayı kabul edersiniz. Bu koşulların herhangi bir kısmına katılmazsanız, Hizmete erişemezsiniz.",
+      "p2": "Bu koşullar, Hizmete erişen veya kullanan tüm ziyaretçiler, kullanıcılar ve diğerleri için geçerlidir."
+    },
+    "description": {
+      "title": "2. Hizmetin Tanımı",
+      "p1": "Emlak, gayrimenkul profesyonelleri için yapay zeka destekli fotoğraf iyileştirme ve video oluşturma hizmetleri sunar. Hizmetimiz, mülk görsellerini yüklemenize, AI iyileştirmeleri uygulamanıza ve profesyonel pazarlama materyalleri oluşturmanıza olanak tanır."
+    },
+    "accounts": {
+      "title": "3. Kullanıcı Hesapları",
+      "p1": "Hizmetin belirli özelliklerini kullanmak için bir hesaba kaydolmanız gerekir. Şunları kabul edersiniz:",
+      "list": {
+        "accurate": "Doğru, güncel ve eksiksiz bilgi sağlamak",
+        "update": "Hesap bilgilerinizi korumak ve derhal güncellemek",
+        "security": "Şifrenizin ve hesabınızın güvenliğini korumak",
+        "responsibility": "Hesabınız altındaki tüm etkinliklerin sorumluluğunu kabul etmek",
+        "notify": "Hesabınızın yetkisiz kullanımını derhal bize bildirmek"
+      }
+    },
+    "payment": {
+      "title": "4. Ödeme ve Fiyatlandırma",
+      "p1": "Emlak, kullanım başına ödeme modeliyle çalışır. Mevcut fiyatlandırma aşağıdaki gibidir:",
+      "list": {
+        "photo": "<strong>Fotoğraf İyileştirme:</strong> Mülk başına 1000 NOK (20 görsele kadar)",
+        "video": "<strong>Video Oluşturma:</strong> Video başına 1000 NOK"
+      },
+      "p2": "Fiyatlar makul bir bildirimle değiştirilebilir. Tüm ödemeler ödeme sağlayıcımız aracılığıyla güvenli bir şekilde işlenir. İade politikamızda belirtilenler dışında ödemeler iade edilmez."
+    },
+    "refund": {
+      "title": "5. İade Politikası",
+      "p1": "AI işleminin sonuçlarından memnun kalmazsanız, işlem tamamlandıktan sonra 24 saat içinde iade talebinde bulunabilirsiniz. İade talepleri, sipariş detaylarınız ve memnuniyetsizlik nedeninizle birlikte <a href=\"mailto:support@emlak.tech\">support@emlak.tech</a> adresine gönderilmelidir.",
+      "p2": "Tamamen kendi takdirimize bağlı olarak, hileli veya kötüye kullanım olduğunu belirlediğimiz iade taleplerini reddetme hakkımız saklıdır."
+    },
+    "content": {
+      "title": "6. Kullanıcı İçeriği",
+      "p1": "Hizmete yüklediğiniz tüm görsellerin ve içeriğin mülkiyeti sizde kalır.",
+      "p2": "İçerik yükleyerek, bize şunlar için sınırlı bir lisans vermiş olursunuz:",
+      "list": {
+        "process": "Görsellerinizi AI teknolojimizi kullanarak işlemek ve iyileştirmek",
+        "store": "Hizmeti sunmak için içeriğinizi geçici olarak saklamak",
+        "derivative": "Kullanımınız için türev çalışmalar (iyileştirilmiş görseller) oluşturmak"
+      },
+      "p3": "İçeriği yüklemek ve kullanmak için gerekli tüm haklara sahip olduğunuzu ve içeriğinizin herhangi bir üçüncü taraf hakkını ihlal etmediğini beyan ve taahhüt edersiniz."
+    },
+    "ip": {
+      "title": "7. Fikri Mülkiyet",
+      "p1": "Hizmet, orijinal içeriği, özellikleri ve işlevselliği dahil olmak üzere Emlak'a aittir ve uluslararası telif hakkı, ticari marka ve diğer fikri mülkiyet yasalarıyla korunmaktadır.",
+      "p2": "Hizmetimiz tarafından üretilen iyileştirilmiş görseller, orijinal görsellerdeki temel haklara tabi olmak kaydıyla size aittir."
+    },
+    "prohibited": {
+      "title": "8. Yasaklanmış Kullanımlar",
+      "p1": "Hizmeti şunlar için kullanmamayı kabul edersiniz:",
+      "list": {
+        "rights": "Kullanma hakkına sahip olmadığınız içeriği yüklemek",
+        "illegal": "Yasa dışı, zararlı veya sakıncalı içerik yüklemek",
+        "access": "Hizmetin herhangi bir bölümüne yetkisiz erişim sağlamaya çalışmak",
+        "interfere": "Hizmete veya sunuculara müdahale etmek veya bozmak",
+        "fraud": "Hizmeti herhangi bir hileli veya aldatıcı amaç için kullanmak",
+        "violate": "Geçerli yasaları veya düzenlemeleri ihlal etmek"
+      }
+    },
+    "liability": {
+      "title": "9. Sorumluluk Sınırlaması",
+      "p1": "Yasaların izin verdiği azami ölçüde, Emlak şunlardan kaynaklanan kar kaybı, veri kaybı veya diğer maddi olmayan kayıplar dahil olmak üzere dolaylı, arızi, özel, sonuç olarak ortaya çıkan veya cezai zararlardan sorumlu tutulamaz:",
+      "list": {
+        "usage": "Hizmeti kullanımınız veya kullanamamanız",
+        "unauthorized": "Sunucularımıza yetkisiz erişim veya kullanım",
+        "interruption": "Hizmete veya Hizmetten iletimin kesilmesi veya durdurulması",
+        "bugs": "Hizmet aracılığıyla iletilen hatalar, virüsler veya diğer zararlı kodlar"
+      },
+      "p2": "Bu koşullar kapsamındaki talepler için toplam sorumluluğumuz, talepten önceki 12 ay içinde bize ödediğiniz tutarı aşmayacaktır."
+    },
+    "warranty": {
+      "title": "10. Garanti Reddi",
+      "p1": "Hizmet, satılabilirlik, belirli bir amaca uygunluk ve ihlal etmeme zımni garantileri dahil ancak bunlarla sınırlı olmamak üzere, açık veya zımni herhangi bir garanti olmaksızın \"olduğu gibi\" ve \"mevcut olduğu şekilde\" sağlanır.",
+      "p2": "Hizmetin kesintisiz, güvenli veya hatasız olacağını veya herhangi bir kusurun düzeltileceğini garanti etmiyoruz."
+    },
+    "termination": {
+      "title": "11. Fesih",
+      "p1": "Bu Koşulların ihlali dahil ancak bununla sınırlı olmamak üzere herhangi bir nedenle, önceden bildirimde bulunmaksızın hesabınızı derhal feshedebilir veya askıya alabiliriz. Fesih üzerine, Hizmeti kullanma hakkınız derhal sona erecektir.",
+      "p2": "Hesabınızı istediğiniz zaman bizimle iletişime geçerek feshedebilirsiniz. Fesih üzerine, hesap verilerinizi Gizlilik Politikamıza uygun olarak sileceğiz."
+    },
+    "governing": {
+      "title": "12. Geçerli Hukuk",
+      "p1": "Bu Koşullar, kanunlar ihtilafı hükümlerine bakılmaksızın Norveç yasalarına tabi olacak ve bunlara göre yorumlanacaktır. Bu Koşullardan doğan her türlü ihtilaf Norveç mahkemelerinde çözülecektir."
+    },
+    "changes": {
+      "title": "13. Koşullarda Değişiklikler",
+      "p1": "Bu Koşulları istediğimiz zaman değiştirme veya yerine yenisini koyma hakkımız saklıdır. Bir revizyon önemliyse, yeni koşullar yürürlüğe girmeden en az 30 gün önce bildirimde bulunacağız.",
+      "p2": "Revizyonlar yürürlüğe girdikten sonra Hizmetimize erişmeye veya kullanmaya devam ederek, revize edilen koşullara bağlı kalmayı kabul edersiniz."
+    },
+    "contact": {
+      "title": "14. İletişim",
+      "p1": "Bu Koşullar hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin:",
+      "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:legal@emlak.tech\">legal@emlak.tech</a><br />Genel sorular: <a href=\"mailto:hello@emlak.tech\">hello@emlak.tech</a>"
+    }
   },
   "project": {
     "steps": {
@@ -442,6 +695,9 @@
       "noCreditCard": "Kredi kartı gerekmez",
       "freeTrial": "Ücretsiz deneme dahil",
       "cancelAnytime": "İstediğiniz zaman iptal edin"
+    },
+    "brands": {
+      "empowering": "En İyi Emlak Yaratıcılarını Güçlendiriyoruz"
     }
   }
 }

@@ -21,7 +21,7 @@ export function InviteEmail({
 
       <Text style={paragraph}>
         <strong>{inviterName}</strong> has invited you to join{" "}
-        <strong>{workspaceName}</strong> on Emlak.
+        <strong>{workspaceName}</strong> on Emlak+.
       </Text>
 
       <Section style={inviteBox}>

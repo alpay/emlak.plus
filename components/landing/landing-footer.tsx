@@ -165,7 +165,7 @@ export function LandingFooter() {
           style={{ borderColor: "var(--landing-border)" }}
         >
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
-            &copy; {currentYear} Emlak. {t("footer.allRightsReserved")}
+            &copy; {currentYear} Emlak+ | {t("footer.allRightsReserved")}
           </p>
           <p className="text-sm" style={{ color: "var(--landing-text-muted)" }}>
             {t("footer.madeWith")}

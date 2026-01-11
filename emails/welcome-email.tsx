@@ -16,7 +16,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
       <Text style={paragraph}>Hi {name},</Text>
 
       <Text style={paragraph}>
-        Thanks for signing up for Emlak. We&apos;re excited to have you on
+        Thanks for signing up for Emlak+. We&apos;re excited to have you on
         board!
       </Text>
 

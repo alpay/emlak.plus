@@ -34,10 +34,10 @@ export function EmailLayout({ preview, children }: EmailLayoutProps) {
           <Hr style={hr} />
           <Section style={footer}>
             <Text style={footerText}>
-              Emlak - AI-powered real estate photo editor
+              Emlak+ - AI-powered real estate photo editor
             </Text>
             <Text style={footerText}>
-              © {new Date().getFullYear()} Emlak. All rights reserved.
+              © {new Date().getFullYear()} Emlak+ | All rights reserved.
             </Text>
           </Section>
         </Container>

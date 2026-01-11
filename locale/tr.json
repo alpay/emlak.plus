@@ -699,6 +699,89 @@
     "brands": {
       "empowering": "En İyi Emlak Yaratıcılarını Güçlendiriyoruz"
     }
+  },
+  "pricingPage": {
+    "titlePrefix": "Fiyatlandırma",
+    "heroTitle": "Basit, şeffaf<br />fiyatlandırma",
+    "heroSubtitle": "Proje başına ödeyin. Abonelik yok, gizli ücret yok.",
+    "photoEnhancement": "Fotoğraf İyileştirme",
+    "videoCreation": "Video Oluşturma",
+    "perProperty": "mülk başına",
+    "perVideo": "video başına",
+    "features": {
+      "photo": [
+        "Mülk başına 20 görsele kadar",
+        "Yapay zeka destekli iyileştirme",
+        "Çoklu stil şablonları",
+        "Yüksek çözünürlüklü indirmeler",
+        "30 saniyeden kısa sürede hazır"
+      ],
+      "video": [
+        "Profesyonel mülk videosu",
+        "Yapay zeka destekli düzenleme",
+        "Müzik ve geçişler dahil",
+        "Dikey veya yatay format",
+        "Dakikalar içinde hazır"
+      ]
+    },
+    "mostPopular": "En Popüler",
+    "getStarted": "Başla",
+    "readyToStart": "Başlamaya hazır mısınız?",
+    "readyToStartDesc": "Emlak fotoğraflarınızı bugün dönüştürün. Denemek için kredi kartı gerekmez.",
+    "startFree": "Ücretsiz Başla",
+    "faq": {
+      "title": "Sıkça sorulan sorular",
+      "eyebrow": "SSS",
+      "items": [
+        {
+          "question": "Fiyatlandırma nasıl çalışır?",
+          "answer": "Aylık değil, proje başına ücret alıyoruz. Fotoğraf iyileştirme için mülk başına 1000 NOK ödersiniz (20 görsele kadar). Video oluşturma için video başına 1000 NOK ödersiniz. Abonelik yok, gizli ücret yok."
+        },
+        {
+          "question": "Hangi görsel formatlarını destekliyorsunuz?",
+          "answer": "JPG, PNG ve WEBP dahil olmak üzere tüm yaygın görsel formatlarını destekliyoruz. Görsel başına maksimum dosya boyutu 10MB'dır. İyileştirilmiş görseller yüksek çözünürlüklü JPG formatında teslim edilir."
+        },
+        {
+          "question": "İşlem ne kadar sürer?",
+          "answer": "Fotoğraf iyileştirme genellikle görsel başına 30 saniyeden az sürer. Video oluşturma, görsel sayısına ve seçilen seçeneklere bağlı olarak genellikle 5-10 dakika sürer."
+        },
+        {
+          "question": "Satın almadan önce deneyebilir miyim?",
+          "answer": "Evet! Yeni kullanıcılar platformu denemek için ücretsiz kredi alır. Tam bir mülk projesine başlamadan önce kaliteyi görmek için birkaç görseli iyileştirebilirsiniz."
+        },
+        {
+          "question": "20'den fazla görselim varsa ne olur?",
+          "answer": "Mülkünüzde 20'den fazla görsel varsa, birden fazla proje oluşturabilir veya daha büyük çekimler için özel fiyatlandırma için bizimle iletişime geçebilirsiniz."
+        },
+        {
+          "question": "İade sunuyor musunuz?",
+          "answer": "Sonuçlardan memnun kalmazsanız, işlemden sonraki 24 saat içinde bizimle iletişime geçin; düzeltmek veya iade sağlamak için sizinle birlikte çalışacağız."
+        }
+      ]
+    }
+  },
+  "blogPage": {
+    "eyebrow": "Blogumuz",
+    "title": "İçgörüler ve Kaynaklar",
+    "subtitle": "Çarpıcı emlak ilanları oluşturmanıza yardımcı olacak ipuçları, rehberler ve sektör içgörüleri. Uzmanlardan öğrenin ve emlak fotoğrafçılığınızı geliştirin.",
+    "allPosts": "Tüm Yazılar",
+    "featured": "Öne Çıkanlar",
+    "searchPlaceholder": "Ara…",
+    "searchAria": "Makalelerde ara",
+    "allArticles": "Tüm Makaleler",
+    "matching": " \"{{query}}\" ile eşleşenler",
+    "noResults": {
+      "title": "Makale bulunamadı",
+      "desc": "Aradığınızı bulmak için filtrelerinizi veya arama teriminizi ayarlamayı deneyin.",
+      "descEmpty": "Yeni içerik için yakında tekrar kontrol edin.",
+      "clear": "Filtreleri temizle"
+    },
+    "newsletter": {
+      "title": "Haberdar olun",
+      "desc": "En son ipuçlarını, rehberleri ve ürün güncellemelerini gelen kutunuza alın. Spam yok, istediğiniz zaman abonelikten çıkabilirsiniz.",
+      "placeholder": "siz@ornek.com",
+      "subscribe": "Abone Ol"
+    }
   }
 }
 

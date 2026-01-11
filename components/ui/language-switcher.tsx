@@ -45,10 +45,36 @@ export function LanguageSwitcher({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  /*
+    Updated to handle URL redirection for content routes where language param matters.
+    If the user is on a localized route (e.g. /en/blog/...), switching language should
+    redirect to the new locale (e.g. /tr/blog/...).
+  */
   const handleLanguageChange = async (lang: SupportedLanguage) => {
     await changeLanguage(lang);
     onLanguageChange?.(lang);
     setIsOpen(false);
+
+    // Check if we are on a content route that needs URL update
+    if (typeof window !== "undefined") {
+      const pathname = window.location.pathname;
+      const isContentRoute = pathname.includes("/blog") || pathname.includes("/help") || pathname.includes("/pricing");
+
+      if (isContentRoute) {
+        // Replace existing locale in path or prepend new one
+        const segments = pathname.split("/");
+        // segments[0] is empty, segments[1] might be locale
+        if (SUPPORTED_LANGUAGES.includes(segments[1] as SupportedLanguage)) {
+           segments[1] = lang;
+           const newPath = segments.join("/");
+           window.location.href = newPath;
+        } else {
+           // No locale prefix, just prepend (though proxy should have handled this,
+           // explicit switch implies we want to force it)
+           window.location.href = `/${lang}${pathname}`;
+        }
+      }
+    }
   };
 
   if (variant === "inline") {

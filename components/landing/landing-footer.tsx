@@ -39,12 +39,15 @@ export function LandingFooter() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link
-              className="font-semibold tracking-tight"
-              href="/"
-              style={{ color: "var(--landing-text)" }}
-            >
-              Emlak
-            </Link>
+            className="font-bold text-lg tracking-tight transition-opacity hover:opacity-80"
+            href="/"
+            style={{ color: "var(--landing-text)" }}
+          >
+            Emlak
+            <span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">
+              +
+            </span>
+          </Link>
             <p
               className="mt-4 max-w-xs text-sm leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}

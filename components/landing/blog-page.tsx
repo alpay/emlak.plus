@@ -2,6 +2,7 @@
 
 import { IconFileSearch, IconSearch } from "@tabler/icons-react";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useBlogFilters } from "@/hooks/use-blog-filters";
 import type { BlogPostMeta } from "@/lib/blog";
 import { BlogCard } from "./blog-card";
@@ -14,6 +15,7 @@ interface BlogPageProps {
 }
 
 export function BlogPage({ posts, categories }: BlogPageProps) {
+  const { t } = useTranslation();
   const { category, setCategory, search, setSearch } = useBlogFilters();
 
   // Filter posts based on category and search
@@ -56,21 +58,19 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
               className="font-semibold text-sm uppercase tracking-wider"
               style={{ color: "var(--landing-accent)" }}
             >
-              Our Blog
+              {t("blogPage.eyebrow")}
             </p>
             <h1
               className="mt-3 font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl"
               style={{ color: "var(--landing-text)" }}
             >
-              Insights & Resources
+              {t("blogPage.title")}
             </h1>
             <p
               className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed md:text-xl"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Tips, guides, and industry insights to help you create stunning
-              property listings. Learn from experts and elevate your real estate
-              photography.
+              {t("blogPage.subtitle")}
             </p>
           </div>
         </section>
@@ -96,7 +96,7 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                 }
                 type="button"
               >
-                All Posts
+                {t("blogPage.allPosts")}
               </button>
               {categories.map((cat) => (
                 <button
@@ -133,7 +133,7 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                   className="font-semibold text-sm uppercase tracking-wider"
                   style={{ color: "var(--landing-text-muted)" }}
                 >
-                  Featured
+                  {t("blogPage.featured")}
                 </h2>
               </div>
               <div className="space-y-8">
@@ -156,8 +156,8 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                 className="font-semibold text-sm uppercase tracking-wider"
                 style={{ color: "var(--landing-text-muted)" }}
               >
-                {category ? category : "All Articles"}
-                {search && ` matching "${search}"`}
+                {category ? category : t("blogPage.allArticles")}
+                {search && t("blogPage.matching", { query: search })}
               </h2>
               <div className="relative">
                 <IconSearch
@@ -165,10 +165,10 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                   style={{ color: "var(--landing-text-muted)" }}
                 />
                 <input
-                  aria-label="Search articles"
+                  aria-label={t("blogPage.searchAria")}
                   className="h-10 w-48 rounded-full pr-4 pl-9 text-sm outline-none transition-all placeholder:opacity-50 focus:w-64 focus:ring-2"
                   onChange={(e) => setSearch(e.target.value || null)}
-                  placeholder="Search…"
+                  placeholder={t("blogPage.searchPlaceholder")}
                   style={{
                     backgroundColor: "var(--landing-card)",
                     color: "var(--landing-text)",
@@ -204,15 +204,15 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                   className="font-semibold text-lg"
                   style={{ color: "var(--landing-text)" }}
                 >
-                  No articles found
+                  {t("blogPage.noResults.title")}
                 </h3>
                 <p
                   className="mx-auto mt-2 max-w-sm text-sm"
                   style={{ color: "var(--landing-text-muted)" }}
                 >
                   {search || category
-                    ? "Try adjusting your filters or search term to find what you're looking for."
-                    : "Check back soon for new content."}
+                    ? t("blogPage.noResults.desc")
+                    : t("blogPage.noResults.descEmpty")}
                 </p>
                 {(search || category) && (
                   <button
@@ -227,7 +227,7 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                     }}
                     type="button"
                   >
-                    Clear filters
+                    {t("blogPage.noResults.clear")}
                   </button>
                 )}
               </div>
@@ -249,20 +249,19 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
               className="font-bold text-3xl tracking-tight sm:text-4xl"
               style={{ color: "var(--landing-text)" }}
             >
-              Stay in the loop
+              {t("blogPage.newsletter.title")}
             </h2>
             <p
               className="mx-auto mt-4 max-w-lg text-lg leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Get the latest tips, guides, and product updates delivered to your
-              inbox. No spam, unsubscribe anytime.
+              {t("blogPage.newsletter.desc")}
             </p>
             <form className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
               <input
                 aria-label="Email address"
                 className="h-12 flex-1 rounded-full px-5 text-base outline-none transition-all placeholder:opacity-50 focus:ring-2"
-                placeholder="your@email.com"
+                placeholder={t("blogPage.newsletter.placeholder")}
                 style={{
                   backgroundColor: "var(--landing-bg)",
                   color: "var(--landing-text)",
@@ -278,7 +277,7 @@ export function BlogPage({ posts, categories }: BlogPageProps) {
                 }}
                 type="submit"
               >
-                Subscribe
+                {t("blogPage.newsletter.subscribe")}
               </button>
             </form>
           </div>

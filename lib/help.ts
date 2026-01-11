@@ -7,6 +7,10 @@ import html from "remark-html";
 
 const HELP_DIRECTORY = path.join(process.cwd(), "content/help");
 
+function getHelpDirectory(locale: string) {
+  return path.join(HELP_DIRECTORY, locale);
+}
+
 // Category configuration
 export const helpCategories = [
   {
@@ -64,8 +68,9 @@ function calculateReadingTime(content: string): number {
   return Math.ceil(words / wordsPerMinute);
 }
 
-export function getAllHelpArticles(): HelpArticleMeta[] {
-  if (!fs.existsSync(HELP_DIRECTORY)) {
+export function getAllHelpArticles(locale: string = "tr"): HelpArticleMeta[] {
+  const directory = getHelpDirectory(locale);
+  if (!fs.existsSync(directory)) {
     return [];
   }
 
@@ -73,7 +78,7 @@ export function getAllHelpArticles(): HelpArticleMeta[] {
 
   // Read each category directory
   for (const category of helpCategories) {
-    const categoryPath = path.join(HELP_DIRECTORY, category.slug);
+    const categoryPath = path.join(directory, category.slug);
     if (!fs.existsSync(categoryPath)) {
       continue;
     }
@@ -103,12 +108,12 @@ export function getAllHelpArticles(): HelpArticleMeta[] {
   return articles.sort((a, b) => a.order - b.order);
 }
 
-export function getPopularArticles(): HelpArticleMeta[] {
-  return getAllHelpArticles().filter((article) => article.popular);
+export function getPopularArticles(locale: string = "tr"): HelpArticleMeta[] {
+  return getAllHelpArticles(locale).filter((article) => article.popular);
 }
 
-export function getArticlesByCategory(categorySlug: string): HelpArticleMeta[] {
-  return getAllHelpArticles()
+export function getArticlesByCategory(categorySlug: string, locale: string = "tr"): HelpArticleMeta[] {
+  return getAllHelpArticles(locale)
     .filter((article) => article.category === categorySlug)
     .sort((a, b) => a.order - b.order);
 }
@@ -119,9 +124,10 @@ export function getCategoryBySlug(slug: string): HelpCategory | undefined {
 
 export async function getHelpArticle(
   categorySlug: string,
-  articleSlug: string
+  articleSlug: string,
+  locale: string = "tr"
 ): Promise<HelpArticle | null> {
-  const fullPath = path.join(HELP_DIRECTORY, categorySlug, `${articleSlug}.md`);
+  const fullPath = path.join(getHelpDirectory(locale), categorySlug, `${articleSlug}.md`);
 
   if (!fs.existsSync(fullPath)) {
     return null;
@@ -148,8 +154,8 @@ export async function getHelpArticle(
   };
 }
 
-export function getAllHelpArticlePaths(): { category: string; slug: string }[] {
-  const articles = getAllHelpArticles();
+export function getAllHelpArticlePaths(locale: string = "tr"): { category: string; slug: string }[] {
+  const articles = getAllHelpArticles(locale);
   return articles.map((article) => ({
     category: article.category,
     slug: article.slug,
@@ -159,18 +165,19 @@ export function getAllHelpArticlePaths(): { category: string; slug: string }[] {
 export function getRelatedArticles(
   currentSlug: string,
   categorySlug: string,
-  limit = 3
+  limit = 3,
+  locale: string = "tr"
 ): HelpArticleMeta[] {
-  return getArticlesByCategory(categorySlug)
+  return getArticlesByCategory(categorySlug, locale)
     .filter((article) => article.slug !== currentSlug)
     .slice(0, limit);
 }
 
-export function searchHelpArticles(query: string): HelpArticleMeta[] {
+export function searchHelpArticles(query: string, locale: string = "tr"): HelpArticleMeta[] {
   if (!query.trim()) return [];
 
   const searchLower = query.toLowerCase();
-  return getAllHelpArticles().filter((article) => {
+  return getAllHelpArticles(locale).filter((article) => {
     const matchesTitle = article.title.toLowerCase().includes(searchLower);
     const matchesDescription = article.description
       .toLowerCase()

@@ -9,15 +9,20 @@ import {
 } from "@/lib/help";
 
 interface HelpArticlePageProps {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ category: string; slug: string; lang: string }>;
 }
 
 export function generateStaticParams() {
-  const paths = getAllHelpArticlePaths();
-  return paths.map(({ category, slug }) => ({
-    category,
-    slug,
-  }));
+  const languages = ["en", "tr"];
+  const params: { category: string; slug: string; lang: string }[] = [];
+
+  for (const lang of languages) {
+    const paths = getAllHelpArticlePaths(lang);
+    for (const path of paths) {
+      params.push({ ...path, lang });
+    }
+  }
+  return params;
 }
 
 export const dynamicParams = false;
@@ -25,8 +30,8 @@ export const dynamicParams = false;
 export async function generateMetadata({
   params,
 }: HelpArticlePageProps): Promise<Metadata> {
-  const { category: categorySlug, slug } = await params;
-  const article = await getHelpArticle(categorySlug, slug);
+  const { category: categorySlug, slug, lang } = await params;
+  const article = await getHelpArticle(categorySlug, slug, lang);
 
   if (!article) {
     return {
@@ -41,16 +46,16 @@ export async function generateMetadata({
 }
 
 export default async function HelpArticle({ params }: HelpArticlePageProps) {
-  const { category: categorySlug, slug } = await params;
+  const { category: categorySlug, slug, lang } = await params;
 
-  const article = await getHelpArticle(categorySlug, slug);
+  const article = await getHelpArticle(categorySlug, slug, lang);
   const category = getCategoryBySlug(categorySlug);
 
   if (!(article && category)) {
     notFound();
   }
 
-  const relatedArticles = getRelatedArticles(slug, categorySlug, 3);
+  const relatedArticles = getRelatedArticles(slug, categorySlug, 3, lang);
 
   return (
     <HelpArticlePage

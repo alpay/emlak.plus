@@ -13,15 +13,21 @@ export const metadata: Metadata = {
     "Get help with Emlak+. Browse our knowledge base for guides, tutorials, and answers to frequently asked questions.",
 };
 
-export default function Help() {
-  const articles = getAllHelpArticles();
-  const popularArticles = getPopularArticles();
+interface HelpPageProps {
+  params: Promise<{ lang: string }>;
+}
+
+export default async function Help({ params }: HelpPageProps) {
+  const { lang } = await params;
+  const articles = getAllHelpArticles(lang);
+  const popularArticles = getPopularArticles(lang);
 
   // Calculate article count per category
   const articleCountByCategory: Record<string, number> = {};
   for (const category of helpCategories) {
     articleCountByCategory[category.slug] = getArticlesByCategory(
-      category.slug
+      category.slug,
+      lang
     ).length;
   }
 

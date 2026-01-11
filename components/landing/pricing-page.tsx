@@ -10,57 +10,9 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LandingFooter } from "./landing-footer";
 import { LandingNav } from "./landing-nav";
-
-const photoFeatures = [
-  "Up to 20 images per property",
-  "AI-powered enhancement",
-  "Multiple style templates",
-  "High-resolution downloads",
-  "Ready in under 30 seconds",
-];
-
-const videoFeatures = [
-  "Professional property video",
-  "AI-powered editing",
-  "Music and transitions included",
-  "Portrait or landscape format",
-  "Ready in minutes",
-];
-
-const faqs = [
-  {
-    question: "How does the pricing work?",
-    answer:
-      "We charge per project, not per month. For photo enhancement, you pay 1000 NOK per property (up to 20 images). For video creation, you pay 1000 NOK per video. No subscriptions, no hidden fees.",
-  },
-  {
-    question: "What image formats do you support?",
-    answer:
-      "We support all common image formats including JPG, PNG, and WEBP. Maximum file size is 10MB per image. Enhanced images are delivered in high-resolution JPG format.",
-  },
-  {
-    question: "How long does processing take?",
-    answer:
-      "Photo enhancement typically takes under 30 seconds per image. Video creation usually takes 5-10 minutes depending on the number of images and selected options.",
-  },
-  {
-    question: "Can I try before I buy?",
-    answer:
-      "Yes! New users get free credits to try out the platform. You can enhance a few images to see the quality before committing to a full property project.",
-  },
-  {
-    question: "What if I have more than 20 images?",
-    answer:
-      "If your property has more than 20 images, you can create multiple projects or contact us for custom pricing on larger shoots.",
-  },
-  {
-    question: "Do you offer refunds?",
-    answer:
-      "If you're not satisfied with the results, contact us within 24 hours of processing and we'll work with you to make it right or provide a refund.",
-  },
-];
 
 function PricingCard({
   icon: Icon,
@@ -77,6 +29,7 @@ function PricingCard({
   features: string[];
   popular?: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       className="relative flex flex-col rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1"
@@ -98,7 +51,7 @@ function PricingCard({
             color: "var(--landing-accent-foreground)",
           }}
         >
-          Most Popular
+          {t("pricingPage.mostPopular")}
         </div>
       )}
 
@@ -178,7 +131,7 @@ function PricingCard({
           border: popular ? "none" : "1px solid var(--landing-border-strong)",
         }}
       >
-        Get Started
+        {t("pricingPage.getStarted")}
         <IconArrowRight className="size-5" />
       </Link>
     </div>
@@ -229,6 +182,12 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 }
 
 export function PricingPage() {
+  const { t } = useTranslation();
+
+  const photoFeatures = (t("pricingPage.features.photo", { returnObjects: true }) as string[]) || [];
+  const videoFeatures = (t("pricingPage.features.video", { returnObjects: true }) as string[]) || [];
+  const faqs = (t("pricingPage.faq.items", { returnObjects: true }) as { question: string; answer: string }[]) || [];
+
   return (
     <div
       className="min-h-screen"
@@ -244,21 +203,20 @@ export function PricingPage() {
               className="font-semibold text-sm uppercase tracking-wider"
               style={{ color: "var(--landing-accent)" }}
             >
-              Pricing
+              {t("pricingPage.titlePrefix")}
             </p>
             <h1
               className="mt-3 font-bold text-4xl tracking-tight sm:text-5xl md:text-6xl"
               style={{ color: "var(--landing-text)" }}
-            >
-              Simple, transparent
-              <br />
-              pricing
-            </h1>
+              dangerouslySetInnerHTML={{
+                __html: t("pricingPage.heroTitle"),
+              }}
+            />
             <p
               className="mt-4 text-lg leading-relaxed md:text-xl"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Pay per project. No subscriptions, no hidden fees.
+              {t("pricingPage.heroSubtitle")}
             </p>
           </div>
         </section>
@@ -269,17 +227,17 @@ export function PricingPage() {
             <PricingCard
               features={photoFeatures}
               icon={IconPhoto}
-              per="per property"
+              per={t("pricingPage.perProperty")}
               popular
               price="1000 NOK"
-              title="Photo Enhancement"
+              title={t("pricingPage.photoEnhancement")}
             />
             <PricingCard
               features={videoFeatures}
               icon={IconMovie}
-              per="per video"
+              per={t("pricingPage.perVideo")}
               price="1000 NOK"
-              title="Video Creation"
+              title={t("pricingPage.videoCreation")}
             />
           </div>
         </section>
@@ -295,13 +253,13 @@ export function PricingPage() {
                 className="font-semibold text-sm uppercase tracking-wider"
                 style={{ color: "var(--landing-accent)" }}
               >
-                FAQ
+                {t("pricingPage.faq.eyebrow")}
               </p>
               <h2
                 className="mt-3 font-bold text-3xl tracking-tight sm:text-4xl"
                 style={{ color: "var(--landing-text)" }}
               >
-                Frequently asked questions
+                {t("pricingPage.faq.title")}
               </h2>
             </div>
 
@@ -331,14 +289,13 @@ export function PricingPage() {
               className="font-bold text-3xl tracking-tight sm:text-4xl"
               style={{ color: "var(--landing-text)" }}
             >
-              Ready to get started?
+              {t("pricingPage.readyToStart")}
             </h2>
             <p
               className="mx-auto mt-4 max-w-lg text-lg leading-relaxed"
               style={{ color: "var(--landing-text-muted)" }}
             >
-              Transform your property photos today. No credit card required to
-              try.
+              {t("pricingPage.readyToStartDesc")}
             </p>
             <div className="mt-8">
               <Link
@@ -349,14 +306,13 @@ export function PricingPage() {
                   color: "var(--landing-accent-foreground)",
                 }}
               >
-                Start for Free
+                {t("pricingPage.startFree")}
                 <IconArrowRight className="size-5" />
               </Link>
             </div>
           </div>
         </section>
       </main>
-
       <LandingFooter />
     </div>
   );

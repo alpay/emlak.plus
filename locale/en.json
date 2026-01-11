@@ -699,5 +699,88 @@
     "brands": {
       "empowering": "Empowering Top Real Estate Creators"
     }
+  },
+  "pricingPage": {
+    "titlePrefix": "Pricing",
+    "heroTitle": "Simple, transparent<br />pricing",
+    "heroSubtitle": "Pay per project. No subscriptions, no hidden fees.",
+    "photoEnhancement": "Photo Enhancement",
+    "videoCreation": "Video Creation",
+    "perProperty": "per property",
+    "perVideo": "per video",
+    "features": {
+      "photo": [
+        "Up to 20 images per property",
+        "AI-powered enhancement",
+        "Multiple style templates",
+        "High-resolution downloads",
+        "Ready in under 30 seconds"
+      ],
+      "video": [
+        "Professional property video",
+        "AI-powered editing",
+        "Music and transitions included",
+        "Portrait or landscape format",
+        "Ready in minutes"
+      ]
+    },
+    "mostPopular": "Most Popular",
+    "getStarted": "Get Started",
+    "readyToStart": "Ready to get started?",
+    "readyToStartDesc": "Transform your property photos today. No credit card required to try.",
+    "startFree": "Start for Free",
+    "faq": {
+      "title": "Frequently asked questions",
+      "eyebrow": "FAQ",
+      "items": [
+        {
+          "question": "How does the pricing work?",
+          "answer": "We charge per project, not per month. For photo enhancement, you pay 1000 NOK per property (up to 20 images). For video creation, you pay 1000 NOK per video. No subscriptions, no hidden fees."
+        },
+        {
+          "question": "What image formats do you support?",
+          "answer": "We support all common image formats including JPG, PNG, and WEBP. Maximum file size is 10MB per image. Enhanced images are delivered in high-resolution JPG format."
+        },
+        {
+          "question": "How long does processing take?",
+          "answer": "Photo enhancement typically takes under 30 seconds per image. Video creation usually takes 5-10 minutes depending on the number of images and selected options."
+        },
+        {
+          "question": "Can I try before I buy?",
+          "answer": "Yes! New users get free credits to try out the platform. You can enhance a few images to see the quality before committing to a full property project."
+        },
+        {
+          "question": "What if I have more than 20 images?",
+          "answer": "If your property has more than 20 images, you can create multiple projects or contact us for custom pricing on larger shoots."
+        },
+        {
+          "question": "Do you offer refunds?",
+          "answer": "If you're not satisfied with the results, contact us within 24 hours of processing and we'll work with you to make it right or provide a refund."
+        }
+      ]
+    }
+  },
+  "blogPage": {
+    "eyebrow": "Our Blog",
+    "title": "Insights & Resources",
+    "subtitle": "Tips, guides, and industry insights to help you create stunning property listings. Learn from experts and elevate your real estate photography.",
+    "allPosts": "All Posts",
+    "featured": "Featured",
+    "searchPlaceholder": "Search…",
+    "searchAria": "Search articles",
+    "allArticles": "All Articles",
+    "matching": " matching \"{{query}}\"",
+    "noResults": {
+      "title": "No articles found",
+      "desc": "Try adjusting your filters or search term to find what you're looking for.",
+      "descEmpty": "Check back soon for new content.",
+      "clear": "Clear filters"
+    },
+    "newsletter": {
+      "title": "Stay in the loop",
+      "desc": "Get the latest tips, guides, and product updates delivered to your inbox. No spam, unsubscribe anytime.",
+      "placeholder": "your@email.com",
+      "subscribe": "Subscribe"
+    }
   }
 }

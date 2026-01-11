@@ -111,6 +111,9 @@ export function BlogPostPage({ post, relatedPosts }: BlogPostPageProps) {
                 style={{ color: "var(--landing-accent)" }}
               >
                 Emlak
+                <span className="relative top-[-12px] text-6xl text-[var(--landing-accent)]">
+                  +
+                </span>
               </div>
             </div>
           </div>

@@ -63,6 +63,9 @@ export function AdminHeader() {
                 href="/admin"
               >
                 Emlak
+                <span className="relative top-[-2px] text-2xl text-[var(--landing-accent)]">
+                  +
+                </span>
               </Link>
               <Badge
                 className="h-5 rounded-md border-0 px-1.5 font-bold text-[10px] uppercase tracking-widest"

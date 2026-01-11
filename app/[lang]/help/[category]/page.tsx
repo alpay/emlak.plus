@@ -8,13 +8,19 @@ import {
 } from "@/lib/help";
 
 interface HelpCategoryProps {
-  params: Promise<{ category: string }>;
+  params: Promise<{ category: string; lang: string }>;
 }
 
 export function generateStaticParams() {
-  return helpCategories.map((category) => ({
-    category: category.slug,
-  }));
+  const languages = ["en", "tr"];
+  const params = [];
+
+  for (const lang of languages) {
+    for (const category of helpCategories) {
+      params.push({ category: category.slug, lang });
+    }
+  }
+  return params;
 }
 
 export const dynamicParams = false;
@@ -38,14 +44,14 @@ export async function generateMetadata({
 }
 
 export default async function HelpCategory({ params }: HelpCategoryProps) {
-  const { category: categorySlug } = await params;
+  const { category: categorySlug, lang } = await params;
   const category = getCategoryBySlug(categorySlug);
 
   if (!category) {
     notFound();
   }
 
-  const articles = getArticlesByCategory(categorySlug);
+  const articles = getArticlesByCategory(categorySlug, lang);
 
   return <HelpCategoryPage articles={articles} category={category} />;
 }

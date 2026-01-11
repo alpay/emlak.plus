@@ -8,9 +8,14 @@ export const metadata: Metadata = {
     "Tips, guides, and industry insights to help you create stunning property listings. Learn from experts and elevate your real estate photography.",
 };
 
-export default function Blog() {
-  const posts = getAllPosts();
-  const categories = getAllCategories();
+interface BlogPageProps {
+  params: Promise<{ lang: string }>;
+}
+
+export default async function Blog({ params }: BlogPageProps) {
+  const { lang } = await params;
+  const posts = getAllPosts(lang);
+  const categories = getAllCategories(lang);
 
   return <BlogPage categories={categories} posts={posts} />;
 }

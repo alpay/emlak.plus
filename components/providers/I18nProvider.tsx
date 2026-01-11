@@ -26,6 +26,25 @@ export function I18nProvider({ children, initialLanguage }: I18nProviderProps) {
       if (stored === "tr" || stored === "en") {
         language = stored;
       }
+
+      // Client-side Redirection for Content Routes on Mismatch
+      // Server defaults to 'en' (or browser lang) but doesn't know localStorage.
+      // If we are on a route like /en/blog but localStorage says 'tr', we should redirect.
+      const pathname = window.location.pathname;
+      const isContentRoute = pathname.includes("/blog") || pathname.includes("/help") || pathname.includes("/pricing");
+
+      if (isContentRoute) {
+        const urlLang = pathname.split("/")[1]; // e.g. "en" or "tr"
+        if (
+          (urlLang === "en" || urlLang === "tr") &&
+          urlLang !== language
+        ) {
+          // Mismatch found! Redirect to the stored language.
+          const newPath = pathname.replace(`/${urlLang}`, `/${language}`);
+          window.location.replace(newPath);
+          return; // Stop further execution
+        }
+      }
     }
 
     // Set language

@@ -6,6 +6,10 @@ import html from "remark-html";
 
 const BLOG_DIRECTORY = path.join(process.cwd(), "content/blog");
 
+function getBlogDirectory(locale: string) {
+  return path.join(BLOG_DIRECTORY, locale);
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -37,17 +41,18 @@ function calculateReadingTime(content: string): number {
   return Math.ceil(words / wordsPerMinute);
 }
 
-export function getAllPosts(): BlogPostMeta[] {
-  if (!fs.existsSync(BLOG_DIRECTORY)) {
+export function getAllPosts(locale: string = "tr"): BlogPostMeta[] {
+  const directory = getBlogDirectory(locale);
+  if (!fs.existsSync(directory)) {
     return [];
   }
 
-  const files = fs.readdirSync(BLOG_DIRECTORY);
+  const files = fs.readdirSync(directory);
   const posts = files
     .filter((file) => file.endsWith(".md"))
     .map((file) => {
       const slug = file.replace(/\.md$/, "");
-      const fullPath = path.join(BLOG_DIRECTORY, file);
+      const fullPath = path.join(directory, file);
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
 
@@ -68,24 +73,24 @@ export function getAllPosts(): BlogPostMeta[] {
   return posts;
 }
 
-export function getFeaturedPosts(): BlogPostMeta[] {
-  return getAllPosts().filter((post) => post.featured);
+export function getFeaturedPosts(locale: string = "tr"): BlogPostMeta[] {
+  return getAllPosts(locale).filter((post) => post.featured);
 }
 
-export function getPostsByCategory(category: string): BlogPostMeta[] {
-  return getAllPosts().filter(
+export function getPostsByCategory(category: string, locale: string = "tr"): BlogPostMeta[] {
+  return getAllPosts(locale).filter(
     (post) => post.category.toLowerCase() === category.toLowerCase()
   );
 }
 
-export function getAllCategories(): string[] {
-  const posts = getAllPosts();
+export function getAllCategories(locale: string = "tr"): string[] {
+  const posts = getAllPosts(locale);
   const categories = new Set(posts.map((post) => post.category));
   return Array.from(categories).sort();
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const fullPath = path.join(BLOG_DIRECTORY, `${slug}.md`);
+export async function getPostBySlug(slug: string, locale: string = "tr"): Promise<BlogPost | null> {
+  const fullPath = path.join(getBlogDirectory(locale), `${slug}.md`);
 
   if (!fs.existsSync(fullPath)) {
     return null;
@@ -111,12 +116,13 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   };
 }
 
-export function getAllPostSlugs(): string[] {
-  if (!fs.existsSync(BLOG_DIRECTORY)) {
+export function getAllPostSlugs(locale: string = "tr"): string[] {
+  const directory = getBlogDirectory(locale);
+  if (!fs.existsSync(directory)) {
     return [];
   }
 
-  const files = fs.readdirSync(BLOG_DIRECTORY);
+  const files = fs.readdirSync(directory);
   return files
     .filter((file) => file.endsWith(".md"))
     .map((file) => file.replace(/\.md$/, ""));
@@ -125,9 +131,10 @@ export function getAllPostSlugs(): string[] {
 export function getRelatedPosts(
   currentSlug: string,
   category: string,
-  limit = 3
+  limit = 3,
+  locale: string = "tr"
 ): BlogPostMeta[] {
-  return getAllPosts()
+  return getAllPosts(locale)
     .filter((post) => post.slug !== currentSlug && post.category === category)
     .slice(0, limit);
 }

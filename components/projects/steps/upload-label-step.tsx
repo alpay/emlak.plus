@@ -81,6 +81,8 @@ function EnvironmentToggle({
   value: ImageEnvironment;
   onChange: (value: ImageEnvironment) => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="rounded-lg bg-muted p-1 flex items-center gap-1">
       <button
@@ -93,7 +95,7 @@ function EnvironmentToggle({
         )}
         onClick={() => onChange("indoor")}
       >
-        İç Mekan
+        {t("roomTypes.environments.indoor", "İç Mekan")}
       </button>
       <button
         type="button"
@@ -105,7 +107,7 @@ function EnvironmentToggle({
         )}
         onClick={() => onChange("outdoor")}
       >
-        Dış Mekan
+        {t("roomTypes.environments.outdoor", "Dış Mekan")}
       </button>
     </div>
   );
@@ -120,6 +122,7 @@ function PhotoCard({
   onRemove: () => void;
   onUpdate: (updates: Partial<Pick<NewUploadedImage, "environment" | "roomType">>) => void;
 }) {
+  const { t } = useTranslation();
   const roomTypes = getRoomTypesByEnvironment(image.environment);
   const currentRoomType = roomTypes.find((r) => r.id === image.roomType);
   const IconComponent = currentRoomType ? ICON_MAP[currentRoomType.icon] : null;
@@ -162,7 +165,7 @@ function PhotoCard({
         {/* Environment toggle */}
         <div>
           <label className="mb-2 block pl-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Ortam Seçimi
+            {t("project.uploadLabel.environment", "Ortam Seçimi")}
           </label>
           <EnvironmentToggle
             value={image.environment}
@@ -173,7 +176,7 @@ function PhotoCard({
         {/* Room type select */}
         <div>
           <label className="mb-1.5 block pl-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Oda Türü
+            {t("project.uploadLabel.roomType", "Oda Türü")}
           </label>
           <Select
             value={image.roomType}
@@ -189,7 +192,7 @@ function PhotoCard({
                   <SelectItem key={room.id} value={room.id}>
                     <div className="flex items-center gap-2">
                       {RoomIcon && <RoomIcon className="h-4 w-4" />}
-                      {room.label}
+                      {t(`roomTypes.${room.id}.label`, room.label)}
                     </div>
                   </SelectItem>
                 );
@@ -314,20 +317,20 @@ export function UploadLabelStep({
 
           <h3 className="mb-2 text-base font-semibold">
             {isDragging
-              ? t("upload.dropHere", "Görsellerinizi buraya bırakın")
-              : t("upload.dragDrop", "Fotoğrafları Sürükle Bırak")}
+              ? t("project.uploadLabel.dropHere", "Görsellerinizi buraya bırakın")
+              : t("project.uploadLabel.dragDrop", "Fotoğrafları Sürükle Bırak")}
           </h3>
           <p className="mb-6 text-xs leading-relaxed text-muted-foreground">
-            veya göz atmak için tıklayın
+            {t("project.uploadLabel.orClick", "veya göz atmak için tıklayın")}
             <br />
-            JPEG, PNG, WebP (Maks. 10MB)
+            {t("project.uploadLabel.maxSize", "JPEG, PNG, WebP (Maks. 10MB)")}
           </p>
           <Button
             className="shadow-lg shadow-[var(--accent-teal)]/25"
             style={{ backgroundColor: "var(--accent-teal)" }}
             type="button"
           >
-            Dosya Seç
+            {t("project.uploadLabel.selectFile", "Dosya Seç")}
           </Button>
         </div>
       </div>

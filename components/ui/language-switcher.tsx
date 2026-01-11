@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useChangeLanguage } from "@/components/providers/I18nProvider";
+import { useChangeLanguage } from "@/app/providers/I18nProvider";
 import {
   LANGUAGE_FLAGS,
   LANGUAGE_NAMES,

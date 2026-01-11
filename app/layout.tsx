@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Outfit } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { I18nProvider } from "@/components/providers/I18nProvider";
+import { I18nProvider } from "@/app/providers/I18nProvider";
 import "./globals.css";
 
 const outfit = Outfit({

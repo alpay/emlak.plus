@@ -28,10 +28,10 @@ interface NewProjectPageProps {
   credits: number;
 }
 
-const STEPS: { id: NewCreationStep; label: string; stepNumber: number }[] = [
-  { id: "upload-label", label: "Yükle", stepNumber: 1 },
-  { id: "ai-enhancements", label: "Düzenle", stepNumber: 2 },
-  { id: "confirm", label: "Onayla", stepNumber: 3 },
+const STEPS_CONFIG: { id: NewCreationStep; labelKey: string; stepNumber: number }[] = [
+  { id: "upload-label", labelKey: "project.steps.uploadLabel", stepNumber: 1 },
+  { id: "ai-enhancements", labelKey: "project.steps.aiEnhancements", stepNumber: 2 },
+  { id: "confirm", labelKey: "project.steps.confirm", stepNumber: 3 },
 ];
 
 function StepIndicator({
@@ -39,12 +39,13 @@ function StepIndicator({
 }: {
   currentStep: NewCreationStep;
 }) {
-  const currentIndex = STEPS.findIndex((s) => s.id === currentStep);
+  const { t } = useTranslation();
+  const currentIndex = STEPS_CONFIG.findIndex((s) => s.id === currentStep);
 
   return (
     <div className="flex items-center justify-center py-2">
       <div className="flex items-center">
-        {STEPS.map((step, index) => {
+        {STEPS_CONFIG.map((step, index) => {
           const isActive = index === currentIndex;
           const isCompleted = index < currentIndex;
 
@@ -73,11 +74,11 @@ function StepIndicator({
                       : "text-muted-foreground"
                   )}
                 >
-                  {step.label}
+                  {t(step.labelKey)}
                 </span>
               </div>
 
-              {index < STEPS.length - 1 && (
+              {index < STEPS_CONFIG.length - 1 && (
                 <div
                   className={cn(
                     "mx-2 h-px w-8 transition-colors",
@@ -156,16 +157,16 @@ export function NewProjectPage({ workspaceId, credits }: NewProjectPageProps) {
 
   const stepTitles: Record<NewCreationStep, { title: string; description: string }> = {
     "upload-label": {
-      title: t("project.uploadLabel.title", "Fotoğrafları Yükle ve Etiketle"),
-      description: t("project.uploadLabel.description", "En iyi sonuçlar için fotoğrafları yükleyin ve oda detaylarını etiketleyin."),
+      title: t("project.uploadLabel.title"),
+      description: t("project.uploadLabel.description"),
     },
     "ai-enhancements": {
-      title: t("project.aiEnhancements.title", "AI İyileştirmeler"),
-      description: t("project.aiEnhancements.description", "Görselinizi mükemmelleştirmek için AI araçlarını seçin ve stili belirleyin."),
+      title: t("project.aiEnhancements.title"),
+      description: t("project.aiEnhancements.description"),
     },
     confirm: {
-      title: t("project.confirm.title", "İncele ve Onayla"),
-      description: t("project.confirm.description", "İlanınızı adlandırın ve işleme başlamadan önce proje detaylarını gözden geçirin."),
+      title: t("project.confirm.title"),
+      description: t("project.confirm.description"),
     },
   };
 
@@ -272,7 +273,7 @@ export function NewProjectPage({ workspaceId, credits }: NewProjectPageProps) {
                 ) : (
                   <>
                     <IconSparkles className="h-4 w-4" />
-                    {t("project.createProject", "Projeyi Oluştur")} ({creditCost} {t("common.credit", "kredi")})
+                    {t("project.confirm.createProject", "Projeyi Oluştur")} ({creditCost} {t("common.credit", "kredi")})
                   </>
                 )}
               </Button>

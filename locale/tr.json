@@ -141,6 +141,98 @@
       "view": "Görünüm",
       "grid": "Izgara",
       "table": "Tablo"
+    },
+    "projectDetail": {
+      "status": {
+        "completed": "Tamamlandı",
+        "processing": "İşleniyor",
+        "pending": "Bekliyor",
+        "failed": "Başarısız",
+        "queued": "Sırada",
+        "enhancing": "İyileştiriliyor…"
+      },
+      "actions": {
+        "retry": "Tekrar Dene (1 kredi)",
+        "compare": "Karşılaştır",
+        "edit": "Düzenle",
+        "download": "İndir",
+        "close": "Kapat",
+        "addMore": "Daha Fazla Ekle",
+        "addImages": "Görsel Ekle",
+        "downloadAll": "Tümünü İndir",
+        "originalFormat": "Orijinal Format",
+        "jpgCompressed": "JPG (Sıkıştırılmış)",
+        "pngLossless": "PNG (Kayıpsız)",
+        "webpModern": "WebP (Modern)",
+        "deleteProject": "Projeyi Sil",
+        "delete": "Sil",
+        "clear": "Temizle",
+        "selected": "{{count}} seçildi"
+      },
+      "stats": {
+        "total": "Toplam",
+        "completed": "Tamamlanan",
+        "style": "Tarz",
+        "created": "Oluşturuldu"
+      },
+      "versionHistory": {
+        "title": "Versiyon Geçmişi",
+        "description": "Seçmek için bir versiyona tıklayın, ardından karşılaştırın veya düzenleyin.",
+        "versionsAvailable": "{{count}} versiyon mevcut",
+        "version": "v{{version}}"
+      },
+      "comparison": {
+        "original": "Orijinal",
+        "enhanced": "İyileştirilmiş"
+      },
+      "empty": {
+        "noImages": "Bu projede henüz görsel yok"
+      },
+      "dialogs": {
+        "deleteImages": {
+          "title": "{{count}} görseli sil?",
+          "description": "Bu işlem geri alınamaz. Seçilen görseller ve tüm versiyonları kalıcı olarak silinecektir.",
+          "confirm": "Sil"
+        },
+        "deleteProject": {
+          "title": "\"{{name}}\" silinsin mi?",
+          "description": "Bu işlem geri alınamaz. Bu işlem projeyi ve onunla ilişkili tüm {{count}} görseli, tüm versiyonlar ve düzenlemeler dahil olmak üzere kalıcı olarak silecektir.",
+          "confirm": "Projeyi Sil",
+          "deleting": "Siliniyor..."
+        }
+      },
+      "toasts": {
+        "processingComplete": "Görsel işleme tamamlandı!",
+        "deletingImages": "{{count}} görsel siliniyor...",
+        "deletedImages": "{{count}} görsel silindi",
+        "deleteFailed": "Silme başarısız",
+        "deletingProject": "Proje ve tüm görseller siliniyor...",
+        "projectDeleted": "Proje başarıyla silindi",
+        "projectDeleteFailed": "Proje silinemedi",
+        "downloadPreparing": "İndirme için {{count}} görsel{{format}} hazırlanıyor...",
+        "downloadStarted": "İndirme başlatıldı",
+        "downloadFailed": "İndirme başarısız"
+      }
+    },
+    "addImagesDialog": {
+      "title": "Daha Fazla Görsel Ekle",
+      "description": "\"{{name}}\" projesine görsel ekle ({{count}}/10 görsel kullanıldı)",
+      "limitReached": "Bu proje maksimum 10 görsel limitine ulaştı.",
+      "dropzone": {
+        "drag": "Görselleri sürükleyip bırakın",
+        "drop": "Görselleri buraya bırakın",
+        "hint": "veya göz atmak için tıklayın • En fazla {{count}} görsel daha"
+      },
+      "selection": {
+        "count": "{{count}} görsel seçildi",
+        "addMore": "Daha fazla ekle"
+      },
+      "roomType": "Oda tipi seçin",
+      "actions": {
+        "cancel": "İptal",
+        "uploading": "Yükleniyor...",
+        "process": "Ekle & İşle ({{count}} kredi)"
+      }
     }
   },
   "empty": {
@@ -549,30 +641,155 @@
       "p2": "<strong>Emlak</strong><br />E-posta: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />Genel sorular: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
-  "project": {
+"project": {
     "steps": {
+      "uploadLabel": "Yükle & Etiketle",
+      "aiEnhancements": "AI İyileştirmeler",
+      "confirm": "Onayla",
       "upload": "Yükle",
       "room": "Oda",
-      "style": "Stil",
-      "confirm": "Onayla"
+      "style": "Stil"
     },
-    "upload": {
-      "title": "Görselleri Yükle",
-      "description": "İyileştirmek istediğiniz gayrimenkul fotoğraflarını ekleyin"
+    "uploadLabel": {
+      "title": "Fotoğrafları Yükle ve Etiketle",
+      "description": "En iyi sonuçlar için fotoğrafları yükleyin ve oda detaylarını etiketleyin.",
+      "environment": "Ortam",
+      "roomType": "Oda Türü",
+      "dropHere": "Görsellerinizi buraya bırakın",
+      "dragDrop": "Fotoğrafları Sürükle Bırak",
+      "orClick": "veya göz atmak için tıklayın",
+      "maxSize": "JPEG, PNG, WebP (Maks. 10MB)",
+      "selectFile": "Dosya Seç"
     },
-    "roomType": {
-      "title": "Oda Türü Seçin",
-      "description": "AI'ın bu alanın türünü anlamasına yardımcı olun"
-    },
-    "style": {
-      "title": "Stil Seçin",
-      "description": "Fotoğraflarınız için bir dönüşüm stili seçin"
+    "aiEnhancements": {
+      "title": "AI İyileştirmeler",
+      "description": "Görselinizi mükemmelleştirmek için AI araçlarını seçin ve stili belirleyin.",
+      "toolsTitle": "AI Araçları",
+      "selectToolPrompt": "Detayları görmek için bir AI aracı seçin",
+      "selectStylePrompt": "Eşyaları değiştirmek için bir stil seçin",
+      "chooseTool": "Bir araç seçin",
+      "toolDetails": {
+        "cleanHands": {
+          "title": "Elleri Temizle",
+          "description": "Fotoğraftaki yansımalarda görünen elleri otomatik olarak algılar ve temizler.",
+          "features": [
+            "Ayna ve cam yansımalarındaki eller temizlenir",
+            "Tripod tutuş izleri kaldırılır",
+            "Doğal görünüm korunur"
+          ]
+        },
+        "cleanCamera": {
+          "title": "Kamerayı Temizle",
+          "description": "Fotoğraftaki tripod, kamera ekipmanı ve yansımalarını otomatik olarak temizler.",
+          "features": [
+            "Tripod ayakları kaldırılır",
+            "Kamera yansımaları temizlenir",
+            "Ekipman gölgeleri düzenlenir"
+          ]
+        },
+        "turnOffScreens": {
+          "title": "Ekranları Kapat",
+          "description": "TV, monitör ve diğer ekranları algılar ve karartır.",
+          "features": [
+            "TV ekranları karartılır",
+            "Bilgisayar monitörleri temizlenir",
+            "Yansımalar giderilir"
+          ]
+        },
+        "lensCorrection": {
+          "title": "Lens Düzeltme",
+          "description": "Geniş açı lens distorsiyonunu düzeltir ve çizgileri düzleştirir.",
+          "features": [
+            "Varil distorsiyonu giderilir",
+            "Duvar ve kapı çizgileri düzleştirilir",
+            "Perspektif düzeltmesi uygulanır"
+          ]
+        },
+        "whiteBalance": {
+          "title": "Beyaz Dengesi",
+          "description": "Renk sıcaklığını optimize eder ve doğal beyaz dengesi sağlar.",
+          "labels": {
+             "cool": "Soğuk",
+             "natural": "Doğal",
+             "warm": "Sıcak",
+             "comingSoon": "* Slider ayarı yakında aktif olacak"
+          }
+        }
+      }
     },
     "confirm": {
       "title": "İncele ve Onayla",
-      "description": "İlanınızı adlandırın ve işleme başlamadan önce gözden geçirin"
+      "description": "İlanınızı adlandırın ve işleme başlamadan önce proje detaylarını gözden geçirin.",
+      "projectName": "İlan Adı",
+      "placeholder": "örn. Atatürk Cad. No:123 Satılık Daire",
+      "summary": "Özet Bilgiler",
+      "replaceFurniture": "Eşyaları Değiştir",
+      "aiEditing": "AI Düzenleme",
+      "imageCount": "Görsel Sayısı",
+      "costPerImage": "Görsel Başına Maliyet",
+      "totalCost": "Toplam Tutar",
+      "creditsRemaining": "Bu işlemden sonra hesabınızda <bold>{{count}} kredi</bold> kalacaktır.",
+      "createProject": "Projeyi Oluştur",
+      "processing": "İşleniyor..."
     },
     "processing": "İşleniyor..."
+  },
+  "roomTypes": {
+    "environments": {
+      "indoor": "İç Mekan",
+      "outdoor": "Dış Mekan"
+    },
+    "living-room": { "label": "Oturma Odası" },
+    "bedroom": { "label": "Yatak Odası" },
+    "kitchen": { "label": "Mutfak" },
+    "bathroom": { "label": "Banyo" },
+    "dining-room": { "label": "Yemek Odası" },
+    "office": { "label": "Ofis" },
+    "hallway": { "label": "Koridor" },
+    "basement": { "label": "Bodrum" },
+    "laundry-room": { "label": "Çamaşır Odası" },
+    "childrens-room": { "label": "Çocuk Odası" },
+    "walk-in-closet": { "label": "Giyinme Odası" },
+    "attic": { "label": "Çatı Katı" },
+    "gym": { "label": "Spor Odası" },
+    "facade": { "label": "Cephe" },
+    "garden": { "label": "Bahçe" },
+    "backyard": { "label": "Arka Bahçe" },
+    "parking": { "label": "Otopark" },
+    "road": { "label": "Sokak Görünümü" },
+    "aerial": { "label": "Havadan Görünüm" },
+    "pool-area": { "label": "Havuz" },
+    "terrace": { "label": "Teras" },
+    "balcony": { "label": "Balkon" }
+  },
+  "aiTools": {
+    "replaceFurniture": { "title": "Eşyaları Değiştir", "description": "Mevcut mobilyaları yenileriyle değiştirir" },
+    "cleanHands": { "title": "Elleri Temizle", "description": "Yansımadaki elleri siler" },
+    "cleanCamera": { "title": "Kamerayı Temizle", "description": "Tripod ve ekipmanı siler" },
+    "turnOffScreens": { "title": "Ekranları Kapat", "description": "TV ve monitörleri karartır" },
+    "lensCorrection": { "title": "Lens Düzeltme", "description": "Geniş açı distorsiyonunu giderir" },
+    "whiteBalance": { "title": "Beyaz Dengesi", "description": "Renk sıcaklığını optimize eder" }
+  },
+  "styles": {
+     "scandinavian": { "name": "İskandinav", "description": "Doğal ahşap ve minimal dekorlu aydınlık, ferah alanlar" },
+     "modern-minimalist": { "name": "Modern Minimalist", "description": "Temiz çizgiler, açık alanlar ve küratörlü sadelik" },
+     "industrial-loft": { "name": "Endüstriyel Loft", "description": "Ham maddeler, brüt unsurlar, şehir karakteri" },
+     "coastal-hamptons": { "name": "Coastal Hamptons", "description": "Denizci dokunuşları ve yumuşak mavilerle esintili zarafet" },
+     "mid-century-modern": { "name": "Mid-Century Modern", "description": "İkonik mobilyalar ve sıcak ahşap tonlarıyla retro çekicilik" },
+     "bohemian-eclectic": { "name": "Bohem Eklektik", "description": "Katmanlı dokular, küresel etkiler, sanatsal yetenek" },
+     "japandi": { "name": "Japandi", "description": "Japon minimalizmi İskandinav sıcaklığıyla buluşuyor" },
+     "luxury-contemporary": { "name": "Lüks Çağdaş", "description": "Birinci sınıf malzemelerle sofistike zarafet" },
+     "farmhouse-modern": { "name": "Modern Çiftlik Evi", "description": "Modern konforla rustik cazibe" },
+     "art-deco": { "name": "Art Deco", "description": "Cesur desenler ve metallerle göz alıcı geometri" },
+     "mediterranean": { "name": "Akdeniz", "description": "Sıcak pişmiş toprak, kemerli detaylar ve güneşli hisler" },
+     "transitional": { "name": "Geçiş", "description": "Geleneksel ve çağdaşın mükemmel dengesi" },
+     "golden-hour": { "name": "Altın Saat", "description": "Rahat bir ortam için sıcak gün batımı aydınlatması" },
+     "bright-airy": { "name": "Aydınlık & Ferah", "description": "Açık hissetmek için doğal ışığı en üst düzeye çıkarın" },
+     "curb-appeal": { "name": "Curb Appeal", "description": "Dış cephe çekiciliğini artırın" },
+     "twilight-exterior": { "name": "Alacakaranlık Çekimi", "description": "Dramatik akşam dış cephe aydınlatması" },
+     "declutter": { "name": "Dağınıklığı Gider & Temizle", "description": "Kusursuz bir görünüm için dağınıklığı kaldırın" },
+     "virtual-renovation": { "name": "Sanal Yenileme", "description": "Eski özellikleri modernize edin" },
+     "coming-soon": { "name": "Daha Fazla Stil Yakında", "description": "Yeni tasarım şablonları yolda" }
   },
   "upload": {
     "dropHere": "Görsellerinizi buraya bırakın",

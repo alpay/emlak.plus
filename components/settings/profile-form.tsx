@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { useChangeLanguage } from "@/components/providers/I18nProvider";
+import { useChangeLanguage } from "@/app/providers/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

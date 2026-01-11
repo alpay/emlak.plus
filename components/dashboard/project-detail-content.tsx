@@ -4,6 +4,7 @@ import {
   IconAlertTriangle,
   IconArrowLeft,
   IconArrowsMaximize,
+  IconPhotoSearch,
   IconCheck,
   IconChevronLeft,
   IconChevronRight,
@@ -25,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -101,14 +103,14 @@ interface ImageGroup {
 function RealtimeProcessingLabel({
   runId,
   accessToken,
-  fallback = "Enhancing…",
   onComplete,
 }: {
   runId?: string;
   accessToken?: string | null;
-  fallback?: string;
   onComplete?: () => void;
 }) {
+  const { t } = useTranslation();
+  const fallback = t("dashboard.projectDetail.status.enhancing");
   const { run } = useRealtimeRun<typeof processImageTask>(runId ?? "", {
     accessToken: accessToken ?? "",
     enabled: !!runId && !!accessToken,
@@ -173,6 +175,7 @@ function ImageCard({
   accessToken?: string | null;
   onProcessingComplete?: () => void;
 }) {
+  const { t } = useTranslation();
   const isCompleted = image.status === "completed";
   const displayUrl =
     isCompleted && image.resultImageUrl
@@ -218,9 +221,9 @@ function ImageCard({
                   <div className="h-12 w-12 rounded-full border-2 border-white/20" />
                   <div className="absolute inset-0 h-12 w-12 animate-spin rounded-full border-2 border-transparent border-t-white" />
                 </div>
+
                 <RealtimeProcessingLabel
                   accessToken={accessToken}
-                  fallback="Enhancing…"
                   onComplete={onProcessingComplete}
                   runId={runId}
                 />
@@ -229,13 +232,13 @@ function ImageCard({
               <div className="flex flex-col items-center gap-2">
                 <IconClock className="h-8 w-8 text-white/70" />
                 <span className="font-medium text-sm text-white/70">
-                  Queued
+                  {t("dashboard.projectDetail.status.queued")}
                 </span>
               </div>
             ) : (
               <div className="flex flex-col items-center gap-2">
                 <IconAlertTriangle className="h-8 w-8 text-red-400" />
-                <span className="font-medium text-red-400 text-sm">Failed</span>
+                <span className="font-medium text-red-400 text-sm">{t("dashboard.projectDetail.status.failed")}</span>
                 <Button
                   className="mt-1 gap-1.5 bg-white/90 text-foreground hover:bg-white"
                   disabled={isRetrying}
@@ -251,7 +254,7 @@ function ImageCard({
                   ) : (
                     <IconRefresh className="h-3.5 w-3.5" />
                   )}
-                  Retry (1 credit)
+                  {t("dashboard.projectDetail.actions.retry", { cost: 1 })}
                 </Button>
               </div>
             )}
@@ -282,7 +285,8 @@ function ImageCard({
               e.stopPropagation();
               onCompare();
             }}
-            title="Compare"
+
+            title={t("dashboard.projectDetail.actions.compare")}
           >
             <IconArrowsMaximize className="h-5 w-5" />
           </button>
@@ -292,7 +296,7 @@ function ImageCard({
               e.stopPropagation();
               onEdit();
             }}
-            title="Edit"
+            title={t("dashboard.projectDetail.actions.edit")}
           >
             <IconPencil className="h-5 w-5" />
           </button>
@@ -302,7 +306,7 @@ function ImageCard({
               e.stopPropagation();
               onDownload();
             }}
-            title="Download"
+            title={t("dashboard.projectDetail.actions.download")}
           >
             <IconDownload className="h-5 w-5" />
           </button>
@@ -322,7 +326,7 @@ function ImageCard({
             e.stopPropagation();
             onVersionClick?.();
           }}
-          title={`${versionCount} versions available`}
+          title={t("dashboard.projectDetail.versionHistory.versionsAvailable", { count: versionCount })}
         >
           v{image.version || 1}
           <span className="text-white/70">/{versionCount}</span>
@@ -345,22 +349,23 @@ function VersionSelector({
   onEdit: (image: ImageGeneration) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [selectedVersion, setSelectedVersion] = React.useState(initialVersion);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
       <div className="relative w-full max-w-2xl rounded-2xl bg-card p-6 shadow-xl">
         <button
-          aria-label="Close"
+          aria-label={t("dashboard.projectDetail.actions.close")}
           className="absolute top-4 right-4 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           onClick={onClose}
         >
           <IconArrowLeft className="h-5 w-5" />
         </button>
 
-        <h3 className="mb-4 font-semibold text-lg">Version History</h3>
+        <h3 className="mb-4 font-semibold text-lg">{t("dashboard.projectDetail.versionHistory.title")}</h3>
         <p className="mb-4 text-muted-foreground text-sm">
-          Click on a version to select it, then compare or edit.
+          {t("dashboard.projectDetail.versionHistory.description")}
         </p>
 
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
@@ -388,7 +393,7 @@ function VersionSelector({
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
                   <span className="font-medium text-white text-xs">
-                    v{version.version || 1}
+                     {t("dashboard.projectDetail.versionHistory.version", { version: version.version || 1 })}
                   </span>
                 </div>
                 {isSelected && (
@@ -403,7 +408,7 @@ function VersionSelector({
 
         <div className="mt-4 flex justify-end gap-2">
           <Button onClick={onClose} variant="outline">
-            Close
+            {t("dashboard.projectDetail.actions.close")}
           </Button>
           <Button
             className="gap-2"
@@ -414,7 +419,7 @@ function VersionSelector({
             variant="outline"
           >
             <IconArrowsMaximize className="h-4 w-4" />
-            Compare
+            {t("dashboard.projectDetail.actions.compare")}
           </Button>
           {selectedVersion.status === "completed" && (
             <Button
@@ -425,7 +430,7 @@ function VersionSelector({
               }}
             >
               <IconPencil className="h-4 w-4" />
-              Edit v{selectedVersion.version || 1}
+              {t("dashboard.projectDetail.actions.edit")} v{selectedVersion.version || 1}
             </Button>
           )}
         </div>
@@ -443,6 +448,7 @@ function ComparisonView({
   enhancedUrl: string;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [sliderPosition, setSliderPosition] = React.useState(50);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -472,7 +478,7 @@ function ComparisonView({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
       <button
-        aria-label="Close comparison view"
+        aria-label={t("dashboard.projectDetail.actions.close")}
         className="absolute top-4 right-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
         onClick={onClose}
       >
@@ -518,10 +524,10 @@ function ComparisonView({
 
         {/* Labels */}
         <div className="pointer-events-none absolute bottom-4 left-4 rounded-full bg-black/60 px-3 py-1.5 font-medium text-sm text-white backdrop-blur-sm">
-          Original
+          {t("dashboard.projectDetail.comparison.original")}
         </div>
         <div className="pointer-events-none absolute right-4 bottom-4 rounded-full bg-black/60 px-3 py-1.5 font-medium text-sm text-white backdrop-blur-sm">
-          Enhanced
+          {t("dashboard.projectDetail.comparison.enhanced")}
         </div>
       </div>
     </div>
@@ -545,6 +551,7 @@ function ImageLightbox({
   onDownload: (image: ImageGeneration) => void;
   onCompare: (image: ImageGeneration) => void;
 }) {
+  const { t } = useTranslation();
   const currentGroup = images[currentIndex];
   const currentImage = currentGroup?.latestVersion;
   const displayUrl =
@@ -599,29 +606,29 @@ function ImageLightbox({
             <button
               className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
               onClick={() => onCompare(currentImage)}
-              title="Compare (C)"
+              title={t("dashboard.projectDetail.actions.compare") + " (C)"}
             >
-              <IconArrowsMaximize className="h-5 w-5" />
+              <IconPhotoSearch className="h-5 w-5" />
             </button>
           )}
           <button
             className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             onClick={() => onDownload(currentImage)}
-            title="Download"
+            title={t("dashboard.projectDetail.actions.download")}
           >
             <IconDownload className="h-5 w-5" />
           </button>
           <button
             className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             onClick={() => onEdit(currentImage)}
-            title="Edit"
+            title={t("dashboard.projectDetail.actions.edit")}
           >
             <IconPencil className="h-5 w-5" />
           </button>
           <button
             className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
             onClick={onClose}
-            title="Close (Esc)"
+            title={t("dashboard.projectDetail.actions.close") + " (Esc)"}
           >
             <IconX className="h-5 w-5" />
           </button>
@@ -705,6 +712,7 @@ export function ProjectDetailContent({
   project,
   images,
 }: ProjectDetailContentProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const [selectedImage, setSelectedImage] =
     React.useState<ImageGeneration | null>(null);
@@ -771,8 +779,7 @@ export function ProjectDetailContent({
   }, [images]);
 
   const template = getTemplateById(project.styleTemplateId);
-  const status =
-    statusConfig[project.status as ProjectStatus] || statusConfig.pending;
+  // Status check moved inline inside JSX to use translation hook
   const completedImages = images.filter((img) => img.status === "completed");
 
   // Group images by their root ID (original image or first in version chain)
@@ -864,16 +871,16 @@ export function ProjectDetailContent({
     const deletePromise = deleteSelectedImages(Array.from(selectedImageIds));
 
     toast.promise(deletePromise, {
-      loading: `Deleting ${count} image${count !== 1 ? "s" : ""}…`,
+      loading: t("dashboard.projectDetail.toasts.deletingImages", { count, plural: count !== 1 ? "s" : "" }),
       success: (result) => {
         if (result.success) {
           clearSelection();
           router.refresh();
-          return `Deleted ${result.data?.deletedCount || count} image${(result.data?.deletedCount || count) !== 1 ? "s" : ""}`;
+          return t("dashboard.projectDetail.toasts.deletedImages", { count: result.data?.deletedCount || count, plural: (result.data?.deletedCount || count) !== 1 ? "s" : "" });
         }
-        throw new Error(result.error || "Delete failed");
+        throw new Error(result.error || t("dashboard.projectDetail.toasts.deleteFailed"));
       },
-      error: (err) => err?.message || "Failed to delete images",
+      error: (err) => err?.message || t("dashboard.projectDetail.toasts.deleteFailed"),
     });
   };
 
@@ -884,17 +891,17 @@ export function ProjectDetailContent({
     const deletePromise = deleteProjectAction(project.id);
 
     toast.promise(deletePromise, {
-      loading: "Deleting project and all images…",
+      loading: t("dashboard.projectDetail.toasts.deletingProject"),
       success: (result) => {
         if (result.success) {
           router.push("/dashboard");
-          return "Project deleted successfully";
+          return t("dashboard.projectDetail.toasts.projectDeleted");
         }
-        throw new Error(result.error || "Delete failed");
+        throw new Error(result.error || t("dashboard.projectDetail.toasts.deleteFailed"));
       },
       error: (err) => {
         setIsDeletingProject(false);
-        return err?.message || "Failed to delete project";
+        return err?.message || t("dashboard.projectDetail.toasts.projectDeleteFailed");
       },
     });
   };
@@ -932,9 +939,9 @@ export function ProjectDetailContent({
     const formatLabel =
       format === "original" ? "" : ` as ${format.toUpperCase()}`;
     toast.promise(downloadPromise, {
-      loading: `Preparing ${count} image${count !== 1 ? "s" : ""}${formatLabel} for download…`,
-      success: "Download started",
-      error: "Download failed",
+      loading: t("dashboard.projectDetail.toasts.downloadPreparing", { count, plural: count !== 1 ? "s" : "", format: formatLabel }),
+      success: t("dashboard.projectDetail.toasts.downloadStarted"),
+      error: t("dashboard.projectDetail.toasts.downloadFailed"),
     });
   };
 
@@ -1103,14 +1110,13 @@ export function ProjectDetailContent({
                 <h1 className="font-bold text-2xl tracking-tight">
                   {project.name}
                 </h1>
-                <Badge className="gap-1" variant={status.variant}>
-                  {status.icon}
-                  {status.label}
+                <Badge className="gap-1" variant={statusConfig[project.status as ProjectStatus]?.variant || statusConfig.pending.variant}>
+                  {statusConfig[project.status as ProjectStatus]?.icon || statusConfig.pending.icon}
+                  {t(`dashboard.projectDetail.status.${project.status}`)}
                 </Badge>
               </div>
               <p className="mt-1 text-muted-foreground text-sm">
-                {template?.name || "Unknown Style"} • {project.imageCount} image
-                {project.imageCount !== 1 ? "s" : ""}
+                {template?.name || t("dashboard.unknownStyle")} • {project.imageCount} {t("pricing.images", { count: project.imageCount })}
               </p>
             </div>
           </div>
@@ -1123,7 +1129,7 @@ export function ProjectDetailContent({
                 variant="outline"
               >
                 <IconPlus className="h-4 w-4" />
-                Add More
+                {t("dashboard.projectDetail.actions.addMore")}
               </Button>
             )}
             {completedImages.length > 0 && selectedImageIds.size === 0 && (
@@ -1134,22 +1140,22 @@ export function ProjectDetailContent({
                     style={{ backgroundColor: "var(--accent-teal)" }}
                   >
                     <IconDownload className="h-4 w-4" />
-                    Download All
+                    {t("dashboard.projectDetail.actions.downloadAll")}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => handleDownload("original")}>
-                    Original Format
+                    {t("dashboard.projectDetail.actions.originalFormat")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => handleDownload("jpg")}>
-                    JPG (Compressed)
+                    {t("dashboard.projectDetail.actions.jpgCompressed")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleDownload("png")}>
-                    PNG (Lossless)
+                    {t("dashboard.projectDetail.actions.pngLossless")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleDownload("webp")}>
-                    WebP (Modern)
+                    {t("dashboard.projectDetail.actions.webpModern")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -1166,12 +1172,12 @@ export function ProjectDetailContent({
                   onClick={() => setAddImagesOpen(true)}
                 >
                   <IconPlus className="mr-2 h-4 w-4" />
-                  Add Images
+                  {t("dashboard.projectDetail.actions.addImages")}
                 </DropdownMenuItem>
                 {completedImages.length > 0 && (
                   <DropdownMenuItem onClick={() => handleDownload("original")}>
                     <IconDownload className="mr-2 h-4 w-4" />
-                    Download All
+                    {t("dashboard.projectDetail.actions.downloadAll")}
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
@@ -1181,7 +1187,7 @@ export function ProjectDetailContent({
                   onClick={() => setDeleteProjectDialogOpen(true)}
                 >
                   <IconTrash className="mr-2 h-4 w-4" />
-                  Delete Project
+                  {t("dashboard.projectDetail.actions.deleteProject")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -1205,7 +1211,7 @@ export function ProjectDetailContent({
             </div>
             <div>
               <p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-                Total
+                {t("dashboard.projectDetail.stats.total")}
               </p>
               <p
                 className="font-mono font-semibold text-lg tabular-nums"
@@ -1231,7 +1237,7 @@ export function ProjectDetailContent({
             </div>
             <div>
               <p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-                Completed
+                {t("dashboard.projectDetail.stats.completed")}
               </p>
               <p
                 className="font-mono font-semibold text-lg tabular-nums"
@@ -1257,10 +1263,10 @@ export function ProjectDetailContent({
             </div>
             <div>
               <p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-                Style
+                {t("dashboard.projectDetail.stats.style")}
               </p>
               <p className="max-w-[120px] truncate font-medium text-foreground text-sm">
-                {template?.name || "Unknown"}
+                {template?.name || t("dashboard.unknownStyle")}
               </p>
             </div>
           </div>
@@ -1280,7 +1286,7 @@ export function ProjectDetailContent({
             </div>
             <div>
               <p className="font-medium text-[11px] text-muted-foreground uppercase tracking-wider">
-                Created
+                {t("dashboard.projectDetail.stats.created")}
               </p>
               <p className="font-medium text-foreground text-sm">
                 {format(project.createdAt, "MMM dd, yyyy")}
@@ -1291,7 +1297,7 @@ export function ProjectDetailContent({
 
         {/* Image grid */}
         <div className="stagger-2 animate-fade-in-up">
-          <h2 className="mb-4 font-semibold text-lg">Images</h2>
+          <h2 className="mb-4 font-semibold text-lg">{t("pricing.images")}</h2>
           {imageGroups.length > 0 ? (
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
               {imageGroups.map((group, index) => (
@@ -1314,7 +1320,7 @@ export function ProjectDetailContent({
                     }
                   }}
                   onProcessingComplete={() => {
-                    toast.success("Image processing complete!");
+                    toast.success(t("dashboard.projectDetail.toasts.processingComplete"));
                     router.refresh();
                   }}
                   onRetry={() => handleRetry(group.latestVersion.id)}
@@ -1335,7 +1341,7 @@ export function ProjectDetailContent({
             <div className="flex flex-col items-center justify-center rounded-xl border border-foreground/10 border-dashed py-12 text-center">
               <IconPhoto className="h-12 w-12 text-muted-foreground/30" />
               <p className="mt-4 text-muted-foreground text-sm">
-                No images in this project yet
+                {t("dashboard.projectDetail.empty.noImages")}
               </p>
               <Button
                 className="mt-4 gap-2"
@@ -1343,7 +1349,7 @@ export function ProjectDetailContent({
                 variant="outline"
               >
                 <IconPlus className="h-4 w-4" />
-                Add Images
+                {t("dashboard.projectDetail.actions.addImages")}
               </Button>
             </div>
           )}
@@ -1362,7 +1368,7 @@ export function ProjectDetailContent({
                 <IconCheck className="h-4 w-4 text-white" />
               </div>
               <span className="font-medium">
-                {selectedImageIds.size} selected
+                {t("dashboard.projectDetail.actions.selected", { count: selectedImageIds.size })}
               </span>
             </div>
 
@@ -1376,7 +1382,7 @@ export function ProjectDetailContent({
                 variant="ghost"
               >
                 <IconX className="h-4 w-4" />
-                Clear
+                {t("dashboard.projectDetail.actions.clear")}
               </Button>
 
               <Button
@@ -1386,7 +1392,7 @@ export function ProjectDetailContent({
                 variant="ghost"
               >
                 <IconTrash className="h-4 w-4" />
-                Delete
+                {t("dashboard.projectDetail.actions.delete")}
               </Button>
 
               <DropdownMenu>
@@ -1397,22 +1403,22 @@ export function ProjectDetailContent({
                     style={{ backgroundColor: "var(--accent-teal)" }}
                   >
                     <IconDownload className="h-4 w-4" />
-                    Download
+                    {t("dashboard.projectDetail.actions.download")}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => handleDownload("original")}>
-                    Original Format
+                    {t("dashboard.projectDetail.actions.originalFormat")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => handleDownload("jpg")}>
-                    JPG (Compressed)
+                    {t("dashboard.projectDetail.actions.jpgCompressed")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleDownload("png")}>
-                    PNG (Lossless)
+                    {t("dashboard.projectDetail.actions.pngLossless")}
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleDownload("webp")}>
-                    WebP (Modern)
+                    {t("dashboard.projectDetail.actions.webpModern")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -1488,21 +1494,19 @@ export function ProjectDetailContent({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Delete {selectedImageIds.size} image
-              {selectedImageIds.size !== 1 ? "s" : ""}?
+              {t("dashboard.projectDetail.dialogs.deleteImages.title", { count: selectedImageIds.size })}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. The selected images and all their
-              versions will be permanently deleted.
+              {t("dashboard.projectDetail.dialogs.deleteImages.description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-500 text-white hover:bg-red-600"
               onClick={handleDeleteSelected}
             >
-              Delete
+              {t("dashboard.projectDetail.dialogs.deleteImages.confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -1516,17 +1520,15 @@ export function ProjectDetailContent({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Delete &ldquo;{project.name}&rdquo;?
+              {t("dashboard.projectDetail.dialogs.deleteProject.title", { name: project.name })}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              project and all {project.imageCount} images associated with it,
-              including all versions and edits.
+              {t("dashboard.projectDetail.dialogs.deleteProject.description", { count: project.imageCount })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeletingProject}>
-              Cancel
+              {t("common.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-500 text-white hover:bg-red-600"
@@ -1536,10 +1538,10 @@ export function ProjectDetailContent({
               {isDeletingProject ? (
                 <>
                   <IconLoader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Deleting…
+                  {t("dashboard.projectDetail.dialogs.deleteProject.deleting")}
                 </>
               ) : (
-                "Delete Project"
+                t("dashboard.projectDetail.dialogs.deleteProject.confirm")
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

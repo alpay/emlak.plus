@@ -60,6 +60,7 @@ function ToolCard({
   onToggle: () => void;
   onSelect: () => void;
 }) {
+  const { t } = useTranslation();
   const IconComponent = tool.icon;
 
   return (
@@ -81,9 +82,9 @@ function ToolCard({
             <IconComponent className={cn("h-6 w-6", tool.color)} />
           </div>
           <div>
-            <h4 className="text-[14px] font-bold">{tool.title}</h4>
+            <h4 className="text-[14px] font-bold">{t(`aiTools.${tool.id}.title`, tool.title)}</h4>
             <p className="text-[11px] leading-tight text-muted-foreground">
-              {tool.description}
+              {t(`aiTools.${tool.id}.description`, tool.description)}
             </p>
           </div>
         </div>
@@ -118,6 +119,7 @@ function StyleCard({
   isSelected: boolean;
   onClick: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -162,9 +164,9 @@ function StyleCard({
             isSelected ? "text-[var(--accent-teal)]" : "group-hover:text-[var(--accent-teal)]"
           )}
         >
-          {template.name}
+          {t(`styles.${template.id}.name`, template.name)}
         </h4>
-        <p className="mt-1 text-xs text-muted-foreground">{template.description}</p>
+        <p className="mt-1 text-xs text-muted-foreground">{t(`styles.${template.id}.description`, template.description)}</p>
       </div>
     </button>
   );
@@ -202,7 +204,7 @@ export function AIEnhancementsStep({
       {/* Left sidebar - AI Tools */}
       <aside className="space-y-3 lg:col-span-4 xl:col-span-3">
         <h3 className="mb-4 px-1 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          AI Araçları
+          {t("project.aiEnhancements.toolsTitle", "AI Araçları")}
         </h3>
         {AI_TOOLS.map((tool) => (
           <ToolCard
@@ -221,7 +223,7 @@ export function AIEnhancementsStep({
         {!selectedTool ? (
           <div className="flex h-64 items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30">
             <p className="text-muted-foreground">
-              Detayları görmek için bir AI aracı seçin
+              {t("project.aiEnhancements.selectToolPrompt", "Detayları görmek için bir AI aracı seçin")}
             </p>
           </div>
         ) : selectedTool === "replaceFurniture" ? (
@@ -229,12 +231,12 @@ export function AIEnhancementsStep({
             selectableTemplates={selectableTemplates}
             selectedTemplate={selectedTemplate}
             onSelectTemplate={onSelectTemplate}
-            title={getPanelTitle(selectedTool)}
+            title={t("aiTools.replaceFurniture.title", "Eşyaları Değiştir")}
           />
         ) : (
           <ToolDetailContent
             toolId={selectedTool}
-            title={getPanelTitle(selectedTool)}
+            title={t(`aiTools.${selectedTool}.title`, getPanelTitle(selectedTool))}
           />
         )}
       </div>
@@ -259,12 +261,13 @@ function FurnitureSelectionPanel({
   onSelectTemplate: (t: StyleTemplate) => void;
   title: string;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <div className="mb-6 flex items-center justify-between">
         <h3 className="text-lg font-bold">{title}</h3>
         <span className="text-sm text-muted-foreground">
-          Eşyaları değiştirmek için bir stil seçin
+          {t("project.aiEnhancements.selectStylePrompt", "Eşyaları değiştirmek için bir stil seçin")}
         </span>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -288,18 +291,23 @@ function ToolDetailContent({
   toolId: string;
   title: string;
 }) {
+  const { t } = useTranslation();
+
   if (toolId === "cleanHands") {
+    const features = t("project.aiEnhancements.toolDetails.cleanHands.features", { returnObjects: true }) as string[];
     return (
       <div className="rounded-2xl border bg-background p-6">
         <h3 className="mb-4 text-lg font-bold">{title}</h3>
         <p className="mb-6 text-muted-foreground">
-          Fotoğraftaki yansımalarda görünen elleri otomatik olarak algılar ve temizler.
+          {t("project.aiEnhancements.toolDetails.cleanHands.description", "Fotoğraftaki yansımalarda görünen elleri otomatik olarak algılar ve temizler.")}
         </p>
         <div className="rounded-xl bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            ✓ Ayna ve cam yansımalarındaki eller temizlenir<br />
-            ✓ Tripod tutuş izleri kaldırılır<br />
-            ✓ Doğal görünüm korunur
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
           </p>
         </div>
       </div>
@@ -307,17 +315,20 @@ function ToolDetailContent({
   }
 
   if (toolId === "cleanCamera") {
+    const features = t("project.aiEnhancements.toolDetails.cleanCamera.features", { returnObjects: true }) as string[];
     return (
       <div className="rounded-2xl border bg-background p-6">
         <h3 className="mb-4 text-lg font-bold">{title}</h3>
         <p className="mb-6 text-muted-foreground">
-          Fotoğraftaki tripod, kamera ekipmanı ve yansımalarını otomatik olarak temizler.
+          {t("project.aiEnhancements.toolDetails.cleanCamera.description", "Fotoğraftaki tripod, kamera ekipmanı ve yansımalarını otomatik olarak temizler.")}
         </p>
         <div className="rounded-xl bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            ✓ Tripod ayakları kaldırılır<br />
-            ✓ Kamera yansımaları temizlenir<br />
-            ✓ Ekipman gölgeleri düzenlenir
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
           </p>
         </div>
       </div>
@@ -325,17 +336,20 @@ function ToolDetailContent({
   }
 
   if (toolId === "turnOffScreens") {
+    const features = t("project.aiEnhancements.toolDetails.turnOffScreens.features", { returnObjects: true }) as string[];
     return (
       <div className="rounded-2xl border bg-background p-6">
         <h3 className="mb-4 text-lg font-bold">{title}</h3>
         <p className="mb-6 text-muted-foreground">
-          TV, monitör ve diğer ekranları algılar ve karartır.
+          {t("project.aiEnhancements.toolDetails.turnOffScreens.description", "TV, monitör ve diğer ekranları algılar ve karartır.")}
         </p>
         <div className="rounded-xl bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            ✓ TV ekranları karartılır<br />
-            ✓ Bilgisayar monitörleri temizlenir<br />
-            ✓ Yansımalar giderilir
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
           </p>
         </div>
       </div>
@@ -343,17 +357,20 @@ function ToolDetailContent({
   }
 
   if (toolId === "lensCorrection") {
+    const features = t("project.aiEnhancements.toolDetails.lensCorrection.features", { returnObjects: true }) as string[];
     return (
       <div className="rounded-2xl border bg-background p-6">
         <h3 className="mb-4 text-lg font-bold">{title}</h3>
         <p className="mb-6 text-muted-foreground">
-          Geniş açı lens distorsiyonunu düzeltir ve çizgileri düzleştirir.
+          {t("project.aiEnhancements.toolDetails.lensCorrection.description", "Geniş açı lens distorsiyonunu düzeltir ve çizgileri düzleştirir.")}
         </p>
         <div className="rounded-xl bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            ✓ Varil distorsiyonu giderilir<br />
-            ✓ Duvar ve kapı çizgileri düzleştirilir<br />
-            ✓ Perspektif düzeltmesi uygulanır
+            {Array.isArray(features) ? features.map((feature, i) => (
+              <React.Fragment key={i}>
+                ✓ {feature}<br />
+              </React.Fragment>
+            )) : null}
           </p>
         </div>
       </div>
@@ -365,11 +382,13 @@ function ToolDetailContent({
       <div className="rounded-2xl border bg-background p-6">
         <h3 className="mb-4 text-lg font-bold">{title}</h3>
         <p className="mb-6 text-muted-foreground">
-          Renk sıcaklığını optimize eder ve doğal beyaz dengesi sağlar.
+          {t("project.aiEnhancements.toolDetails.whiteBalance.description", "Renk sıcaklığını optimize eder ve doğal beyaz dengesi sağlar.")}
         </p>
         <div className="mt-4 space-y-4">
           <div>
-            <label className="mb-2 block text-sm font-medium">Sıcaklık Ayarı</label>
+            <label className="mb-2 block text-sm font-medium">
+              {t("project.aiEnhancements.toolDetails.whiteBalance.labels.temperature", "Sıcaklık Ayarı")}
+            </label>
             <input
               type="range"
               min="-100"
@@ -379,13 +398,13 @@ function ToolDetailContent({
               disabled
             />
             <div className="mt-1 flex justify-between text-xs text-muted-foreground">
-              <span>Soğuk</span>
-              <span>Doğal</span>
-              <span>Sıcak</span>
+              <span>{t("project.aiEnhancements.toolDetails.whiteBalance.labels.cool", "Soğuk")}</span>
+              <span>{t("project.aiEnhancements.toolDetails.whiteBalance.labels.natural", "Doğal")}</span>
+              <span>{t("project.aiEnhancements.toolDetails.whiteBalance.labels.warm", "Sıcak")}</span>
             </div>
           </div>
           <p className="text-xs text-muted-foreground italic">
-            * Slider ayarı yakında aktif olacak
+            {t("project.aiEnhancements.toolDetails.whiteBalance.labels.comingSoon", "* Slider ayarı yakında aktif olacak")}
           </p>
         </div>
       </div>

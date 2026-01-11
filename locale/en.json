@@ -139,6 +139,102 @@
       "view": "View",
       "grid": "Grid",
       "table": "Table"
+    },
+    "projectDetail": {
+      "status": {
+        "completed": "Completed",
+        "processing": "Processing",
+        "pending": "Pending",
+        "failed": "Failed",
+        "queued": "Queued",
+        "enhancing": "Enhancing…"
+      },
+      "actions": {
+        "retry": "Retry (1 credit)",
+        "compare": "Compare",
+        "edit": "Edit",
+        "download": "Download",
+        "close": "Close",
+        "addMore": "Add More",
+        "addImages": "Add Images",
+        "downloadAll": "Download All",
+        "originalFormat": "Original Format",
+        "jpgCompressed": "JPG (Compressed)",
+        "pngLossless": "PNG (Lossless)",
+        "webpModern": "WebP (Modern)",
+        "deleteProject": "Delete Project",
+        "delete": "Delete",
+        "clear": "Clear",
+        "selected": "{{count}} selected"
+      },
+      "stats": {
+        "total": "Total",
+        "completed": "Completed",
+        "style": "Style",
+        "created": "Created"
+      },
+      "versionHistory": {
+        "title": "Version History",
+        "description": "Click on a version to select it, then compare or edit.",
+        "versionsAvailable": "{{count}} versions available",
+        "version": "v{{version}}"
+      },
+      "comparison": {
+        "original": "Original",
+        "enhanced": "Enhanced"
+      },
+      "empty": {
+        "noImages": "No images in this project yet"
+      },
+      "dialogs": {
+        "deleteImages": {
+          "title": "Delete {{count}} image?",
+          "title_other": "Delete {{count}} images?",
+          "description": "This action cannot be undone. The selected images and all their versions will be permanently deleted.",
+          "confirm": "Delete"
+        },
+        "deleteProject": {
+          "title": "Delete \"{{name}}\"?",
+          "description": "This action cannot be undone. This will permanently delete the project and all {{count}} images associated with it, including all versions and edits.",
+          "confirm": "Delete Project",
+          "deleting": "Deleting..."
+        }
+      },
+      "toasts": {
+        "processingComplete": "Image processing complete!",
+        "deletingImages": "Deleting {{count}} image...",
+        "deletingImages_other": "Deleting {{count}} images...",
+        "deletedImages": "Deleted {{count}} image",
+        "deletedImages_other": "Deleted {{count}} images",
+        "deleteFailed": "Delete failed",
+        "deletingProject": "Deleting project and all images…",
+        "projectDeleted": "Project deleted successfully",
+        "projectDeleteFailed": "Failed to delete project",
+        "downloadPreparing": "Preparing {{count}} image{{format}} for download…",
+        "downloadStarted": "Download started",
+        "downloadFailed": "Download failed"
+      }
+    },
+    "addImagesDialog": {
+      "title": "Add More Images",
+      "description": "Add images to \"{{name}}\" ({{count}}/10 images used)",
+      "limitReached": "This project has reached the maximum of 10 images.",
+      "dropzone": {
+        "drag": "Drag & drop images",
+        "drop": "Drop your images here",
+        "hint": "or click to browse • Up to {{count}} more image{{plural}}"
+      },
+      "selection": {
+        "count": "{{count}} image selected",
+        "count_other": "{{count}} images selected",
+        "addMore": "Add more"
+      },
+      "roomType": "Select room type",
+      "actions": {
+        "cancel": "Cancel",
+        "uploading": "Uploading...",
+        "process": "Add & Process ({{count}} credit{{plural}})"
+      }
     }
   },
   "empty": {
@@ -547,30 +643,155 @@
       "p2": "<strong>Emlak</strong><br />Email: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a><br />General inquiries: <a href=\"mailto:info@emlak.plus\">info@emlak.plus</a>"
     }
   },
-  "project": {
+"project": {
     "steps": {
+      "uploadLabel": "Upload & Label",
+      "aiEnhancements": "AI Enhancements",
+      "confirm": "Confirm",
       "upload": "Upload",
       "room": "Room",
-      "style": "Style",
-      "confirm": "Confirm"
+      "style": "Style"
     },
-    "upload": {
-      "title": "Upload Images",
-      "description": "Add the real estate photos you want to enhance"
+    "uploadLabel": {
+      "title": "Upload & Label Photos",
+      "description": "Upload photos and tag room details for best results.",
+      "environment": "Environment",
+      "roomType": "Room Type",
+      "dropHere": "Drop images here",
+      "dragDrop": "Drag & Drop Photos",
+      "orClick": "or click to browse",
+      "maxSize": "JPEG, PNG, WebP (Max 10MB)",
+      "selectFile": "Select File"
     },
-    "roomType": {
-      "title": "Select Room Type",
-      "description": "Help the AI understand what kind of space this is"
-    },
-    "style": {
-      "title": "Choose Style",
-      "description": "Select a transformation style for your photos"
+    "aiEnhancements": {
+      "title": "AI Enhancements",
+      "description": "Select AI tools and choose a style to perfect your image.",
+      "toolsTitle": "AI Tools",
+      "selectToolPrompt": "Select an AI tool to view details",
+      "selectStylePrompt": "Select a style to replace furniture",
+      "chooseTool": "Choose a tool",
+      "toolDetails": {
+        "cleanHands": {
+          "title": "Clean Hands",
+          "description": "Automatically detects and removes hands in reflections.",
+          "features": [
+            "Hands in mirror/glass reflections removed",
+            "Tripod holding signs removed",
+            "Natural look preserved"
+          ]
+        },
+        "cleanCamera": {
+          "title": "Clean Camera",
+          "description": "Automatically removes tripods, camera gear, and reflections.",
+          "features": [
+            "Tripod legs removed",
+            "Camera reflections cleaned",
+            "Equipment shadows fixed"
+          ]
+        },
+        "turnOffScreens": {
+          "title": "Turn Off Screens",
+          "description": "Detects and blackens TV and monitor screens.",
+          "features": [
+            "TV screens darkened",
+            "Computer monitors cleaned",
+            "Reflections removed"
+          ]
+        },
+        "lensCorrection": {
+          "title": "Lens Correction",
+          "description": "Corrects wide-angle lens distortion and straightens lines.",
+          "features": [
+            "Barrel distortion removed",
+            "Wall/door lines straightened",
+            "Perspective correction applied"
+          ]
+        },
+        "whiteBalance": {
+          "title": "White Balance",
+          "description": "Optimizes color temperature and ensures natural white balance.",
+          "labels": {
+             "cool": "Cool",
+             "natural": "Natural",
+             "warm": "Warm",
+             "comingSoon": "* Slider setting coming soon"
+          }
+        }
+      }
     },
     "confirm": {
       "title": "Review & Confirm",
-      "description": "Name your project and review before processing"
+      "description": "Name your listing and review project details.",
+      "projectName": "Listing Name",
+      "placeholder": "e.g. 123 Main St",
+      "summary": "Summary",
+      "replaceFurniture": "Replace Furniture",
+      "aiEditing": "AI Editing",
+      "imageCount": "Image Count",
+      "costPerImage": "Cost Per Image",
+      "totalCost": "Total Cost",
+      "creditsRemaining": "You will have <bold>{{count}} credits</bold> remaining after this operation.",
+      "createProject": "Create Listing",
+      "processing": "Processing..."
     },
     "processing": "Processing..."
+  },
+  "roomTypes": {
+    "environments": {
+      "indoor": "Indoor",
+      "outdoor": "Outdoor"
+    },
+    "living-room": { "label": "Living Room" },
+    "bedroom": { "label": "Bedroom" },
+    "kitchen": { "label": "Kitchen" },
+    "bathroom": { "label": "Bathroom" },
+    "dining-room": { "label": "Dining Room" },
+    "office": { "label": "Office" },
+    "hallway": { "label": "Hallway" },
+    "basement": { "label": "Basement" },
+    "laundry-room": { "label": "Laundry Room" },
+    "childrens-room": { "label": "Children's Room" },
+    "walk-in-closet": { "label": "Walk-in Closet" },
+    "attic": { "label": "Attic" },
+    "gym": { "label": "Gym" },
+    "facade": { "label": "Facade" },
+    "garden": { "label": "Garden" },
+    "backyard": { "label": "Backyard" },
+    "parking": { "label": "Parking" },
+    "road": { "label": "Street View" },
+    "aerial": { "label": "Aerial View" },
+    "pool-area": { "label": "Pool Area" },
+    "terrace": { "label": "Terrace" },
+    "balcony": { "label": "Balcony" }
+  },
+  "aiTools": {
+    "replaceFurniture": { "title": "Replace Furniture", "description": "Replaces existing furniture with new ones" },
+    "cleanHands": { "title": "Clean Hands", "description": "Removes hands in reflections" },
+    "cleanCamera": { "title": "Clean Camera", "description": "Removes tripod and equipment" },
+    "turnOffScreens": { "title": "Turn Off Screens", "description": "Blackens TVs and monitors" },
+    "lensCorrection": { "title": "Lens Correction", "description": "Fixes wide-angle distortion" },
+    "whiteBalance": { "title": "White Balance", "description": "Optimizes color temperature" }
+  },
+  "styles": {
+     "scandinavian": { "name": "Scandinavian", "description": "Light, airy spaces with natural wood and minimal decor" },
+     "modern-minimalist": { "name": "Modern Minimalist", "description": "Clean lines, open spaces, and curated simplicity" },
+     "industrial-loft": { "name": "Industrial Loft", "description": "Raw materials, exposed elements, urban character" },
+     "coastal-hamptons": { "name": "Coastal Hamptons", "description": "Breezy elegance with nautical touches and soft blues" },
+     "mid-century-modern": { "name": "Mid-Century Modern", "description": "Retro charm with iconic furniture and warm wood tones" },
+     "bohemian-eclectic": { "name": "Bohemian Eclectic", "description": "Layered textures, global influences, artistic flair" },
+     "japandi": { "name": "Japandi", "description": "Japanese minimalism meets Scandinavian warmth" },
+     "luxury-contemporary": { "name": "Luxury Contemporary", "description": "Sophisticated elegance with premium materials" },
+     "farmhouse-modern": { "name": "Modern Farmhouse", "description": "Rustic charm with contemporary comfort" },
+     "art-deco": { "name": "Art Deco", "description": "Glamorous geometry with bold patterns and metallics" },
+     "mediterranean": { "name": "Mediterranean", "description": "Warm terracotta, arched details, and sunny vibes" },
+     "transitional": { "name": "Transitional", "description": "Perfect balance of traditional and contemporary" },
+     "golden-hour": { "name": "Golden Hour", "description": "Warm sunset lighting for cozy ambiance" },
+     "bright-airy": { "name": "Bright & Airy", "description": "Maximize natural light for open feel" },
+     "curb-appeal": { "name": "Curb Appeal", "description": "Enhance exterior attractiveness" },
+     "twilight-exterior": { "name": "Twilight Shot", "description": "Dramatic evening exterior lighting" },
+     "declutter": { "name": "Declutter & Clean", "description": "Remove clutter for a pristine look" },
+     "virtual-renovation": { "name": "Virtual Renovation", "description": "Modernize outdated features" },
+     "coming-soon": { "name": "More Styles Coming Soon", "description": "New design templates are on the way" }
   },
   "upload": {
     "dropHere": "Drop your images here",

@@ -4,13 +4,19 @@ import { redirect } from "next/navigation";
 import { ImpersonationBanner } from "@/components/admin/impersonation-banner";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { Toaster } from "@/components/ui/sonner";
+import { getT } from "@/i18n/server";
 import { auth } from "@/lib/auth";
+import { constructMetadata } from "@/lib/constructMetadata";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
-export const metadata: Metadata = {
-  title: "Dashboard | Emlak",
-  description: "Manage your property photos and AI edits",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getT();
+  return constructMetadata({
+    title: t("metadata.pages.dashboard.title"),
+    description: t("metadata.pages.dashboard.description"),
+    noIndex: true,
+  });
+}
 
 export default async function DashboardLayout({
   children,

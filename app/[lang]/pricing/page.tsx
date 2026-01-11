@@ -1,10 +1,16 @@
+import type { Metadata } from "next";
 import { PricingPage } from "@/components/landing/pricing-page";
+import { getT } from "@/i18n/server";
+import { constructMetadata } from "@/lib/constructMetadata";
 
-export const metadata = {
-  title: "Pricing - Emlak",
-  description:
-    "Simple, transparent pricing. Pay per project, no subscriptions.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getT();
+  return constructMetadata({
+    title: t("metadata.pages.pricing.title"),
+    description: t("metadata.pages.pricing.description"),
+    canonical: "/pricing",
+  });
+}
 
 export default function Page() {
   return <PricingPage />;

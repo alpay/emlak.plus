@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { HelpPage } from "@/components/landing/help-page";
+import { getT } from "@/i18n/server";
+import { constructMetadata } from "@/lib/constructMetadata";
 import {
   getAllHelpArticles,
   getArticlesByCategory,
@@ -7,11 +9,14 @@ import {
   helpCategories,
 } from "@/lib/help";
 
-export const metadata: Metadata = {
-  title: "Help Center | Emlak+",
-  description:
-    "Get help with Emlak+. Browse our knowledge base for guides, tutorials, and answers to frequently asked questions.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getT();
+  return constructMetadata({
+    title: t("metadata.pages.help.title"),
+    description: t("metadata.pages.help.description"),
+    canonical: "/help",
+  });
+}
 
 interface HelpPageProps {
   params: Promise<{ lang: string }>;

@@ -1037,5 +1037,63 @@
       "placeholder": "your@email.com",
       "subscribe": "Subscribe"
     }
+  },
+  "metadata": {
+    "defaultTitle": "Emlak+ - AI-Powered Real Estate Photo Editor",
+    "defaultDescription": "Transform your real estate photos with AI. Professional virtual staging, sky replacement, and photo enhancement for property listings.",
+    "pages": {
+      "home": {
+        "title": "Emlak+ - AI-Powered Real Estate Photo Editor",
+        "description": "Transform your real estate photos with AI. Professional virtual staging, sky replacement, and photo enhancement for property listings."
+      },
+      "about": {
+        "title": "About - Emlak+",
+        "description": "Learn about Emlak+, the AI-powered photo enhancement platform for real estate professionals."
+      },
+      "contact": {
+        "title": "Contact - Emlak+",
+        "description": "Get in touch with us. We'd love to hear from you."
+      },
+      "pricing": {
+        "title": "Pricing - Emlak+",
+        "description": "Simple, transparent pricing. Pay per project, no subscriptions."
+      },
+      "blog": {
+        "title": "Blog | Emlak+",
+        "description": "Tips, guides, and industry insights to help you create stunning property listings."
+      },
+      "help": {
+        "title": "Help Center | Emlak+",
+        "description": "Get help with Emlak+. Browse our knowledge base for guides, tutorials, and answers to frequently asked questions."
+      },
+      "terms": {
+        "title": "Terms of Service - Emlak+",
+        "description": "Terms and conditions for using Emlak+ services."
+      },
+      "privacy": {
+        "title": "Privacy Policy - Emlak+",
+        "description": "How we collect, use, and protect your personal information."
+      },
+      "auth": {
+        "title": "Sign In | Emlak+",
+        "description": "Sign in to your Emlak+ account"
+      },
+      "dashboard": {
+        "title": "Dashboard | Emlak+",
+        "description": "Manage your property photos and AI edits"
+      },
+      "video": {
+        "title": "Videos | Emlak+",
+        "description": "Create and manage property tour videos"
+      },
+      "invite": {
+        "title": "Accept Invitation | Emlak+",
+        "description": "Join a workspace on Emlak+"
+      },
+      "admin": {
+        "title": "Admin | Emlak+",
+        "description": "Platform administration"
+      }
+    }
   }
 }

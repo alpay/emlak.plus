@@ -4,22 +4,21 @@ import { initReactI18next } from "react-i18next";
 import en from "@/locale/en.json";
 import tr from "@/locale/tr.json";
 
-export const SUPPORTED_LANGUAGES = ["tr", "en"] as const;
-export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+// Re-export all constants from i18n-constants.ts
+// This keeps backward compatibility for client-side imports
+export {
+  SUPPORTED_LANGUAGES,
+  DEFAULT_LANGUAGE,
+  LANGUAGE_COOKIE_NAME,
+  LANGUAGE_HEADER_NAME,
+  LANGUAGE_NAMES,
+  LANGUAGE_FLAGS,
+  type SupportedLanguage,
+} from "./i18n-constants";
 
-export const DEFAULT_LANGUAGE: SupportedLanguage = "tr";
+import { DEFAULT_LANGUAGE } from "./i18n-constants";
 
-export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
-  tr: "Türkçe",
-  en: "English",
-};
-
-export const LANGUAGE_FLAGS: Record<SupportedLanguage, string> = {
-  tr: "🇹🇷",
-  en: "🇬🇧",
-};
-
-// Initialize i18next
+// Initialize i18next (client-side only - uses React)
 i18n.use(initReactI18next).init({
   resources: {
     en: { translation: en },

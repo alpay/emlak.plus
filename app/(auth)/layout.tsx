@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
+import { getT } from "@/i18n/server";
+import { constructMetadata } from "@/lib/constructMetadata";
 
-export const metadata: Metadata = {
-  title: "Sign In | Emlak",
-  description: "Sign in to Emlak",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getT();
+  return constructMetadata({
+    title: t("metadata.pages.auth.title"),
+    description: t("metadata.pages.auth.description"),
+  });
+}
 
 import { LandingNav } from "@/components/landing/landing-nav";
 

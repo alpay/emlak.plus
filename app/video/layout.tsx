@@ -3,13 +3,19 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { Toaster } from "@/components/ui/sonner";
+import { getT } from "@/i18n/server";
 import { auth } from "@/lib/auth";
+import { constructMetadata } from "@/lib/constructMetadata";
 import { getUserWithWorkspace } from "@/lib/db/queries";
 
-export const metadata: Metadata = {
-  title: "Videos | Emlak",
-  description: "Create and manage property tour videos",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getT();
+  return constructMetadata({
+    title: t("metadata.pages.video.title"),
+    description: t("metadata.pages.video.description"),
+    noIndex: true,
+  });
+}
 
 export default async function VideoLayout({
   children,

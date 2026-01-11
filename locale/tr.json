@@ -1035,6 +1035,64 @@
       "placeholder": "siz@ornek.com",
       "subscribe": "Abone Ol"
     }
+  },
+  "metadata": {
+    "defaultTitle": "Emlak+ - Yapay Zeka Destekli Emlak Fotoğraf Düzenleyici",
+    "defaultDescription": "Emlak fotoğraflarınızı yapay zeka ile dönüştürün. Profesyonel sanal dekorasyon, gökyüzü değiştirme ve mülk listeleri için fotoğraf iyileştirme.",
+    "pages": {
+      "home": {
+        "title": "Emlak+ - Yapay Zeka Destekli Emlak Fotoğraf Düzenleyici",
+        "description": "Emlak fotoğraflarınızı yapay zeka ile dönüştürün. Profesyonel sanal dekorasyon, gökyüzü değiştirme ve mülk listeleri için fotoğraf iyileştirme."
+      },
+      "about": {
+        "title": "Hakkımızda - Emlak+",
+        "description": "Gayrimenkul profesyonelleri için yapay zeka destekli fotoğraf iyileştirme platformu Emlak+ hakkında bilgi edinin."
+      },
+      "contact": {
+        "title": "İletişim - Emlak+",
+        "description": "Bizimle iletişime geçin. Sizden haber almaktan mutluluk duyarız."
+      },
+      "pricing": {
+        "title": "Fiyatlandırma - Emlak+",
+        "description": "Basit, şeffaf fiyatlandırma. Proje başına ödeme, abonelik yok."
+      },
+      "blog": {
+        "title": "Blog | Emlak+",
+        "description": "Çarpıcı mülk listeleri oluşturmanıza yardımcı olacak ipuçları, rehberler ve sektör içgörüleri."
+      },
+      "help": {
+        "title": "Yardım Merkezi | Emlak+",
+        "description": "Emlak+ ile ilgili yardım alın. Rehberler, eğitimler ve sık sorulan soruların yanıtları için bilgi tabanımıza göz atın."
+      },
+      "terms": {
+        "title": "Kullanım Koşulları - Emlak+",
+        "description": "Emlak+ hizmetlerini kullanmak için şartlar ve koşullar."
+      },
+      "privacy": {
+        "title": "Gizlilik Politikası - Emlak+",
+        "description": "Kişisel bilgilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz."
+      },
+      "auth": {
+        "title": "Giriş Yap | Emlak+",
+        "description": "Emlak+ hesabınıza giriş yapın"
+      },
+      "dashboard": {
+        "title": "Panel | Emlak+",
+        "description": "Mülk fotoğraflarınızı ve AI düzenlemelerinizi yönetin"
+      },
+      "video": {
+        "title": "Videolar | Emlak+",
+        "description": "Mülk tur videoları oluşturun ve yönetin"
+      },
+      "invite": {
+        "title": "Daveti Kabul Et | Emlak+",
+        "description": "Emlak+ üzerinde bir çalışma alanına katılın"
+      },
+      "admin": {
+        "title": "Yönetici | Emlak+",
+        "description": "Platform yönetimi"
+      }
+    }
   }
 }
 

@@ -4,22 +4,24 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-
-const LANGUAGES = ["en", "tr"];
-const DEFAULT_LOCALE = "en";
-// Removed cookie constant as per user request
+import {
+  DEFAULT_LANGUAGE,
+  LANGUAGE_COOKIE_NAME,
+  LANGUAGE_HEADER_NAME,
+  SUPPORTED_LANGUAGES,
+} from "@/lib/i18n-constants";
 
 function getLocale(request: NextRequest): string {
-  // 1. Check Accept-Language header (Browser Lang)
+  // Check Accept-Language header (Browser Lang)
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
 
   try {
-    return matchLocale(languages, LANGUAGES, DEFAULT_LOCALE);
+    return matchLocale(languages, [...SUPPORTED_LANGUAGES], DEFAULT_LANGUAGE);
   } catch (e) {
-    return DEFAULT_LOCALE;
+    return DEFAULT_LANGUAGE;
   }
 }
 
@@ -31,6 +33,26 @@ function getLocale(request: NextRequest): string {
  */
 export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+
+  // --- Determine locale for all routes ---
+  // Check if pathname already has locale prefix
+  const pathnameHasLocale = SUPPORTED_LANGUAGES.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  // Get locale from URL path, cookie, or Accept-Language header
+  let locale: string;
+  if (pathnameHasLocale) {
+    locale = pathname.split("/")[1];
+  } else {
+    // Check cookie first
+    const cookieLocale = request.cookies.get(LANGUAGE_COOKIE_NAME)?.value;
+    if (cookieLocale && SUPPORTED_LANGUAGES.includes(cookieLocale as typeof SUPPORTED_LANGUAGES[number])) {
+      locale = cookieLocale;
+    } else {
+      locale = getLocale(request);
+    }
+  }
 
   // --- Auth Check for Dashboard ---
   if (pathname.startsWith("/dashboard")) {
@@ -45,25 +67,24 @@ export function proxy(request: NextRequest) {
       url.searchParams.set("redirect", request.nextUrl.pathname);
       return NextResponse.redirect(url);
     }
-    return NextResponse.next();
+    // Inject language header for dashboard routes
+    const response = NextResponse.next();
+    response.headers.set(LANGUAGE_HEADER_NAME, locale);
+    return response;
   }
 
   // --- i18n Check for Content Routes ---
-  // Only apply to /blog, /help, and /pricing routes for now, as requested
+  // Only apply URL prefix to /blog, /help, and /pricing routes
   const isContentRoute = pathname.startsWith("/blog") || pathname.startsWith("/help") || pathname.startsWith("/pricing");
 
-  // Check if pathname already has locale
-  const pathnameHasLocale = LANGUAGES.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
-
   if (pathnameHasLocale) {
-    return;
+    // Already has locale, just inject header
+    const response = NextResponse.next();
+    response.headers.set(LANGUAGE_HEADER_NAME, locale);
+    return response;
   }
 
   if (isContentRoute) {
-    const locale = getLocale(request);
-
     // Redirect to locale-prefixed path
     request.nextUrl.pathname = `/${locale}${pathname}`;
     // Preserve query parameters
@@ -72,7 +93,10 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(request.nextUrl);
   }
 
-  return NextResponse.next();
+  // For all other routes, inject language header
+  const response = NextResponse.next();
+  response.headers.set(LANGUAGE_HEADER_NAME, locale);
+  return response;
 }
 
 export const config = {

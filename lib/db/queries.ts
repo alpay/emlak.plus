@@ -15,6 +15,7 @@ import {
 const BILLING_DEFAULTS = {
   IMAGE_PROJECT_PRICE_ORE: 100_000, // 1000 NOK
   VIDEO_PROJECT_PRICE_ORE: 100_000, // 1000 NOK
+  VAT_RATE: 0.25,
 };
 
 import type {
@@ -1204,7 +1205,8 @@ export async function getAdminWorkspaces(options: {
     videosGenerated: Number(row.videos_generated) || 0,
     videosCompleted: Number(row.videos_completed) || 0,
     totalSpend:
-      Math.round(Number(row.images_generated) * COST_PER_IMAGE * 100) / 100,
+      Math.round(Number(row.images_generated) * COST_PER_IMAGE * 100) / 100 +
+      (Number(row.video_cost_cents) || 0) / 100,
     totalVideoSpend: (Number(row.video_cost_cents) || 0) / 100,
     ownerId: row.owner_id,
     ownerName: row.owner_name,
@@ -1265,7 +1267,23 @@ export async function getAdminWorkspaceById(
 
   const w = workspaceData[0];
   const owner = ownerData[0];
+  // Get video stats
+  const [videoStats] = await db
+    .select({
+      total: count(),
+      completed: sum(
+        sql`CASE WHEN ${videoProject.status} = 'completed' THEN 1 ELSE 0 END`
+      ),
+      totalCost: sum(videoProject.actualCost),
+    })
+    .from(videoProject)
+    .where(eq(videoProject.workspaceId, workspaceId));
+
   const imagesGenerated = Number(imageCount?.total) || 0;
+  const videosGenerated = Number(videoStats?.total) || 0;
+  const videosCompleted = Number(videoStats?.completed) || 0;
+  const totalVideoSpend = (Number(videoStats?.totalCost) || 0) / 100;
+  const totalImageSpend = Math.round(imagesGenerated * COST_PER_IMAGE * 100) / 100;
 
   return {
     id: w.id,
@@ -1275,7 +1293,10 @@ export async function getAdminWorkspaceById(
     plan: w.plan as WorkspacePlan,
     memberCount: memberCount?.count || 0,
     imagesGenerated,
-    totalSpend: Math.round(imagesGenerated * COST_PER_IMAGE * 100) / 100,
+    videosGenerated,
+    videosCompleted,
+    totalVideoSpend,
+    totalSpend: totalImageSpend + totalVideoSpend,
     ownerId: owner?.id || null,
     ownerName: owner?.name || null,
     ownerEmail: owner?.email || null,
@@ -1353,6 +1374,7 @@ export interface AdminWorkspaceDetail {
     updatedAt: Date;
     suspendedAt: Date | null;
     suspendedReason: string | null;
+    credits: number;
   };
   owner: {
     id: string;
@@ -1492,6 +1514,7 @@ export async function getAdminWorkspaceDetail(
       updatedAt: w.updatedAt,
       suspendedAt: w.suspendedAt,
       suspendedReason: w.suspendedReason,
+      credits: w.credits,
     },
     owner: owner
       ? {

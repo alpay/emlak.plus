@@ -283,7 +283,7 @@ export async function markInvoiceAsSentAction(
  */
 export async function markInvoiceAsPaidAction(
   invoiceId: string
-): Promise<ActionResult<Invoice>> {
+): Promise<ActionResult<Invoice> & { affiliateEarningCreated?: boolean }> {
   const adminCheck = await verifySystemAdmin();
   if (adminCheck.error) {
     return { success: false, error: adminCheck.error };
@@ -311,6 +311,7 @@ export async function markInvoiceAsPaidAction(
       invoice.workspaceId
     );
 
+    let affiliateEarningCreated = false;
     if (affiliateRelationship) {
       await createAffiliateEarning({
         affiliateWorkspaceId: affiliateRelationship.affiliateWorkspaceId,
@@ -319,10 +320,15 @@ export async function markInvoiceAsPaidAction(
         invoiceAmountOre: invoice.totalAmountOre,
         commissionPercent: affiliateRelationship.commissionPercent,
       });
+      affiliateEarningCreated = true;
     }
 
     revalidatePath("/admin/billing");
-    return { success: true, data: updated };
+    return {
+      success: true,
+      data: updated,
+      affiliateEarningCreated,
+    };
   } catch (error) {
     console.error("[billing:markInvoiceAsPaid] Error:", error);
     return { success: false, error: "Failed to mark invoice as paid" };

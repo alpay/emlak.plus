@@ -402,7 +402,7 @@ function AffiliateEarningsTable({
 
       if (result.success) {
         toast.success("Provisjoner utbetalt", {
-          description: `${result.data?.count ?? selectedIds.size} provisjoner markert som utbetalt`,
+          description: `${selectedIds.size} provisjoner markert som utbetalt`,
         });
         setSelectedIds(new Set());
         router.refresh();

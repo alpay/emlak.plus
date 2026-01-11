@@ -92,6 +92,10 @@ export function SelectImagesStep({
               {
                 id: result.imageId,
                 url: result.url,
+                startImageUrl: result.url,
+                startImageId: result.imageId,
+                endImageUrl: result.url,
+                endImageId: result.imageId,
                 roomType: "other" as const,
                 roomLabel: "",
               },

@@ -35,7 +35,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { createInvoiceFromLineItemsAction } from "@/lib/actions/billing";
+import {
+  createInvoiceFromLineItemsAction,
+  markInvoiceAsSentAction,
+} from "@/lib/actions/billing";
 import type { UninvoicedLineItemRow } from "@/lib/db/queries";
 
 // Format Norwegian currency

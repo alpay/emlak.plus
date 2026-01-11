@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
           num_images: 1,
           output_format: "jpeg",
         },
-      })) as NanoBananaProOutput;
+      })) as unknown as NanoBananaProOutput;
 
       console.log("Fal.ai result:", JSON.stringify(result, null, 2));
 

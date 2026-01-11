@@ -132,8 +132,8 @@ export async function POST(request: NextRequest) {
             prompt,
             num_inference_steps: 28,
             output_format: "jpeg",
-          },
-        })) as FluxFillOutput;
+          } as any,
+        })) as unknown as FluxFillOutput;
 
         console.log("FLUX Fill result:", JSON.stringify(result, null, 2));
 
@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
             num_images: 1,
             output_format: "jpeg",
           },
-        })) as NanoBananaProOutput;
+        })) as unknown as NanoBananaProOutput;
 
         console.log("Nano Banana result:", JSON.stringify(result, null, 2));
 
@@ -217,24 +217,26 @@ export async function POST(request: NextRequest) {
       const newVersion = currentVersion + 1;
 
       // Create new image record as a new version (don't overwrite)
-      const newImage = await createImageGeneration({
-        workspaceId: image.workspaceId,
-        userId: image.userId,
-        projectId: image.projectId,
-        originalImageUrl: image.originalImageUrl, // Keep the original source
-        resultImageUrl: storedResultUrl,
-        prompt,
-        version: newVersion,
-        parentId: rootImageId, // Link to the root/original image
-        status: "completed",
-        errorMessage: null,
-        metadata: {
-          editedFrom: image.id,
-          editedAt: new Date().toISOString(),
-          editMode: mode,
-          model: mode === "remove" ? "flux-fill-pro" : "nano-banana-pro",
-        },
-      });
+        const newImage = await createImageGeneration({
+          workspaceId: image.workspaceId,
+          userId: image.userId,
+          projectId: image.projectId,
+          originalImageUrl: image.originalImageUrl, // Keep the original source
+          resultImageUrl: storedResultUrl,
+          prompt,
+          environment: image.environment,
+          imageRoomType: image.imageRoomType,
+          version: newVersion,
+          parentId: rootImageId, // Link to the root/original image
+          status: "completed",
+          errorMessage: null,
+          metadata: {
+            editedFrom: image.id,
+            editedAt: new Date().toISOString(),
+            editMode: mode,
+            model: mode === "remove" ? "flux-fill-pro" : "nano-banana-pro",
+          },
+        });
 
       // Update project counts
       await updateProjectCounts(image.projectId);

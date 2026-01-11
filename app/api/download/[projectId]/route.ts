@@ -132,16 +132,20 @@ export async function GET(
               // Convert image using Sharp
               const sharpInstance = sharp(buffer);
 
-              if (format === "jpg") {
-                buffer = await sharpInstance
-                  .jpeg({ quality: config.quality })
-                  .toBuffer();
+              if (format === "jpg" && "quality" in config) {
+                buffer = Buffer.from(
+                  await sharpInstance
+                    .jpeg({ quality: config.quality })
+                    .toBuffer()
+                );
               } else if (format === "png") {
-                buffer = await sharpInstance.png().toBuffer();
-              } else if (format === "webp") {
-                buffer = await sharpInstance
-                  .webp({ quality: config.quality })
-                  .toBuffer();
+                buffer = Buffer.from(await sharpInstance.png().toBuffer());
+              } else if (format === "webp" && "quality" in config) {
+                buffer = Buffer.from(
+                  await sharpInstance
+                    .webp({ quality: config.quality })
+                    .toBuffer()
+                );
               }
             }
           }

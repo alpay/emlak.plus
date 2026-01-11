@@ -137,7 +137,7 @@ export default async function VideoPage() {
         ) : (
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {videos.map((video, index) => {
-              const status = statusConfig[video.status];
+              const status = statusConfig[video.status as keyof typeof statusConfig];
               return (
                 <Link
                   className={cn(

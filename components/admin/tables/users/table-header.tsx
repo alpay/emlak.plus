@@ -71,7 +71,6 @@ const columnConfigs: ColumnConfig[] = [
   {
     id: "status",
     label: "Status",
-    sortField: "status",
     width: 100,
     minWidth: 80,
     maxWidth: 120,
@@ -95,7 +94,7 @@ const columnConfigs: ColumnConfig[] = [
   {
     id: "joinedAt",
     label: "Joined",
-    sortField: "joinedAt",
+    sortField: "createdAt",
     width: 120,
     minWidth: 100,
     maxWidth: 140,

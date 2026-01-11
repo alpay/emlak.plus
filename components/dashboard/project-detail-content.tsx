@@ -115,7 +115,7 @@ function RealtimeProcessingLabel({
   });
 
   // Track completion
-  const prevStatusRef = React.useRef<string | undefined>();
+  const prevStatusRef = React.useRef<string | undefined>(undefined);
   React.useEffect(() => {
     const currentStatus = run?.status;
     if (prevStatusRef.current !== currentStatus) {

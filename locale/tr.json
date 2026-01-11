@@ -19,7 +19,12 @@
     "yes": "Evet",
     "no": "Hayır",
     "or": "veya",
-    "and": "ve"
+    "and": "ve",
+    "lessThan": "<{{value}}",
+    "date": "Tarih",
+    "openMenu": "Menüyü aç",
+    "viewDetails": "Detayları gör",
+    "downloadAll": "Tümünü indir"
   },
   "nav": {
     "features": "Özellikler",
@@ -75,7 +80,10 @@
   "cta": {
     "title": "Emlak Fotoğraflarınızı Dönüştürmeye Hazır mısınız?",
     "subtitle": "Binlerce profesyonele katılın ve listelerinizi üst düzeye çıkarın",
-    "button": "Ücretsiz Deneyin"
+    "button": "Ücretsiz Deneyin",
+    "noCreditCard": "Kredi kartı gerekmez",
+    "freeTrial": "Ücretsiz deneme dahil",
+    "cancelAnytime": "İstediğiniz zaman iptal edin"
   },
   "testimonials": {
     "title": "Müşterilerimiz Ne Diyor",
@@ -214,7 +222,34 @@
     "createAccount": "Hesap Oluştur",
     "orContinueWith": "veya şununla devam edin",
     "google": "Google ile devam et",
-    "github": "GitHub ile devam et"
+    "github": "GitHub ile devam et",
+    "welcomeBack": "Tekrar Hoş Geldiniz",
+    "enterCredentials": "Hesabınıza giriş yapmak için bilgilerinizi girin",
+    "emailLabel": "E-posta",
+    "emailPlaceholder": "ahmet@ornek.com",
+    "passwordLabel": "Şifre",
+    "passwordPlaceholder": "Şifrenizi girin",
+    "signInButton": "Giriş Yap",
+    "signingIn": "Giriş yapılıyor...",
+    "dontHaveAccount": "Hesabınız yok mu?",
+    "signUpLink": "Kayıt Ol",
+    "enterDetails": "Hesabınızı oluşturmak için aşağıdaki bilgileri girin",
+    "nameLabel": "İsim",
+    "namePlaceholder": "Ahmet Yılmaz",
+    "newPasswordPlaceholder": "En az 8 karakter",
+    "createAccountButton": "Hesap Oluştur",
+    "creatingAccount": "Hesap oluşturuluyor...",
+    "alreadyHaveAccount": "Zaten hesabınız var mı?",
+    "signInLink": "Giriş Yap",
+    "errors": {
+      "enterEmail": "Lütfen e-posta adresinizi girin",
+      "enterPassword": "Lütfen şifrenizi girin",
+      "enterName": "Lütfen isminizi girin",
+      "passwordLength": "Şifre en az 8 karakter olmalıdır",
+      "signedIn": "Başarıyla giriş yapıldı",
+      "accountCreated": "Hesap başarıyla oluşturuldu",
+      "failedCreate": "Hesap oluşturulamadı"
+    }
   },
   "errors": {
     "required": "Bu alan zorunludur",
@@ -604,13 +639,13 @@
       "dragHint": "Öncesi ve sonrasını karşılaştırmak için sürükleyin",
       "tabs": {
         "twilight": "Alacakaranlık",
-        "windowPull": "Pencere Netleştirme",
-        "skyReplacement": "Gökyüzü Değiştirme",
-        "waterEnhancement": "Su İyileştirme",
-        "cameraRemoval": "Kamera Kaldırma",
-        "handRemoval": "El Kaldırma",
-        "lensCorrection": "Lens Düzeltme",
-        "whiteBalancing": "Beyaz Dengesi"
+        "window-pull": "Pencere Netleştirme",
+        "sky-replacement": "Gökyüzü Değiştirme",
+        "water-enhancement": "Su İyileştirme",
+        "camera-removal": "Kamera Kaldırma",
+        "hand-removal": "El Kaldırma",
+        "lens-correction": "Lens Düzeltme",
+        "white-balancing": "Beyaz Dengesi"
       }
     },
     "valueProp": {
@@ -620,9 +655,10 @@
       "stats": {
         "revisionRate": "Revizyon Oranı",
         "revisionDesc": "Tutarlı, el yapımı kalitesinde düzenlemelerle her ay daha az revizyon.",
-        "costSavings": "Maliyet Tasarrufu",
+        "costRate": "Maliyet Tasarrufu",
         "costDesc": "Müşterilerimiz prodüksiyon sonrası maliyetlerinde yıllık önemli miktarda tasarruf sağlıyor.",
-        "turnaround": "Teslim Süresi",
+        "turnaroundRate": "Teslim Süresi",
+        "turnaroundValue": "<2 dk",
         "turnaroundDesc": "Platformumuzla her gün 25+ ilanı 30 dakikadan kısa sürede düzenleyin."
       }
     },

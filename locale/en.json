@@ -19,7 +19,12 @@
     "yes": "Yes",
     "no": "No",
     "or": "or",
-    "and": "and"
+    "and": "and",
+    "lessThan": "<{{value}}",
+    "date": "Date",
+    "openMenu": "Open menu",
+    "viewDetails": "View details",
+    "downloadAll": "Download all"
   },
   "nav": {
     "features": "Features",
@@ -95,6 +100,7 @@
     "allRightsReserved": "All rights reserved.",
     "madeWith": "Made with ❤️ in Turkey"
   },
+
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome",
@@ -214,7 +220,34 @@
     "createAccount": "Create Account",
     "orContinueWith": "or continue with",
     "google": "Continue with Google",
-    "github": "Continue with GitHub"
+    "github": "Continue with GitHub",
+    "welcomeBack": "Welcome back",
+    "enterCredentials": "Enter your credentials to sign in to your account",
+    "emailLabel": "Email",
+    "emailPlaceholder": "john@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signInButton": "Sign in",
+    "signingIn": "Signing in...",
+    "dontHaveAccount": "Don't have an account?",
+    "signUpLink": "Sign up",
+    "enterDetails": "Enter your details below to create your account",
+    "nameLabel": "Name",
+    "namePlaceholder": "John Doe",
+    "newPasswordPlaceholder": "At least 8 characters",
+    "createAccountButton": "Create account",
+    "creatingAccount": "Creating account...",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInLink": "Sign in",
+    "errors": {
+      "enterEmail": "Please enter your email",
+      "enterPassword": "Please enter your password",
+      "enterName": "Please enter your name",
+      "passwordLength": "Password must be at least 8 characters",
+      "signedIn": "Signed in successfully",
+      "accountCreated": "Account created successfully",
+      "failedCreate": "Failed to create account"
+    }
   },
   "errors": {
     "required": "This field is required",
@@ -604,13 +637,13 @@
       "dragHint": "Drag the slider to compare before and after",
       "tabs": {
         "twilight": "Twilight",
-        "windowPull": "Window Pull",
-        "skyReplacement": "Sky Replacement",
-        "waterEnhancement": "Water Enhancement",
-        "cameraRemoval": "Camera Removal",
-        "handRemoval": "Hand Removal",
-        "lensCorrection": "Lens Correction",
-        "whiteBalancing": "White Balancing"
+        "window-pull": "Window Pull",
+        "sky-replacement": "Sky Replacement",
+        "water-enhancement": "Water Enhancement",
+        "camera-removal": "Camera Removal",
+        "hand-removal": "Hand Removal",
+        "lens-correction": "Lens Correction",
+        "white-balancing": "White Balancing"
       }
     },
     "valueProp": {
@@ -620,9 +653,10 @@
       "stats": {
         "revisionRate": "Revision Rate",
         "revisionDesc": "Consistent, hand-blend quality edits with fewer revisions needed each month.",
-        "costSavings": "Cost Savings",
+        "costRate": "Cost Savings",
         "costDesc": "Our clients save significant amounts annually in post-production costs.",
-        "turnaround": "Turnaround",
+        "turnaroundRate": "Turnaround",
+        "turnaroundValue": "<2 min",
         "turnaroundDesc": "Edit 25+ listings in under 30 minutes every day with our platform."
       }
     },

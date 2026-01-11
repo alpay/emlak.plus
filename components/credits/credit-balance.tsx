@@ -2,6 +2,7 @@
 
 import { IconCoins } from "@tabler/icons-react";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 interface CreditBalanceProps {
@@ -10,6 +11,7 @@ interface CreditBalanceProps {
 }
 
 export function CreditBalance({ credits, className }: CreditBalanceProps) {
+  const { t } = useTranslation();
   const isLow = credits < 5;
   const isEmpty = credits <= 0;
 
@@ -28,7 +30,7 @@ export function CreditBalance({ credits, className }: CreditBalanceProps) {
     >
       <IconCoins className="size-4" />
       <span>{credits}</span>
-      <span className="hidden text-muted-foreground sm:inline">credits</span>
+      <span className="hidden text-muted-foreground sm:inline">{t("pricing.credits")}</span>
     </Link>
   );
 }

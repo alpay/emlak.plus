@@ -4,6 +4,7 @@ import { IconLoader } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +23,7 @@ export default function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/dashboard";
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,12 +33,12 @@ export default function SignInPage() {
     e.preventDefault();
 
     if (!email.trim()) {
-      toast.error("Please enter your email");
+      toast.error(t("auth.errors.enterEmail"));
       return;
     }
 
     if (!password) {
-      toast.error("Please enter your password");
+      toast.error(t("auth.errors.enterPassword"));
       return;
     }
 
@@ -49,11 +51,11 @@ export default function SignInPage() {
       },
       {
         onSuccess: () => {
-          toast.success("Signed in successfully");
+          toast.success(t("auth.errors.signedIn"));
           router.push(redirectTo);
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message || "Invalid email or password");
+          toast.error(ctx.error.message || t("auth.errors.failedCreate")); // fallback message might need its own key or generic error
           setIsLoading(false);
         },
       }
@@ -63,33 +65,33 @@ export default function SignInPage() {
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Welcome back</CardTitle>
+        <CardTitle className="text-2xl">{t("auth.welcomeBack")}</CardTitle>
         <CardDescription>
-          Enter your credentials to sign in to your account
+          {t("auth.enterCredentials")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("auth.emailLabel")}</Label>
             <Input
               autoComplete="email"
               disabled={isLoading}
               id="email"
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="john@example.com"
+              placeholder={t("auth.emailPlaceholder")}
               type="email"
               value={email}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("auth.passwordLabel")}</Label>
             <Input
               autoComplete="current-password"
               disabled={isLoading}
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder={t("auth.passwordPlaceholder")}
               type="password"
               value={password}
             />
@@ -98,22 +100,22 @@ export default function SignInPage() {
             {isLoading ? (
               <>
                 <IconLoader className="mr-2 size-4 animate-spin" />
-                Signing in...
+                {t("auth.signingIn")}
               </>
             ) : (
-              "Sign in"
+              t("auth.signInButton")
             )}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="justify-center">
         <p className="text-muted-foreground text-sm">
-          Don&apos;t have an account?{" "}
+          {t("auth.dontHaveAccount")}{" "}
           <Link
             className="text-foreground underline underline-offset-4 hover:text-foreground/80"
             href="/sign-up"
           >
-            Sign up
+            {t("auth.signUpLink")}
           </Link>
         </p>
       </CardFooter>

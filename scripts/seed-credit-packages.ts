@@ -19,8 +19,8 @@ config({ path: ".env" });
 // Create products in https://app.dodopayments.com first!
 const DODO_PRODUCT_IDS = {
   STARTER: "pdt_0NVsfT7G5xFcQUsTYMHEx", // 10 credits - $5
-  POPULAR: "YOUR_DODO_PRODUCT_ID_FOR_POPULAR", // 25 credits - $10
-  BEST_VALUE: "YOUR_DODO_PRODUCT_ID_FOR_BEST_VALUE", // 50 credits - $18
+  POPULAR: "pdt_0NW29HeMLsaXzdUrpF5LX", // 25 credits - $10
+  BEST_VALUE: "pdt_0NW29O2vv0BB84bRP5O5h", // 50 credits - $18
 };
 
 const PACKAGES = [

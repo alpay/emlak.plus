@@ -81,14 +81,14 @@ export function LandingNav() {
         <div className="hidden items-center justify-center gap-8 md:flex">
           <Link
             className="font-medium text-sm transition-colors hover:opacity-70"
-            href="#features"
+            href="/#features"
             style={{ color: "var(--landing-text-muted)" }}
           >
             {t("nav.features")}
           </Link>
           <Link
             className="font-medium text-sm transition-colors hover:opacity-70"
-            href="#how-it-works"
+            href="/#how-it-works"
             style={{ color: "var(--landing-text-muted)" }}
           >
             {t("nav.howItWorks")}

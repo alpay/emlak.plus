@@ -4,6 +4,7 @@ import { IconLoader } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +21,7 @@ import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,17 +31,17 @@ export default function SignUpPage() {
     e.preventDefault();
 
     if (!name.trim()) {
-      toast.error("Please enter your name");
+      toast.error(t("auth.errors.enterName"));
       return;
     }
 
     if (!email.trim()) {
-      toast.error("Please enter your email");
+      toast.error(t("auth.errors.enterEmail"));
       return;
     }
 
     if (password.length < 8) {
-      toast.error("Password must be at least 8 characters");
+      toast.error(t("auth.errors.passwordLength"));
       return;
     }
 
@@ -54,11 +56,11 @@ export default function SignUpPage() {
       },
       {
         onSuccess: () => {
-          toast.success("Account created successfully");
+          toast.success(t("auth.errors.accountCreated"));
           router.push("/onboarding");
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message || "Failed to create account");
+          toast.error(ctx.error.message || t("auth.errors.failedCreate"));
           setIsLoading(false);
         },
       }
@@ -68,45 +70,45 @@ export default function SignUpPage() {
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Create an account</CardTitle>
+        <CardTitle className="text-2xl">{t("auth.createAccount")}</CardTitle>
         <CardDescription>
-          Enter your details below to create your account
+          {t("auth.enterDetails")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">{t("auth.nameLabel")}</Label>
             <Input
               autoComplete="name"
               disabled={isLoading}
               id="name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="John Doe"
+              placeholder={t("auth.namePlaceholder")}
               type="text"
               value={name}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("auth.emailLabel")}</Label>
             <Input
               autoComplete="email"
               disabled={isLoading}
               id="email"
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="john@example.com"
+              placeholder={t("auth.emailPlaceholder")}
               type="email"
               value={email}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("auth.passwordLabel")}</Label>
             <Input
               autoComplete="new-password"
               disabled={isLoading}
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 8 characters"
+              placeholder={t("auth.newPasswordPlaceholder")}
               type="password"
               value={password}
             />
@@ -115,22 +117,22 @@ export default function SignUpPage() {
             {isLoading ? (
               <>
                 <IconLoader className="mr-2 size-4 animate-spin" />
-                Creating account...
+                {t("auth.creatingAccount")}
               </>
             ) : (
-              "Create account"
+              t("auth.createAccountButton")
             )}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="justify-center">
         <p className="text-muted-foreground text-sm">
-          Already have an account?{" "}
+          {t("auth.alreadyHaveAccount")}{" "}
           <Link
             className="text-foreground underline underline-offset-4 hover:text-foreground/80"
             href="/sign-in"
           >
-            Sign in
+            {t("auth.signInLink")}
           </Link>
         </p>
       </CardFooter>

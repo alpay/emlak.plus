@@ -19,8 +19,8 @@ const stats = [
   {
     icon: IconClock,
     id: "turnaround",
-    valueKey: "common.lessThan", // Special handling for value translation
-    valueDefault: "<2 dk",
+    valueKey: "landing.valueProp.stats.turnaroundValue",
+    valueDefault: "<2 min",
     color: "var(--accent-teal)",
   },
 ];

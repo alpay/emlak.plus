@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import NextImage from "next/image";
 import Link from "next/link";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -68,6 +69,7 @@ const ProjectNameCell = memo(
     thumbnailUrl: string | null;
     id: string;
   }) => {
+    const { t } = useTranslation();
     const template = getTemplateById(styleTemplateId);
     return (
       <Link
@@ -94,7 +96,7 @@ const ProjectNameCell = memo(
             {name}
           </span>
           <span className="block truncate text-muted-foreground text-xs">
-            {template?.name || "Unknown Style"}
+            {template?.name || t("dashboard.unknownStyle", "Unknown Style")}
           </span>
         </div>
       </Link>
@@ -104,7 +106,13 @@ const ProjectNameCell = memo(
 ProjectNameCell.displayName = "ProjectNameCell";
 
 const StatusCell = memo(({ status }: { status: ProjectStatus }) => {
+  const { t } = useTranslation();
+
+  // Status config moved inside or just used for icons/colors
+  // Labels should be translated
   const config = statusConfig[status] || statusConfig.pending;
+  const label = t(`dashboard.status.${status}`, config.label);
+
   return (
     <Badge
       className="gap-1 border-transparent"
@@ -115,7 +123,7 @@ const StatusCell = memo(({ status }: { status: ProjectStatus }) => {
       variant="outline"
     >
       {config.icon}
-      {config.label}
+      {label}
     </Badge>
   );
 });
@@ -154,27 +162,29 @@ const DateCell = memo(({ date }: { date: Date }) => (
 ));
 DateCell.displayName = "DateCell";
 
-const ActionsCell = memo(({ project }: { project: Project }) => (
+const ActionsCell = memo(({ project }: { project: Project }) => {
+  const { t } = useTranslation();
+  return (
   <div className="flex items-center justify-center">
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="h-8 w-8 p-0" variant="ghost">
           <IconDotsVertical className="h-4 w-4" />
-          <span className="sr-only">Open menu</span>
+          <span className="sr-only">{t("common.openMenu", "Open menu")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
           <Link href={`/dashboard/${project.id}`}>
             <IconEye className="mr-2 h-4 w-4" />
-            View details
+            {t("common.viewDetails", "View details")}
           </Link>
         </DropdownMenuItem>
         {project.status === "completed" && (
           <DropdownMenuItem asChild>
             <a href={`/api/download/${project.id}`}>
               <IconDownload className="mr-2 h-4 w-4" />
-              Download all
+              {t("common.downloadAll", "Download all")}
             </a>
           </DropdownMenuItem>
         )}
@@ -187,19 +197,25 @@ const ActionsCell = memo(({ project }: { project: Project }) => (
           }}
         >
           <IconTrash className="mr-2 h-4 w-4" />
-          Delete
+          {t("common.delete", "Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   </div>
-));
+)});
 ActionsCell.displayName = "ActionsCell";
+
+// Helper component for translated headers
+const TranslatedHeader = ({ textKey, defaultText }: { textKey: string; defaultText: string }) => {
+  const { t } = useTranslation();
+  return <>{t(textKey, defaultText)}</>;
+};
 
 export const columns: ColumnDef<Project>[] = [
   {
     id: "name",
     accessorKey: "name",
-    header: "Project",
+    header: () => <TranslatedHeader textKey="dashboard.projects" defaultText="Project" />,
     size: 300,
     minSize: 200,
     cell: ({ row }) => (
@@ -214,7 +230,7 @@ export const columns: ColumnDef<Project>[] = [
   {
     id: "status",
     accessorKey: "status",
-    header: "Status",
+    header: () => <TranslatedHeader textKey="dashboard.filters.status" defaultText="Status" />,
     size: 130,
     minSize: 110,
     cell: ({ row }) => (
@@ -224,7 +240,7 @@ export const columns: ColumnDef<Project>[] = [
   {
     id: "images",
     accessorKey: "imageCount",
-    header: "Images",
+    header: () => <TranslatedHeader textKey="pricing.images" defaultText="Images" />,
     size: 140,
     minSize: 120,
     cell: ({ row }) => (
@@ -237,7 +253,7 @@ export const columns: ColumnDef<Project>[] = [
   {
     id: "createdAt",
     accessorKey: "createdAt",
-    header: "Created",
+    header: () => <TranslatedHeader textKey="common.date" defaultText="Created" />, // Using common.date or similar
     size: 120,
     minSize: 100,
     cell: ({ row }) => <DateCell date={row.original.createdAt} />,

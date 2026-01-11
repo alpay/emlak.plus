@@ -3,6 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import type { Project } from "@/lib/db/schema";
 import { columns } from "./columns";
@@ -17,6 +18,7 @@ interface DataTableProps {
 }
 
 export function DataTable({ projects }: DataTableProps) {
+  const { t } = useTranslation();
   const parentRef = useRef<HTMLDivElement>(null);
 
   // Set up TanStack Table
@@ -86,7 +88,7 @@ export function DataTable({ projects }: DataTableProps) {
                   className="h-24 text-center"
                   colSpan={columns.length}
                 >
-                  No results.
+                  {t("common.noResults")}
                 </TableCell>
               </TableRow>
             )}
@@ -102,7 +104,7 @@ export function DataTable({ projects }: DataTableProps) {
         >
           {projects.length}
         </span>{" "}
-        project{projects.length !== 1 ? "s" : ""}
+        {projects.length === 1 ? t("dashboard.project", "Listings") : t("dashboard.projects", "Listings")}
       </div>
     </div>
   );

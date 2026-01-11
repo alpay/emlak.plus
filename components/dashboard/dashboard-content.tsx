@@ -8,13 +8,13 @@ import {
   IconTable,
   IconX,
 } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { EmptyProjects } from "@/components/dashboard/empty-projects";
 import { ProjectsGrid } from "@/components/dashboard/projects-grid";
 import { StatsBar } from "@/components/dashboard/stats-bar";
-import { NewProjectDialog } from "@/components/projects/new-project-dialog";
 import { DataTable } from "@/components/tables/properties/data-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -104,7 +104,7 @@ function getUsedStyles(projects: Project[]) {
 
 export function DashboardContent({ projects, stats }: DashboardContentProps) {
   const { t } = useTranslation();
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const router = useRouter();
   const [view, setView] = useQueryState(
     "view",
     parseAsStringLiteral(["grid", "table"] as const).withDefault("grid")
@@ -184,7 +184,7 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
               <ViewToggle onViewChange={setView} view={view} />
               <Button
                 className="gap-2 shadow-sm"
-                onClick={() => setDialogOpen(true)}
+                onClick={() => router.push("/dashboard/new")}
                 style={{ backgroundColor: "var(--accent-teal)" }}
               >
                 <IconPlus className="h-4 w-4" />
@@ -286,11 +286,8 @@ export function DashboardContent({ projects, stats }: DashboardContentProps) {
         </>
       ) : (
         /* Empty state */
-        <EmptyProjects onCreateClick={() => setDialogOpen(true)} />
+        <EmptyProjects onCreateClick={() => router.push("/dashboard/new")} />
       )}
-
-      {/* New Project Dialog */}
-      <NewProjectDialog onOpenChange={setDialogOpen} open={dialogOpen} />
     </div>
   );
 }

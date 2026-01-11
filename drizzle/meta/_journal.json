@@ -15,6 +15,13 @@
       "when": 1767918788568,
       "tag": "0001_numerous_killer_shrike",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768093377211,
+      "tag": "0002_quick_sway",
+      "breakpoints": true
     }
   ]
 }

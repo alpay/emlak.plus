@@ -18,137 +18,292 @@ export interface RoomTypeOption {
   description: string;
 }
 
-export const ROOM_TYPES: RoomTypeOption[] = [
+// İç Mekan (Indoor) room types
+export const INDOOR_ROOM_TYPES: RoomTypeOption[] = [
   {
     id: "living-room",
-    label: "Living Room",
+    label: "Oturma Odası",
     icon: "IconSofa",
-    description: "Living spaces, family rooms, lounges",
+    description: "Salon ve oturma alanları",
   },
   {
     id: "bedroom",
-    label: "Bedroom",
+    label: "Yatak Odası",
     icon: "IconBed",
-    description: "Bedrooms, master suites, guest rooms",
+    description: "Yatak odaları ve misafir odaları",
   },
   {
     id: "kitchen",
-    label: "Kitchen",
+    label: "Mutfak",
     icon: "IconToolsKitchen2",
-    description: "Kitchens and cooking areas",
+    description: "Mutfak ve yemek pişirme alanları",
   },
   {
     id: "bathroom",
-    label: "Bathroom",
+    label: "Banyo",
     icon: "IconBath",
-    description: "Bathrooms, en-suites, powder rooms",
+    description: "Banyo ve tuvalet",
   },
   {
     id: "dining-room",
-    label: "Dining Room",
+    label: "Yemek Odası",
     icon: "IconArmchair",
-    description: "Dining areas and breakfast nooks",
+    description: "Yemek alanları",
   },
   {
     id: "office",
-    label: "Office",
+    label: "Ofis",
     icon: "IconDesk",
-    description: "Home offices and study rooms",
+    description: "Ev ofisi ve çalışma odası",
   },
   {
     id: "hallway",
-    label: "Hallway",
+    label: "Koridor",
     icon: "IconDoor",
-    description: "Hallways, corridors, and entryways",
-  },
-  {
-    id: "garage",
-    label: "Garage",
-    icon: "IconCar",
-    description: "Garages and parking spaces",
-  },
-  {
-    id: "balcony",
-    label: "Balcony",
-    icon: "IconBuildingBridge",
-    description: "Balconies and terraces",
-  },
-  {
-    id: "laundry-room",
-    label: "Laundry Room",
-    icon: "IconWashMachine",
-    description: "Laundry rooms and utility spaces",
-  },
-  {
-    id: "childrens-room",
-    label: "Children's Room",
-    icon: "IconMoodKid",
-    description: "Kids' rooms and playrooms",
-  },
-  {
-    id: "walk-in-closet",
-    label: "Walk-in Closet",
-    icon: "IconHanger",
-    description: "Walk-in closets and dressing rooms",
+    description: "Koridor, hol ve giriş",
   },
   {
     id: "basement",
-    label: "Basement",
+    label: "Bodrum",
     icon: "IconStairs",
-    description: "Basements and cellars",
+    description: "Bodrum katı",
+  },
+  {
+    id: "laundry-room",
+    label: "Çamaşır Odası",
+    icon: "IconWashMachine",
+    description: "Çamaşır odası",
+  },
+  {
+    id: "childrens-room",
+    label: "Çocuk Odası",
+    icon: "IconMoodKid",
+    description: "Çocuk odaları ve oyun odaları",
+  },
+  {
+    id: "walk-in-closet",
+    label: "Giyinme Odası",
+    icon: "IconHanger",
+    description: "Giyinme odası ve gardırop",
   },
   {
     id: "attic",
-    label: "Attic",
+    label: "Çatı Katı",
     icon: "IconBuildingSkyscraper",
-    description: "Attics and loft spaces",
+    description: "Çatı katı ve tavan arası",
   },
   {
     id: "gym",
-    label: "Home Gym",
+    label: "Spor Odası",
     icon: "IconBarbell",
-    description: "Home gyms and fitness rooms",
+    description: "Ev spor salonu",
   },
+];
+
+// Dış Mekan (Outdoor) room types
+export const OUTDOOR_ROOM_TYPES: RoomTypeOption[] = [
   {
-    id: "exterior",
-    label: "Exterior",
+    id: "facade",
+    label: "Cephe",
     icon: "IconHome",
-    description: "Exterior views and facades",
+    description: "Bina dış cephesi",
   },
   {
     id: "garden",
-    label: "Garden",
+    label: "Bahçe",
     icon: "IconPlant",
-    description: "Gardens and outdoor landscapes",
+    description: "Bahçe ve peyzaj",
+  },
+  {
+    id: "backyard",
+    label: "Arka Bahçe",
+    icon: "IconTree",
+    description: "Arka bahçe alanı",
+  },
+  {
+    id: "parking",
+    label: "Otopark",
+    icon: "IconCar",
+    description: "Otopark ve garaj girişi",
+  },
+  {
+    id: "road",
+    label: "Sokak Görünümü",
+    icon: "IconRoad",
+    description: "Sokak ve cadde görünümü",
+  },
+  {
+    id: "aerial",
+    label: "Havadan Görünüm",
+    icon: "IconDrone",
+    description: "Drone/havadan çekim",
   },
   {
     id: "pool-area",
-    label: "Pool Area",
+    label: "Havuz",
     icon: "IconPool",
-    description: "Swimming pools and pool decks",
+    description: "Havuz alanı",
+  },
+  {
+    id: "terrace",
+    label: "Teras",
+    icon: "IconSun",
+    description: "Teras ve balkon",
+  },
+  {
+    id: "balcony",
+    label: "Balkon",
+    icon: "IconBuildingBridge",
+    description: "Balkon görünümü",
   },
 ];
+
+// Combined room types for backward compatibility
+export const ROOM_TYPES: RoomTypeOption[] = [
+  ...INDOOR_ROOM_TYPES,
+  ...OUTDOOR_ROOM_TYPES,
+];
+
+// Get room types by environment
+export function getRoomTypesByEnvironment(
+  env: "indoor" | "outdoor"
+): RoomTypeOption[] {
+  return env === "indoor" ? INDOOR_ROOM_TYPES : OUTDOOR_ROOM_TYPES;
+}
 
 export function getRoomTypeById(id: string): RoomTypeOption | undefined {
   return ROOM_TYPES.find((r) => r.id === id);
 }
 
-// Generate a prompt with room type context and architectural preservation
+// AI Tools Configuration - shared between components
+export interface AIToolConfig {
+  id: string;
+  icon: string; // Tabler icon name
+  title: string;
+  description: string;
+  color: string;
+  bgColor: string;
+  promptAddition: string;
+}
+
+export const AI_TOOLS_CONFIG: AIToolConfig[] = [
+  {
+    id: "replaceFurniture",
+    icon: "IconArmchair2",
+    title: "Eşyaları Değiştir",
+    description: "Mevcut mobilyaları yenileriyle değiştirir",
+    color: "text-blue-500",
+    bgColor: "bg-blue-50 dark:bg-blue-900/20",
+    promptAddition: "", // Style template handles this
+  },
+  {
+    id: "cleanHands",
+    icon: "IconHandStop",
+    title: "Elleri Temizle",
+    description: "Yansımadaki elleri siler",
+    color: "text-orange-500",
+    bgColor: "bg-orange-50 dark:bg-orange-900/20",
+    promptAddition: "Remove any hands, fingers, or human limbs visible in mirror reflections, glass surfaces, or any reflective surfaces. Make the reflections appear natural without any human presence.",
+  },
+  {
+    id: "cleanCamera",
+    icon: "IconCamera",
+    title: "Kamerayı Temizle",
+    description: "Tripod ve ekipmanı siler",
+    color: "text-emerald-500",
+    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
+    promptAddition: "Remove any camera equipment, tripods, camera bags, lighting equipment, or photography gear visible in the image or reflections. Make the space appear as if no photography equipment was ever present.",
+  },
+  {
+    id: "turnOffScreens",
+    icon: "IconDeviceTv",
+    title: "Ekranları Kapat",
+    description: "TV ve monitörleri karartır",
+    color: "text-purple-500",
+    bgColor: "bg-purple-50 dark:bg-purple-900/20",
+    promptAddition: "Turn off all TV screens, computer monitors, and electronic displays. Make all screens appear as black/off while maintaining the device frames and their positions in the room.",
+  },
+  {
+    id: "lensCorrection",
+    icon: "IconFocusCentered",
+    title: "Lens Düzeltme",
+    description: "Geniş açı distorsiyonunu giderir",
+    color: "text-gray-500",
+    bgColor: "bg-gray-100 dark:bg-gray-800",
+    promptAddition: "Correct any wide-angle lens distortion. Make all vertical lines (walls, doors, windows) perfectly straight and parallel. Remove barrel distortion and make the room appear with natural perspective.",
+  },
+  {
+    id: "whiteBalance",
+    icon: "IconSun",
+    title: "Beyaz Dengesi",
+    description: "Renk sıcaklığını optimize eder",
+    color: "text-yellow-500",
+    bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
+    promptAddition: "Correct the white balance to achieve natural, neutral colors. Remove any yellow, blue, or green color casts. Make whites appear pure white and ensure accurate color representation throughout the image.",
+  },
+];
+
+export function getAIToolConfig(id: string): AIToolConfig | undefined {
+  return AI_TOOLS_CONFIG.find((t) => t.id === id);
+}
+
+// ProjectAITools type for reference (matches schema.ts)
+interface AIToolsState {
+  replaceFurniture: boolean;
+  cleanHands: boolean;
+  cleanCamera: boolean;
+  turnOffScreens: boolean;
+  lensCorrection: boolean;
+  whiteBalance: boolean;
+}
+
+// Generate a prompt with room type context, AI tools, and architectural preservation
 export function generatePrompt(
-  template: StyleTemplate,
-  roomType: string | null
+  template: StyleTemplate | null,
+  roomType: string | null,
+  environment?: "indoor" | "outdoor",
+  aiTools?: AIToolsState
 ): string {
   const preserveStructure =
     "Do not move, remove, or modify windows, walls, doors, or any architectural elements. Keep the room layout exactly as shown.";
 
-  let prompt = template.prompt;
+  let promptParts: string[] = [];
 
+  // Add room type and environment context
   if (roomType) {
     const roomLabel = roomType.replace(/-/g, " ");
-    prompt = `This is a ${roomLabel}. ${prompt}`;
+    const envLabel = environment === "outdoor" ? "outdoor" : "indoor";
+    promptParts.push(`This is an ${envLabel} ${roomLabel}.`);
   }
 
-  return `${prompt} ${preserveStructure}`;
+  // Add style template prompt
+  if (template) {
+    if (environment === "outdoor") {
+      // For outdoor, we ONLY want to change specific furniture/items, NOT the whole atmosphere/walls
+      // User request: "outdoor icin secilen resimlerde secilen stil asla uygulanmamali, cunku o outdoor... sadece esyalari degistirsin"
+      promptParts.push(
+        `Update the furniture and movable items to match ${template.name} style. Do NOT apply interior design styles to the exterior building or landscape. Keep the facade, plants, and structural elements exactly as is.`
+      );
+    } else {
+      // For indoor, apply the full style prompt
+      promptParts.push(template.prompt);
+    }
+  }
+
+  // Add AI tool prompt additions
+  if (aiTools) {
+    for (const tool of AI_TOOLS_CONFIG) {
+      const toolId = tool.id as keyof AIToolsState;
+      if (aiTools[toolId] && tool.promptAddition) {
+        promptParts.push(tool.promptAddition);
+      }
+    }
+  }
+
+  // Always add structure preservation
+  promptParts.push(preserveStructure);
+
+  return promptParts.join(" ");
 }
 
 export const STYLE_TEMPLATES: StyleTemplate[] = [

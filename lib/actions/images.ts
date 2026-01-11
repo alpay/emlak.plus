@@ -122,7 +122,16 @@ export async function recordUploadedImages(
     fileSize: number;
     contentType: string;
     roomType?: string | null;
-  }[]
+    environment?: "indoor" | "outdoor";
+  }[],
+  aiTools?: {
+    replaceFurniture: boolean;
+    cleanHands: boolean;
+    cleanCamera: boolean;
+    turnOffScreens: boolean;
+    lensCorrection: boolean;
+    whiteBalance: boolean;
+  }
 ): Promise<ActionResult<ImageWithRunId[]>> {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -151,11 +160,10 @@ export async function recordUploadedImages(
     return { success: false, error: "Project not found" };
   }
 
-  // Get the style template for the prompt
-  const template = getTemplateById(projectData.project.styleTemplateId);
-  if (!template) {
-    return { success: false, error: "Style template not found" };
-  }
+  // Get the style template for the prompt (optional if only using AI tools)
+  const template = projectData.project.styleTemplateId
+    ? getTemplateById(projectData.project.styleTemplateId)
+    : null;
 
   // Check if workspace has enough credits for all images
   const currentCredits = await getWorkspaceCredits(workspaceId);
@@ -174,9 +182,10 @@ export async function recordUploadedImages(
     for (const image of images) {
       const publicUrl = getPublicUrl(image.path);
 
-      // Use per-image room type if provided, otherwise fall back to project room type
+      // Use per-image room type and environment if provided
       const roomType = image.roomType || projectData.project.roomType;
-      const prompt = generatePrompt(template, roomType);
+      const environment = image.environment || "indoor";
+      const prompt = generatePrompt(template ?? null, roomType, environment, aiTools);
 
       // Create database record
       const imageRecord = await createImageGeneration({
@@ -188,10 +197,16 @@ export async function recordUploadedImages(
         prompt,
         status: "pending",
         errorMessage: null,
+        environment,
+        imageRoomType: roomType,
+        version: 1,
+        parentId: null,
         metadata: {
-          templateId: template.id,
-          templateName: template.name,
+          templateId: template?.id || null,
+          templateName: template?.name || null,
           roomType,
+          environment,
+          aiTools,
           originalFileName: image.fileName,
           originalFileSize: image.fileSize,
           contentType: image.contentType,
@@ -551,15 +566,18 @@ export async function regenerateImage(
     return { success: false, error: "Style template not found" };
   }
 
-  // Get project to get room type for prompt generation
+  // Get metadata and project settings
   const projectData = await getProjectById(image.projectId);
+  const metadata = image.metadata as any;
   const roomType =
     projectData?.project.roomType ||
-    (image.metadata as { roomType?: string })?.roomType ||
+    metadata?.roomType ||
     null;
+  const environment = metadata?.environment || "indoor";
+  const aiTools = metadata?.aiTools || projectData?.project.aiTools;
 
-  // Generate prompt with room type context
-  const prompt = generatePrompt(template, roomType);
+  // Generate prompt with context
+  const prompt = generatePrompt(template ?? null, roomType, environment, aiTools);
 
   // Check if workspace has enough credits for regeneration
   const currentCredits = await getWorkspaceCredits(currentUser[0].workspaceId);

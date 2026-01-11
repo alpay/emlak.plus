@@ -179,6 +179,9 @@ export const project = pgTable(
     roomType: text("room_type"), // living-room | bedroom | kitchen | bathroom | dining-room | office | exterior | etc (Comprehensive list in RoomType)
     thumbnailUrl: text("thumbnail_url"),
 
+    // AI tools selected for this project (applies to all images)
+    aiTools: jsonb("ai_tools"), // { replaceFurniture, cleanHands, cleanCamera, turnOffScreens, lensCorrection, whiteBalance }
+
     // Status tracking
     status: text("status").notNull().default("pending"), // pending | processing | completed | failed
 
@@ -218,6 +221,10 @@ export const imageGeneration = pgTable(
     originalImageUrl: text("original_image_url").notNull(),
     resultImageUrl: text("result_image_url"),
     prompt: text("prompt").notNull(),
+
+    // Per-image settings (set during upload)
+    environment: text("environment").notNull().default("indoor"), // "indoor" | "outdoor"
+    imageRoomType: text("image_room_type"), // Room type specific to this image (uses RoomType enum)
 
     // Version tracking for edit history
     version: integer("version").notNull().default(1), // v1, v2, v3...
@@ -431,6 +438,17 @@ export type WorkspaceStatus = "active" | "suspended" | "trial";
 export type WorkspacePlan = "free" | "pro" | "enterprise";
 export type ProjectStatus = "pending" | "processing" | "completed" | "failed";
 export type ImageStatus = "pending" | "processing" | "completed" | "failed";
+export type ImageEnvironment = "indoor" | "outdoor";
+
+// AI tools that can be applied to a project
+export interface ProjectAITools {
+  replaceFurniture: boolean;
+  cleanHands: boolean;
+  cleanCamera: boolean;
+  turnOffScreens: boolean;
+  lensCorrection: boolean;
+  whiteBalance: boolean;
+}
 
 // Comprehensive Room Types (English keys, Norwegian UI labels)
 export type RoomType =

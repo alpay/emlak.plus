@@ -11,11 +11,17 @@ export interface UploadProgress {
   error?: string;
 }
 
+// Per-image metadata for upload
+export interface ImageMetadata {
+  environment: "indoor" | "outdoor";
+  roomType: string;
+}
+
 interface UseImageUploadReturn {
   uploadImages: (
     projectId: string,
     files: File[],
-    roomTypes?: (string | null)[]
+    imageMetadata?: ImageMetadata[]
   ) => Promise<boolean>;
   progress: UploadProgress[];
   isUploading: boolean;
@@ -38,7 +44,7 @@ export function useImageUpload(): UseImageUploadReturn {
     async (
       projectId: string,
       files: File[],
-      roomTypes?: (string | null)[]
+      imageMetadata?: ImageMetadata[]
     ): Promise<boolean> => {
       if (files.length === 0) return false;
 
@@ -91,13 +97,17 @@ export function useImageUpload(): UseImageUploadReturn {
           fileName: string;
           fileSize: number;
           contentType: string;
-          roomType: string | null;
+          roomType: string;
+          environment: "indoor" | "outdoor";
         }[] = [];
 
         for (let i = 0; i < signedUrls.length; i++) {
           const { imageId, signedUrl, path } = signedUrls[i];
           const file = files[i];
-          const roomType = roomTypes?.[i] || null;
+          const metadata = imageMetadata?.[i];
+          // Default to living-room and indoor if not provided
+          const roomType = metadata?.roomType || "living-room";
+          const environment = metadata?.environment || "indoor";
 
           try {
             // Upload to Supabase using signed URL
@@ -129,6 +139,7 @@ export function useImageUpload(): UseImageUploadReturn {
               fileSize: file.size,
               contentType: file.type,
               roomType,
+              environment,
             });
           } catch (uploadError) {
             // Mark this file as failed

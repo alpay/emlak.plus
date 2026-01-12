@@ -250,7 +250,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Yer çöplerini, dağınık eşyaları temizler",
     color: "text-rose-500",
     bgColor: "bg-rose-50 dark:bg-rose-900/20",
-    promptAddition: "Remove all clutter and mess from the photo. This includes items on the floor like shoes, socks, toys, clothes, bags, cables, trash, and any disorganized items. Remove items that look out of place on counters, tables, and surfaces. Keep only essential, well-placed furniture and decor. The space should look clean, organized, and ready for a professional listing photo. Do not remove permanent fixtures or built-in items.",
+    promptAddition: "For this property listing photo, remove all clutter and personal items that distract from the space. This includes: shoes, clothing, toys, personal care items, dishes, food items, cables, trash, magazines, and any disorganized items on floors, counters, tables, and surfaces. Keep only essential, well-placed furniture appropriate for a property listing. The space should appear clean, spacious, and move-in ready. Do not remove permanent fixtures, built-in items, or architectural elements.",
   },
   {
     id: "cleanHands",
@@ -259,7 +259,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Yansımadaki elleri siler",
     color: "text-orange-500",
     bgColor: "bg-orange-50 dark:bg-orange-900/20",
-    promptAddition: "Remove any hands, fingers, or human limbs visible in mirror reflections, glass surfaces, or any reflective surfaces. Make the reflections appear natural without any human presence.",
+    promptAddition: "Remove any hands, fingers, arms, or human body parts visible in the image or its mirror reflections, glass surfaces, window reflections, or any reflective surfaces in this property photo. Replace with natural-looking reflections of the room that maintain the professional appearance expected in real estate listing photography.",
   },
   {
     id: "cleanCamera",
@@ -268,7 +268,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Tripod ve ekipmanı siler",
     color: "text-emerald-500",
     bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
-    promptAddition: "Remove any camera equipment, tripods, camera bags, lighting equipment, or photography gear visible in the image or reflections. Make the space appear as if no photography equipment was ever present.",
+    promptAddition: "Remove any camera equipment, tripods, camera bags, lighting stands, flash units, or photography gear visible in this property photo or its reflections. The space should appear naturally photographed without any visible production equipment, as expected in professional real estate photography.",
   },
   {
     id: "turnOffScreens",
@@ -277,7 +277,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "TV ve monitörleri karartır",
     color: "text-purple-500",
     bgColor: "bg-purple-50 dark:bg-purple-900/20",
-    promptAddition: "Turn off all TV screens, computer monitors, and electronic displays. Make all screens appear as black/off while maintaining the device frames and their positions in the room.",
+    promptAddition: "Turn off all TV screens, computer monitors, tablets, and electronic displays visible in this property photo. Make all screens appear as black/off state while keeping the device frames, stands, and mounting positions exactly as they are. This creates a cleaner, more neutral presentation for potential buyers.",
   },
   {
     id: "lensCorrection",
@@ -286,7 +286,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Geniş açı distorsiyonunu giderir",
     color: "text-gray-500",
     bgColor: "bg-gray-100 dark:bg-gray-800",
-    promptAddition: "Correct any wide-angle lens distortion. Make all vertical lines (walls, doors, windows) perfectly straight and parallel. Remove barrel distortion and make the room appear with natural perspective.",
+    promptAddition: "PRIORITY LENS CORRECTION: Apply professional lens distortion correction to this property photo. If the image was taken with a wide-angle or fisheye lens, correct the barrel/pincushion distortion so all straight lines appear straight. Specifically: 1) Make all vertical lines (walls, door frames, window frames, columns, edges of furniture) perfectly vertical and parallel. 2) Make all horizontal lines (floor edges, ceiling lines, window sills, countertops) perfectly horizontal. 3) Remove any curved or bowed appearance from what should be straight edges. 4) Correct perspective so the room appears as it would to the human eye with a normal lens. The result should look like it was photographed with a standard 35-50mm lens with natural perspective.",
   },
   {
     id: "whiteBalance",
@@ -295,7 +295,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Renk sıcaklığını optimize eder",
     color: "text-yellow-500",
     bgColor: "bg-yellow-50 dark:bg-yellow-900/20",
-    promptAddition: "Correct the white balance to achieve natural, neutral colors. Remove any yellow, blue, or green color casts. Make whites appear pure white and ensure accurate color representation throughout the image.",
+    promptAddition: "Correct the white balance in this property photo to achieve natural, neutral colors. Remove any yellow, orange, blue, or green color casts caused by mixed lighting. Make whites appear pure white, walls their true color, and ensure accurate color representation throughout. The lighting should appear natural and inviting for potential buyers.",
   },
   {
     id: "grassGreening",
@@ -314,7 +314,7 @@ export const AI_TOOLS_CONFIG: AIToolConfig[] = [
     description: "Kişisel bilgileri, plakaları gizler",
     color: "text-red-500",
     bgColor: "bg-red-50 dark:bg-red-900/20",
-    promptAddition: "Blur and obscure any sensitive or private information visible in the photo. This includes: license plates on vehicles, full street addresses or house numbers that could identify the exact location, family photos or portraits of people, personal documents, computer screens showing personal information, name plates, and any other identifying information. Apply a natural-looking blur that protects privacy while maintaining the professional appearance of the photo.",
+    promptAddition: "For privacy protection in this property listing, blur and obscure all sensitive information visible in the photo. This includes: vehicle license plates, visible street addresses or house numbers, family photos or portraits, personal documents, mail with addresses, computer/phone screens showing personal data, name plates, and any other identifying information. Apply a natural-looking blur that protects privacy while maintaining the professional quality of the listing photo.",
   },
   {
     id: "skyReplacement",
@@ -349,34 +349,43 @@ export interface AIToolsState {
 }
 
 // Generate a prompt with room type context, AI tools, and architectural preservation
+// Optimized for real estate virtual staging - maintains property integrity
 export function generatePrompt(
   template: StyleTemplate | null,
-  roomType: string | null,
-  environment?: "indoor" | "outdoor",
+  roomType: string,
+  environment: "indoor" | "outdoor",
   aiTools?: AIToolsState
 ): string {
-  const preserveStructure =
-    "Do not move, remove, or modify windows, walls, doors, or any architectural elements. Keep the room layout exactly as shown.";
+  // Enhanced structure preservation prompt for real estate
+  // Note: Lens correction is allowed - it's a photographic fix, not a structural modification
+  const preserveStructure = `CRITICAL PRESERVATION RULES: This image is for a real estate property listing. Preserve the exact architectural integrity of the property. Do NOT add, remove, or relocate any of the following physical elements: walls, windows, doors, ceiling height, flooring, tiles, built-in cabinetry, kitchen cabinets, bathroom fixtures, fireplaces, staircases, columns, beams, radiators, air vents, electrical outlets, or any permanent structural elements. Keep the same number and arrangement of rooms, windows, and doors. Maintain natural lighting direction. The edited image must accurately represent the actual physical property. EXCEPTION: Lens distortion correction IS allowed - straightening vertical and horizontal lines to correct fisheye or wide-angle lens distortion is a photographic correction and does not alter the property's actual structure.`;
 
   const promptParts: string[] = [];
 
-  // Add room type and environment context
-  if (roomType) {
-    const roomLabel = roomType.replace(/-/g, " ");
-    const envLabel = environment === "outdoor" ? "outdoor" : "indoor";
-    promptParts.push(`This is an ${envLabel} ${roomLabel}.`);
+  // Add professional real estate context with room type
+  const roomLabel = roomType.replace(/-/g, " ");
+  if (environment === "outdoor") {
+    promptParts.push(
+      `This is a professional real estate listing photograph of an outdoor ${roomLabel} area, captured to showcase this property for potential buyers.`
+    );
+  } else {
+    promptParts.push(
+      `This is a professional real estate listing photograph of a ${roomLabel}, captured to showcase this property for potential buyers.`
+    );
   }
 
-  // Add style template prompt
+  // Add style template prompt with real estate framing
   if (template) {
     if (environment === "outdoor") {
-      // For outdoor, we ONLY want to change specific furniture/items, NOT the whole atmosphere/walls
+      // For outdoor, be very conservative - only change movable items
       promptParts.push(
-        `Update the furniture and movable items to match ${template.name} style. Do NOT apply interior design styles to the exterior building or landscape. Keep the facade, plants, and structural elements exactly as is.`
+        `For this property exterior, virtually stage by updating only the movable outdoor furniture and portable decor items to complement a ${template.name} aesthetic. Do NOT modify: the building facade, roof, siding, brick/stone work, windows, doors, landscaping beds, trees, shrubs, permanent structures, driveways, pathways, fencing, or any architectural elements. Keep all existing plants and landscaping exactly as photographed.`
       );
     } else {
-      // For indoor, apply the full style prompt
-      promptParts.push(template.prompt);
+      // For indoor, apply the full style with real estate context
+      promptParts.push(
+        `For this property listing, virtually stage the space: ${template.prompt}`
+      );
     }
   }
 
@@ -394,7 +403,7 @@ export function generatePrompt(
           const grassRoomTypes = ["garden", "backyard", "facade", "pool-area", "terrace"];
           if (grassRoomTypes.includes(roomType)) {
             promptParts.push(
-              "If there is a lawn or grass area visible in the photo, enhance it to look lush, healthy, and vibrant green. Only enhance existing grass areas - do not add grass where there is none. The grass should look naturally green and well-maintained, as if professionally landscaped. Do not change paved areas, decking, or non-grass surfaces."
+              "Enhance the lawn and grass areas to appear lush, healthy, and vibrant green as they would look during peak growing season. Only enhance existing grass areas - do not add grass where there is none. The grass should look naturally maintained by professional landscaping. Preserve all paved areas, decking, garden beds, and non-grass surfaces exactly as shown."
             );
           }
         }
@@ -403,7 +412,9 @@ export function generatePrompt(
         if (environment === "outdoor" && aiTools.selectedSkyOption) {
           const skyOption = getSkyOptionById(aiTools.selectedSkyOption);
           if (skyOption) {
-            promptParts.push(skyOption.prompt);
+            promptParts.push(
+              `${skyOption.prompt} Ensure the new sky blends naturally with the existing scene lighting and horizon line.`
+            );
           }
         }
       } else if (tool.promptAddition) {
@@ -413,7 +424,7 @@ export function generatePrompt(
     }
   }
 
-  // Always add structure preservation
+  // Always add structure preservation as the final, most important instruction
   promptParts.push(preserveStructure);
 
   return promptParts.join(" ");

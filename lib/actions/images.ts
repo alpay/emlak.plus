@@ -121,8 +121,8 @@ export async function recordUploadedImages(
     fileName: string;
     fileSize: number;
     contentType: string;
-    roomType?: string | null;
-    environment?: "indoor" | "outdoor";
+    roomType: string;
+    environment: "indoor" | "outdoor";
   }[],
   aiTools?: ProjectAITools
 ): Promise<ActionResult<ImageWithRunId[]>> {
@@ -175,10 +175,11 @@ export async function recordUploadedImages(
     for (const image of images) {
       const publicUrl = getPublicUrl(image.path);
 
-      // Use per-image room type and environment if provided
-      const roomType = image.roomType || projectData.project.roomType;
-      const environment = image.environment || "indoor";
-      const prompt = generatePrompt(template ?? null, roomType, environment, aiTools as AIToolsState | undefined);
+      // Use per-image room type and environment (now required)
+      const { roomType, environment } = image;
+
+      const effectiveAiTools = (aiTools || projectData.project.aiTools) as AIToolsState | undefined;
+      const prompt = generatePrompt(template ?? null, roomType, environment, effectiveAiTools);
 
       // Create database record
       const imageRecord = await createImageGeneration({
@@ -555,7 +556,7 @@ export async function regenerateImage(
     newTemplateId || (image.metadata as { templateId?: string })?.templateId;
   const template = templateId ? getTemplateById(templateId) : null;
 
-  if (!template) {
+  if (!template && templateId !== "no-style") {
     return { success: false, error: "Style template not found" };
   }
 
@@ -568,11 +569,13 @@ export async function regenerateImage(
     aiTools?: ProjectAITools | null;
   } | null;
 
-  const roomType =
+  // Get roomType and environment with sensible defaults (never null)
+  const roomType: string =
+    image.imageRoomType ||
     projectData?.project.roomType ||
     metadata?.roomType ||
-    null;
-  const environment = metadata?.environment || "indoor";
+    "living-room";
+  const environment: "indoor" | "outdoor" = metadata?.environment || "indoor";
   const aiTools = (metadata?.aiTools || projectData?.project.aiTools) as AIToolsState | undefined;
 
   // Generate prompt with context
@@ -600,8 +603,8 @@ export async function regenerateImage(
       resultImageUrl: null,
       metadata: {
         ...(image.metadata as object),
-        templateId: template.id,
-        templateName: template.name,
+        templateId: template?.id || "no-style",
+        templateName: template?.name || "No Style",
         roomType,
         runId: handle.id,
       },

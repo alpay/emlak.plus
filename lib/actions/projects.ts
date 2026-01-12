@@ -50,9 +50,19 @@ export async function createProjectAction(
   const name = formData.get("name") as string;
   const styleTemplateId = formData.get("styleTemplateId") as string;
   const roomType = formData.get("roomType") as string | null;
+  const aiToolsJson = formData.get("aiTools") as string | null;
 
-  if (!(name && styleTemplateId)) {
-    return { success: false, error: "Name and style template are required" };
+  if (!name) {
+    return { success: false, error: "Name is required" };
+  }
+
+  let aiTools = [];
+  try {
+    if (aiToolsJson) {
+      aiTools = JSON.parse(aiToolsJson);
+    }
+  } catch (e) {
+    console.error("Failed to parse aiTools:", e);
   }
 
   try {
@@ -60,11 +70,11 @@ export async function createProjectAction(
       workspaceId: currentUser[0].workspaceId,
       userId: session.user.id,
       name,
-      styleTemplateId,
+      styleTemplateId: styleTemplateId || "no-style",
       roomType: roomType || null,
       thumbnailUrl: null,
       status: "pending",
-      aiTools: [],
+      aiTools,
       imageCount: 0,
       completedCount: 0,
     });

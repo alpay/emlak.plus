@@ -140,7 +140,7 @@ export function NewProjectPage({ workspaceId, credits }: NewProjectPageProps) {
         roomType: img.roomType,
       }));
 
-      const uploadSuccess = await imageUpload.uploadImages(project.id, files);
+      const uploadSuccess = await imageUpload.uploadImages(project.id, files, imageMetadata);
 
       if (!uploadSuccess) {
         console.error("Failed to upload images:", imageUpload.error);

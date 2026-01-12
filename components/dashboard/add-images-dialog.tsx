@@ -25,8 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useImageUpload } from "@/hooks/use-image-upload";
-import { ROOM_TYPES } from "@/lib/style-templates";
+import { useImageUpload, type ImageMetadata } from "@/hooks/use-image-upload";
+import { ROOM_TYPES, OUTDOOR_ROOM_TYPES } from "@/lib/style-templates";
 import { cn } from "@/lib/utils";
 
 interface UploadedImage {
@@ -34,7 +34,8 @@ interface UploadedImage {
   file: File;
   preview: string;
   name: string;
-  roomType: string | null;
+  roomType: string;
+  environment: "indoor" | "outdoor";
 }
 
 interface AddImagesDialogProps {
@@ -84,7 +85,8 @@ export function AddImagesDialog({
         file,
         preview: URL.createObjectURL(file),
         name: file.name,
-        roomType: null,
+        roomType: "living-room", // Default room type, user should update
+        environment: "indoor", // Default, updated when room type is selected
       }));
 
       setImages((prev) => [...prev, ...newImages]);
@@ -93,8 +95,11 @@ export function AddImagesDialog({
   );
 
   const updateImageRoomType = useCallback((id: string, roomType: string) => {
+    // Derive environment from room type
+    const isOutdoor = OUTDOOR_ROOM_TYPES.some((r) => r.id === roomType);
+    const environment = isOutdoor ? "outdoor" : "indoor";
     setImages((prev) =>
-      prev.map((img) => (img.id === id ? { ...img, roomType } : img))
+      prev.map((img) => (img.id === id ? { ...img, roomType, environment } : img))
     );
   }, []);
 
@@ -155,11 +160,14 @@ export function AddImagesDialog({
 
     try {
       const files = images.map((img) => img.file);
-      const roomTypes = images.map((img) => img.roomType);
+      const imageMetadata: ImageMetadata[] = images.map((img) => ({
+        roomType: img.roomType,
+        environment: img.environment,
+      }));
       const uploadSuccess = await imageUpload.uploadImages(
         projectId,
         files,
-        roomTypes
+        imageMetadata
       );
 
       if (uploadSuccess) {

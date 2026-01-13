@@ -8,6 +8,7 @@ import {
 } from "@/lib/fal";
 import { getVideoPath, uploadVideo } from "@/lib/supabase";
 import { DEFAULT_NEGATIVE_PROMPT } from "@/lib/video/motion-prompts";
+import { executeFalIdempotentRequest } from "./fal-utils";
 
 export interface GenerateTransitionClipPayload {
   clipId: string;
@@ -130,19 +131,32 @@ export const generateTransitionClipTask = task({
         negative_prompt: DEFAULT_NEGATIVE_PROMPT,
       };
 
-      const result = (await fal.subscribe(KLING_VIDEO_PRO, {
-        input: klingInput,
-        onQueueUpdate: (update) => {
-          logger.info("Kling processing update", { update });
-          if (update.status === "IN_PROGRESS") {
-            metadata.set("status", {
-              step: "generating",
-              label: "Generating transition…",
-              progress: 50,
-            } satisfies TransitionClipStatus);
-          }
+      const metadataRecord = (clip.metadata as Record<string, any>) || {};
+      const result = await executeFalIdempotentRequest<KlingVideoOutput>(
+        KLING_VIDEO_PRO,
+        klingInput,
+        metadataRecord.fal_transition_request_id,
+        {
+          onRequestIdReceived: async (requestId) => {
+            await updateVideoClip(clipId, {
+              metadata: {
+                ...metadataRecord,
+                fal_transition_request_id: requestId,
+              },
+            });
+          },
+          onClearRequestId: async () => {
+            await updateVideoClip(clipId, {
+              metadata: {
+                ...metadataRecord,
+                fal_transition_request_id: null,
+              },
+            });
+          },
         },
-      })) as unknown as KlingVideoOutput;
+        logger,
+        "Kling Video Transition"
+      );
 
       logger.info("Kling transition result received", { result });
 

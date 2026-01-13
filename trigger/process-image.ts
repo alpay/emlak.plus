@@ -224,9 +224,11 @@ export const processImageTask = task({
   },
 });
 
+import { executeFalIdempotentRequest } from "./fal-utils";
+
 /**
  * Helper to handle the idempotent execution of Fal.ai requests.
- * Checks for existing IDs, manages submitting vs polling, and handles error recovery.
+ * delegated to shared utility
  */
 async function executeFalRequest(
   imageId: string,
@@ -234,113 +236,37 @@ async function executeFalRequest(
   falImageUrl: string,
   metadataRecord: Record<string, any>
 ): Promise<string> {
-  const requestId = metadataRecord.fal_request_id as string | undefined;
-  let activeRequestId = requestId;
+  const result = await executeFalIdempotentRequest<NanoBananaProOutput>(
+    NANO_BANANA_PRO_EDIT,
+    {
+      prompt,
+      image_urls: [falImageUrl],
+      num_images: 1,
+      aspect_ratio: "auto",
+      resolution: "2K",
+      output_format: "webp",
+    },
+    metadataRecord.fal_request_id,
+    {
+      onRequestIdReceived: async (requestId) => {
+        await updateImageGeneration(imageId, {
+          metadata: { ...metadataRecord, fal_request_id: requestId },
+        });
+      },
+      onClearRequestId: async () => {
+        await updateImageGeneration(imageId, {
+          metadata: { ...metadataRecord, fal_request_id: null },
+        });
+      },
+    },
+    logger,
+    "Nano Banana Pro"
+  );
 
-  try {
-    let result: NanoBananaProOutput;
-
-    if (activeRequestId) {
-      logger.info("Resuming existing Fal.ai request", {
-        requestId: activeRequestId,
-      });
-      // Poll for result using the request ID
-      result = (await fal.queue.result(NANO_BANANA_PRO_EDIT, {
-        requestId: activeRequestId,
-      })) as unknown as NanoBananaProOutput;
-    } else {
-      logger.info("Calling Fal.ai Nano Banana Pro", { imageId, prompt });
-
-      // Use subscribe for the initial request to handle the "submit -> poll" handover reliably
-      // This prevents "Bad Request" errors that happen when polling too fast after submit
-      result = (await fal.subscribe(NANO_BANANA_PRO_EDIT, {
-        input: {
-          prompt,
-          image_urls: [falImageUrl],
-          num_images: 1,
-          aspect_ratio: "auto",
-          resolution: "2K",
-          output_format: "webp",
-        },
-        logs: true,
-        onQueueUpdate: async (update) => {
-          if (update.request_id && update.request_id !== activeRequestId) {
-            activeRequestId = update.request_id;
-            logger.info("Fal.ai request started", {
-              requestId: activeRequestId,
-            });
-
-            // Save request ID asynchronously to preserve it for retries in case of timeout
-            try {
-              await updateImageGeneration(imageId, {
-                metadata: {
-                  ...metadataRecord,
-                  fal_request_id: activeRequestId,
-                },
-              });
-            } catch (dbError) {
-              // Non-fatal, just log. If we fail to save, we might double-gen on retry, but main flow works.
-              logger.error("Failed to save request ID", {
-                requestId: activeRequestId,
-                error: dbError instanceof Error ? dbError.message : "Db error",
-              });
-            }
-          }
-        },
-      })) as unknown as NanoBananaProOutput;
-    }
-
-    logger.info("Fal.ai result received", { result });
-
-    const output = (result as { data?: NanoBananaProOutput }).data || result;
-    if (!output.images?.[0]?.url) {
-      throw new Error("No image returned from Fal.ai");
-    }
-
-    return output.images[0].url;
-  } catch (error) {
-    // Smart Recovery: Check if the request failed irrecoverably
-    await handleFalError(imageId, activeRequestId, error);
-    throw error;
+  const output = (result as { data?: NanoBananaProOutput }).data || result;
+  if (!output.images?.[0]?.url) {
+    throw new Error("No image returned from Fal.ai");
   }
-}
 
-/**
- * Checks Fal.ai status on error. If the request definitely failed, clearing the ID allows a fresh retry.
- */
-async function handleFalError(
-  imageId: string,
-  requestId: string | undefined,
-  originalError: unknown
-) {
-  if (!requestId) return;
-
-  try {
-    logger.info("Check status of failed request", { requestId });
-    const status = await fal.queue.status(NANO_BANANA_PRO_EDIT, {
-      requestId,
-      logs: true,
-    });
-
-    const statusStr = (status as any).status;
-
-    // If failed on their end, clear ID to allow retry
-    if (statusStr === "FAILED" || statusStr === "falsy_failed") {
-      logger.info("Request failed on Fal, clearing ID", { requestId });
-      const currentImage = await getImageGenerationById(imageId);
-      const currentMeta = (currentImage?.metadata as Record<string, any>) || {};
-
-      await updateImageGeneration(imageId, {
-        metadata: { ...currentMeta, fal_request_id: null },
-      });
-    }
-  } catch (checkError) {
-    logger.warn("Failed to check status, clearing ID to be safe", { requestId });
-    // If we can't check status, better to retry fresh
-    const currentImage = await getImageGenerationById(imageId);
-    const currentMeta = (currentImage?.metadata as Record<string, any>) || {};
-    await updateImageGeneration(imageId, {
-      metadata: { ...currentMeta, fal_request_id: null },
-    });
-  }
+  return output.images[0].url;
 }

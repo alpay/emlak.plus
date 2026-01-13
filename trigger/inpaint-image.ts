@@ -6,7 +6,9 @@ import {
   deleteVersionsAfter,
   getImageGenerationById,
   updateProjectCounts,
+  updateImageGeneration,
 } from "@/lib/db/queries";
+import { executeFalIdempotentRequest } from "./fal-utils";
 import {
   FLUX_FILL_PRO,
   type FluxFillOutput,
@@ -153,15 +155,32 @@ export const inpaintImageTask = task({
 
         logger.info("Uploaded mask to Fal.ai storage", { falMaskUrl });
 
-        // Call FLUX Fill Pro API
-        const result = (await fal.subscribe(FLUX_FILL_PRO, {
-          input: {
+        // Call FLUX Fill Pro API using idempotent helper
+        const metadataRecord = (image.metadata as Record<string, any>) || {};
+        const result = await executeFalIdempotentRequest<FluxFillOutput>(
+          FLUX_FILL_PRO,
+          {
             image_url: falImageUrl,
             mask_url: falMaskUrl,
             prompt,
             output_format: "jpeg",
           },
-        })) as unknown as FluxFillOutput;
+          metadataRecord.fal_inpaint_request_id,
+          {
+            onRequestIdReceived: async (requestId) => {
+              await updateImageGeneration(imageId, {
+                metadata: { ...metadataRecord, fal_inpaint_request_id: requestId },
+              });
+            },
+            onClearRequestId: async () => {
+              await updateImageGeneration(imageId, {
+                metadata: { ...metadataRecord, fal_inpaint_request_id: null },
+              });
+            },
+          },
+          logger,
+          "Flux Fill Pro"
+        );
 
         logger.info("FLUX Fill result received");
 
@@ -178,8 +197,10 @@ export const inpaintImageTask = task({
         // ADD MODE: Use Nano Banana Pro (image-to-image)
         logger.info("Using Nano Banana Pro for add mode");
 
-        const result = (await fal.subscribe(NANO_BANANA_PRO_EDIT, {
-          input: {
+        const metadataRecord = (image.metadata as Record<string, any>) || {};
+        const result = await executeFalIdempotentRequest<NanoBananaProOutput>(
+          NANO_BANANA_PRO_EDIT,
+          {
             prompt,
             image_urls: [falImageUrl],
             num_images: 1,
@@ -187,7 +208,22 @@ export const inpaintImageTask = task({
             resolution: "2K", // Max 2048px output (2x upscale)
             output_format: "webp", // Smaller file size
           },
-        })) as unknown as NanoBananaProOutput;
+          metadataRecord.fal_inpaint_request_id,
+          {
+            onRequestIdReceived: async (requestId) => {
+              await updateImageGeneration(imageId, {
+                metadata: { ...metadataRecord, fal_inpaint_request_id: requestId },
+              });
+            },
+            onClearRequestId: async () => {
+              await updateImageGeneration(imageId, {
+                metadata: { ...metadataRecord, fal_inpaint_request_id: null },
+              });
+            },
+          },
+          logger,
+          "Nano Banana Pro"
+        );
 
         logger.info("Nano Banana result received");
 

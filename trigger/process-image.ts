@@ -102,33 +102,12 @@ export const processImageTask = task({
         progress: 50,
       } satisfies ProcessImageStatus);
 
-      logger.info("Calling Fal.ai Nano Banana Pro", {
+      const resultImageUrl = await executeFalRequest(
         imageId,
-        prompt: image.prompt,
-      });
-
-      const result = (await fal.subscribe(NANO_BANANA_PRO_EDIT, {
-        input: {
-          prompt: image.prompt,
-          image_urls: [falImageUrl],
-          num_images: 1,
-          aspect_ratio: "auto", // Preserve input image aspect ratio
-          resolution: "2K", // Max 2048px output (2x upscale)
-          output_format: "webp", // Smaller file size
-        },
-      })) as unknown as NanoBananaProOutput;
-
-      logger.info("Fal.ai result received", { result });
-
-      // Check for result - handle both direct and wrapped response
-      const output = (result as { data?: NanoBananaProOutput }).data || result;
-      if (!output.images?.[0]?.url) {
-        logger.error("No images in response", { result });
-        throw new Error("No image returned from Fal.ai");
-      }
-
-      const resultImageUrl = output.images[0].url;
-      const contentType = output.images[0].content_type || "image/webp";
+        image.prompt,
+        falImageUrl,
+        (image.metadata as Record<string, any>) || {}
+      );
 
       // Step 4: Save to Supabase
       metadata.set("status", {
@@ -145,6 +124,8 @@ export const processImageTask = task({
       }
 
       const resultImageBuffer = await resultImageResponse.arrayBuffer();
+      // Use a consistent default if content-type is missing, though executeFalRequest ensures URL exists
+      const contentType = "image/webp";
       const extension = getExtensionFromContentType(contentType);
 
       const resultPath = getImagePath(
@@ -242,3 +223,124 @@ export const processImageTask = task({
     }
   },
 });
+
+/**
+ * Helper to handle the idempotent execution of Fal.ai requests.
+ * Checks for existing IDs, manages submitting vs polling, and handles error recovery.
+ */
+async function executeFalRequest(
+  imageId: string,
+  prompt: string,
+  falImageUrl: string,
+  metadataRecord: Record<string, any>
+): Promise<string> {
+  const requestId = metadataRecord.fal_request_id as string | undefined;
+  let activeRequestId = requestId;
+
+  try {
+    let result: NanoBananaProOutput;
+
+    if (activeRequestId) {
+      logger.info("Resuming existing Fal.ai request", {
+        requestId: activeRequestId,
+      });
+      // Poll for result using the request ID
+      result = (await fal.queue.result(NANO_BANANA_PRO_EDIT, {
+        requestId: activeRequestId,
+      })) as unknown as NanoBananaProOutput;
+    } else {
+      logger.info("Calling Fal.ai Nano Banana Pro", { imageId, prompt });
+
+      // Use subscribe for the initial request to handle the "submit -> poll" handover reliably
+      // This prevents "Bad Request" errors that happen when polling too fast after submit
+      result = (await fal.subscribe(NANO_BANANA_PRO_EDIT, {
+        input: {
+          prompt,
+          image_urls: [falImageUrl],
+          num_images: 1,
+          aspect_ratio: "auto",
+          resolution: "2K",
+          output_format: "webp",
+        },
+        logs: true,
+        onQueueUpdate: async (update) => {
+          if (update.request_id && update.request_id !== activeRequestId) {
+            activeRequestId = update.request_id;
+            logger.info("Fal.ai request started", {
+              requestId: activeRequestId,
+            });
+
+            // Save request ID asynchronously to preserve it for retries in case of timeout
+            try {
+              await updateImageGeneration(imageId, {
+                metadata: {
+                  ...metadataRecord,
+                  fal_request_id: activeRequestId,
+                },
+              });
+            } catch (dbError) {
+              // Non-fatal, just log. If we fail to save, we might double-gen on retry, but main flow works.
+              logger.error("Failed to save request ID", {
+                requestId: activeRequestId,
+                error: dbError instanceof Error ? dbError.message : "Db error",
+              });
+            }
+          }
+        },
+      })) as unknown as NanoBananaProOutput;
+    }
+
+    logger.info("Fal.ai result received", { result });
+
+    const output = (result as { data?: NanoBananaProOutput }).data || result;
+    if (!output.images?.[0]?.url) {
+      throw new Error("No image returned from Fal.ai");
+    }
+
+    return output.images[0].url;
+  } catch (error) {
+    // Smart Recovery: Check if the request failed irrecoverably
+    await handleFalError(imageId, activeRequestId, error);
+    throw error;
+  }
+}
+
+/**
+ * Checks Fal.ai status on error. If the request definitely failed, clearing the ID allows a fresh retry.
+ */
+async function handleFalError(
+  imageId: string,
+  requestId: string | undefined,
+  originalError: unknown
+) {
+  if (!requestId) return;
+
+  try {
+    logger.info("Check status of failed request", { requestId });
+    const status = await fal.queue.status(NANO_BANANA_PRO_EDIT, {
+      requestId,
+      logs: true,
+    });
+
+    const statusStr = (status as any).status;
+
+    // If failed on their end, clear ID to allow retry
+    if (statusStr === "FAILED" || statusStr === "falsy_failed") {
+      logger.info("Request failed on Fal, clearing ID", { requestId });
+      const currentImage = await getImageGenerationById(imageId);
+      const currentMeta = (currentImage?.metadata as Record<string, any>) || {};
+
+      await updateImageGeneration(imageId, {
+        metadata: { ...currentMeta, fal_request_id: null },
+      });
+    }
+  } catch (checkError) {
+    logger.warn("Failed to check status, clearing ID to be safe", { requestId });
+    // If we can't check status, better to retry fresh
+    const currentImage = await getImageGenerationById(imageId);
+    const currentMeta = (currentImage?.metadata as Record<string, any>) || {};
+    await updateImageGeneration(imageId, {
+      metadata: { ...currentMeta, fal_request_id: null },
+    });
+  }
+}

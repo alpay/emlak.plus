@@ -61,7 +61,9 @@ export async function POST(request: NextRequest) {
           prompt: image.prompt,
           image_urls: [falImageUrl], // Use Fal.ai storage URL
           num_images: 1,
-          output_format: "jpeg",
+          aspect_ratio: "auto", // Preserve input image aspect ratio
+          resolution: "2K", // Max 2048px output (2x upscale)
+          output_format: "webp", // Smaller file size
         },
       })) as unknown as NanoBananaProOutput;
 
@@ -75,7 +77,7 @@ export async function POST(request: NextRequest) {
       }
 
       const resultImageUrl = output.images[0].url;
-      const contentType = output.images[0].content_type || "image/jpeg";
+      const contentType = output.images[0].content_type || "image/webp";
 
       // Download the result image and upload to Supabase
       const resultImageResponse = await fetch(resultImageUrl);

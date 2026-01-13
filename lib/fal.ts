@@ -16,6 +16,7 @@ export interface NanoBananaProInput {
   image_urls: string[]; // NOTE: Array, not single string!
   num_images?: number; // 1-4, default 1
   aspect_ratio?:
+    | "auto"
     | "21:9"
     | "16:9"
     | "3:2"

@@ -156,7 +156,9 @@ export async function POST(request: NextRequest) {
             prompt,
             image_urls: [falImageUrl],
             num_images: 1,
-            output_format: "jpeg",
+            aspect_ratio: "auto", // Preserve input image aspect ratio
+            resolution: "2K", // Max 2048px output (2x upscale)
+            output_format: "webp", // Smaller file size
           },
         })) as unknown as NanoBananaProOutput;
 
@@ -171,7 +173,7 @@ export async function POST(request: NextRequest) {
         }
 
         resultImageUrl = output.images[0].url;
-        contentType = output.images[0].content_type || "image/jpeg";
+        contentType = output.images[0].content_type || "image/webp";
       }
 
       // Download the result image and upload to Supabase

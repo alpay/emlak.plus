@@ -2,6 +2,7 @@
 
 import {
   IconArmchair2,
+  IconBulb,
   IconCamera,
   IconCheck,
   IconCloud,
@@ -11,6 +12,8 @@ import {
   IconHandStop,
   IconInfoCircle,
   IconPlant,
+  IconPool,
+  IconRoad,
   IconSun,
   IconTrash,
 } from "@tabler/icons-react";
@@ -39,6 +42,9 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   IconPlant,
   IconEyeOff,
   IconCloud,
+  IconBulb,
+  IconRoad,
+  IconPool,
 };
 
 // Map config to component-usable format with actual icon components
@@ -277,21 +283,17 @@ export function AIEnhancementsStep({
 
   const selectableTemplates = STYLE_TEMPLATES.filter((tpl) => !tpl.comingSoon);
 
-  // Handle tool card click - just select the tool to show its panel
   const handleToolSelect = (toolId: keyof ProjectAITools) => {
     setSelectedTool(toolId);
   };
 
-  // Handle toggle switch - toggle the tool on/off
   const handleToolToggle = (toolId: keyof ProjectAITools) => {
     onToggleTool(toolId);
-    // If enabling a tool, also select it
     if (!aiTools[toolId]) {
       setSelectedTool(toolId);
     }
   };
 
-  // Handle sky option selection
   const handleSkyOptionSelect = (skyOptionId: string) => {
     onSelectSkyOption?.(skyOptionId);
   };
@@ -304,7 +306,6 @@ export function AIEnhancementsStep({
           {t("project.aiEnhancements.toolsTitle", "AI Araçları")}
         </h3>
         {AI_TOOLS.map((tool) => {
-          // Disable outdoor-only tools if no outdoor images
           const isDisabled = tool.outdoorOnly && !hasOutdoorImages;
 
           return (
@@ -320,7 +321,6 @@ export function AIEnhancementsStep({
           );
         })}
 
-        {/* Info about outdoor-only tools */}
         {!hasOutdoorImages && (
           <div className="mt-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 p-3 text-xs text-amber-700 dark:text-amber-400">
             <div className="flex items-start gap-2">
@@ -449,7 +449,54 @@ function ToolDetailContent({
 }) {
   const { t } = useTranslation();
 
-  // Declutter tool
+  if (toolId === "turnOnLights") {
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.turnOnLights.description", "Tüm aydınlatma armatürlerini, lambaları ve aplikleri doğal görünümlü bir şekilde açar.")}
+        </p>
+        <div className="rounded-xl bg-amber-50 dark:bg-amber-900/20 p-4 mb-4">
+          <p className="text-sm text-amber-700 dark:text-amber-300">
+            {t("project.aiEnhancements.toolDetails.turnOnLights.note", "Mekanda sıcak ve davetkar bir atmosfer yaratır.")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (toolId === "fixDriveway") {
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.fixDriveway.description", "Yol, kaldırım ve garaj girişindeki çatlakları, yağ lekelerini ve kusurları onarır.")}
+        </p>
+        <div className="rounded-xl bg-slate-50 dark:bg-slate-900/20 p-4 mb-4">
+          <p className="text-sm text-slate-700 dark:text-slate-300">
+             {t("project.aiEnhancements.toolDetails.fixDriveway.note", "Sadece dış mekan zemin yüzeylerine uygulanır.")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (toolId === "blueWater") {
+    return (
+      <div className="rounded-2xl border bg-background p-6">
+        <h3 className="mb-4 text-lg font-bold">{title}</h3>
+        <p className="mb-6 text-muted-foreground">
+          {t("project.aiEnhancements.toolDetails.blueWater.description", "Havuz ve su özelliklerini kristal berraklığında masmavi bir görünüme kavuşturur.")}
+        </p>
+        <div className="rounded-xl bg-cyan-50 dark:bg-cyan-900/20 p-4 mb-4">
+          <p className="text-sm text-cyan-700 dark:text-cyan-300">
+             {t("project.aiEnhancements.toolDetails.blueWater.note", "Kir ve bulanıklık giderilir, su davetkar hale getirilir.")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (toolId === "declutter") {
     const features = t("project.aiEnhancements.toolDetails.declutter.features", { returnObjects: true }) as string[];
     return (
@@ -589,7 +636,6 @@ function ToolDetailContent({
     );
   }
 
-  // Grass Greening tool
   if (toolId === "grassGreening") {
     const features = t("project.aiEnhancements.toolDetails.grassGreening.features", { returnObjects: true }) as string[];
     return (
@@ -616,7 +662,6 @@ function ToolDetailContent({
     );
   }
 
-  // Blur Sensitive Info tool
   if (toolId === "blurSensitiveInfo") {
     const features = t("project.aiEnhancements.toolDetails.blurSensitiveInfo.features", { returnObjects: true }) as string[];
     return (

@@ -453,6 +453,9 @@ export interface ProjectAITools {
   blurSensitiveInfo: boolean;
   skyReplacement: boolean;
   selectedSkyOption?: string; // ID of the selected sky option
+  turnOnLights?: boolean;
+  fixDriveway?: boolean;
+  blueWater?: boolean;
 }
 
 // Comprehensive Room Types (English keys, Norwegian UI labels)
